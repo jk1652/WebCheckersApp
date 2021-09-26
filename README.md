@@ -10,6 +10,7 @@ a web micro-framework.
 - Quentin Ramos II
 - Spencer Creveling
 - David Pritchard
+- Zane Kitchen Lipski
 
 
 ## Prerequisites
