@@ -7,7 +7,7 @@ a web micro-framework.
 ## Team
 
 - Jaden Kitchen Lipski
-- MEMBER2
+- Quentin Ramos II
 - MEMBER3
 - MEMBER4
 
