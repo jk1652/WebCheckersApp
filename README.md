@@ -8,7 +8,7 @@ a web micro-framework.
 
 - Jaden Kitchen Lipski
 - Quentin Ramos II
-- MEMBER3
+- Spencer Creveling
 - MEMBER4
 
 
