@@ -10,10 +10,10 @@ public class Piece {
     // Attributes
     //
 
-    private enum Type {SINGLE, KING}
+    public enum Type {SINGLE, KING}
     private final Type type;
 
-    private enum Color {RED, WHITE}
+    public enum Color {RED, WHITE}
     private final Color color;
     //
     // Constructor
