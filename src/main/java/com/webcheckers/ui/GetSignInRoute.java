@@ -16,12 +16,10 @@ import java.util.logging.Logger;
 public class GetSignInRoute implements Route {
     private static final Logger LOG = Logger.getLogger(GetSignInRoute.class.getName());
 
-    //private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-
     private final TemplateEngine templateEngine;
 
     /**
-     * Create the Spark Route (UI controller) to handle all {@code GET /signup} HTTP requests.
+     * Create the Spark Route (UI controller) to handle all {@code GET /signin} HTTP requests.
      *
      * @param templateEngine
      *   the HTML template rendering engine
@@ -33,7 +31,7 @@ public class GetSignInRoute implements Route {
     }
 
     /**
-     * Render the WebCheckers SignUp page.
+     * Render the WebCheckers SignIn page.
      *
      * @param request
      *   the HTTP request
@@ -46,12 +44,8 @@ public class GetSignInRoute implements Route {
     @Override
     public Object handle(Request request, Response response) {
         LOG.finer("GetHomeRoute is invoked.");
-        //
-        Map<String, Object> vm = new HashMap<>();
-        //vm.put("title", "Welcome!");
 
-        // display a user message in the Home page
-        //vm.put("message", WELCOME_MSG);
+        Map<String, Object> vm = new HashMap<>();
 
         // render the View
         return templateEngine.render(new ModelAndView(vm , "login.ftl"));
