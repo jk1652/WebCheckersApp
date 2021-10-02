@@ -9,7 +9,8 @@ a web micro-framework.
 - Jaden Kitchen Lipski
 - Quentin Ramos II
 - Spencer Creveling
-- MEMBER4
+- David Pritchard
+- Zane Kitchen Lipski
 
 
 ## Prerequisites
