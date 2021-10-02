@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ * @author: Quentin Ramos II
+ */
+
 public class Piece {
 
     //
