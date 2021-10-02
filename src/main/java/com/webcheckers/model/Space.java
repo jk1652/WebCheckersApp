@@ -1,4 +1,29 @@
 package com.webcheckers.model;
 
+/**
+ * @author Spencer Creveling
+ */
+
 public class Space {
+    private final int cellIdx;
+    private final Boolean isValid;
+    private Piece piece;
+
+    public Space(int cellIdx, boolean isValid, Piece piece){
+        this.cellIdx = cellIdx;
+        this.isValid = isValid;
+        this.piece = piece;
+    }
+
+    public int getCellIndx(){
+        return cellIdx;
+    }
+
+    public boolean isValid(){
+        return isValid;
+    }
+
+    public Piece getPiece(){
+        return piece;
+    }
 }
