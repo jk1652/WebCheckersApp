@@ -1,5 +1,10 @@
 package com.webcheckers.model;
 
+/**
+ * @author Spencer Creveling
+ * @author Quentin Ramos II
+ */
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
