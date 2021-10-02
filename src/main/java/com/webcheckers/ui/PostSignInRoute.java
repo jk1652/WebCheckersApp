@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.webcheckers.model.Player;
 import spark.*;
 
 import java.util.HashMap;
@@ -42,10 +43,6 @@ public class PostSignInRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
-    //
-    // TemplateViewRoute method
-    //
-
     /**
      * {@inheritDoc}
      *
@@ -53,6 +50,9 @@ public class PostSignInRoute implements Route {
      */
     @Override
     public String handle(Request request, Response response) {
+        final Map<String, Object> vm = new HashMap<>();
+        final Session session = request.session();
+        session.attribute(Player.);
         return "a";
     }
 }
