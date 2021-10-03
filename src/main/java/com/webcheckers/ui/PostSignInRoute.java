@@ -16,13 +16,27 @@ import spark.Session;
 import spark.TemplateEngine;
 import static spark.Spark.halt;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.Session;
+import spark.TemplateEngine;
+import static spark.Spark.halt;
+
 import com.webcheckers.appl.PlayerLobby;
 
 import static spark.Spark.halt;
 
 public class PostSignInRoute implements Route {
 
-    static final String USERNAME_IN_USE = "Invalid Username: Username in use.";
+    static final String ERROR_MESSAGE_USERNAME_IN_USE = "Invalid Username: Username in use.";
+    static final String USERNAME = "playerName";
 
     //private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
@@ -52,7 +66,12 @@ public class PostSignInRoute implements Route {
     public String handle(Request request, Response response) {
         final Map<String, Object> vm = new HashMap<>();
         final Session session = request.session();
-        session.attribute(Player.);
+        session.attribute("signingIn");
+
+        final String name = request.queryParams(USERNAME);
+
+
+
         return "a";
     }
 }
