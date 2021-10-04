@@ -30,8 +30,8 @@ public class PlayerLobby {
         if(names.contains(player)) {
             return false;
         }
+        LOG.fine("user added " + name);
         names.add(player);
-
         return true;
     }
 
@@ -39,8 +39,18 @@ public class PlayerLobby {
         return names.size();
     }
 
-    public String getPlayerName(int i) {
-        return names.get(i).getName();
+
+    public ArrayList<Player> getPlayerList() {
+        return names;
+    }
+
+    public Boolean isValidName(String name){
+        if (name.matches("[a-zA-Z_0-9]+([a-zA-Z_0-9]|\\s)*$")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 

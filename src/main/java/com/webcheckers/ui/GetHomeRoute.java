@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -72,17 +73,21 @@ public class GetHomeRoute implements Route {
     }
 
     if (playerName != null) {
-      String playerList = new String();
+      ArrayList<Player> playerList = playerLobby.getPlayerList();
 
-      for (int x = 0; x < playerLobby.numberofPlayers(); x++) {
-        if (playerLobby.getPlayerName(x) == playerName) {
+
+      String players = new String();
+      // creates players full of player names
+      for (Player x : playerList) {
+        if (x.equals(new Player(playerName))) {
           continue;
         }
-        playerList = playerList + (playerLobby.getPlayerName(x) + "\n");
+        players = players + ("<li>" + x.getName() + "</li><br>");
       }
 
       vm.put("currentUser", playerName);
-      vm.put("playerList", playerList);
+      vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
+      vm.put("playerList", players);
     }
     else {
       vm.put("message", Message.info("Current Number of Players: " +

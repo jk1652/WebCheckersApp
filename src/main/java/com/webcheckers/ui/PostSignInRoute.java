@@ -37,6 +37,9 @@ import static spark.Spark.halt;
 public class PostSignInRoute implements Route {
 
     static final Message ERROR_MESSAGE_USERNAME_IN_USE = Message.info("Invalid Username: Username in use.");
+    static final Message ERROR_MESSAGE_USERNAME_INVALID = Message.info("Invalid Username: Username needs to include " +
+            "at least one alphanumeric character.");
+
     static final String USERNAME = "playerName";
 
     private final PlayerLobby playerLobby;
@@ -68,7 +71,13 @@ public class PostSignInRoute implements Route {
         final Map<String, Object> vm = new HashMap<>();
 
 
+
         final String name = request.queryParams(USERNAME);
+
+        if (!(playerLobby.isValidName(name))){
+            vm.put("message", ERROR_MESSAGE_USERNAME_INVALID);
+            return templateEngine.render(new ModelAndView(vm, "login.ftl"));
+        }
 
         if (playerLobby.addPlayer(name)) {
             request.session().attribute(USERNAME, name);

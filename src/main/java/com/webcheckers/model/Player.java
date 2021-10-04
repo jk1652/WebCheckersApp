@@ -14,7 +14,7 @@ public class Player {
     private String name;
 
     public Player(String name) {
-        LOG.fine("user created " + name);
+        //LOG.fine("user created " + name);
         this.name = name;
     }
     public String getName() {

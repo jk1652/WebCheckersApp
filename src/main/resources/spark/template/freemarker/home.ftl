@@ -22,7 +22,10 @@
 
     <#if playerList??>
         <p>
+            ${playerListTitle}
+            <ul>
             ${playerList}
+            </ul>
         </p>
     </#if>
 
