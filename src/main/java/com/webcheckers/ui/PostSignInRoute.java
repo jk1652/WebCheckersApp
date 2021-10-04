@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ import static spark.Spark.halt;
 
 public class PostSignInRoute implements Route {
 
-    static final String ERROR_MESSAGE_USERNAME_IN_USE = "Invalid Username: Username in use.";
+    static final Message ERROR_MESSAGE_USERNAME_IN_USE = Message.info("Invalid Username: Username in use.");
     static final String USERNAME = "playerName";
 
     private final PlayerLobby playerLobby;
@@ -79,14 +80,15 @@ public class PostSignInRoute implements Route {
             return null;
         }
         else {
-            vm.put(ERROR_MESSAGE_USERNAME_IN_USE, new Error(ERROR_MESSAGE_USERNAME_IN_USE));
-            return templateEngine.render(error(vm, ERROR_MESSAGE_USERNAME_IN_USE));
+            //vm.put(ERROR_MESSAGE_USERNAME_IN_USE, new Error(ERROR_MESSAGE_USERNAME_IN_USE));
+            vm.put("message", ERROR_MESSAGE_USERNAME_IN_USE);
+            return templateEngine.render(new ModelAndView(vm, "login.ftl"));
         }
     }
 
     private ModelAndView error(final Map<String, Object> vm, final String message) {
         vm.put(USERNAME, message);
-        vm.put("messageType", "error");
+        vm.put("message.type", "error");
         return new ModelAndView(vm, "login.ftl");
     }
 

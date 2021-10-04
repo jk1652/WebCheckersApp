@@ -11,6 +11,8 @@
 
 <div class="body">
 
+    <#include "message.ftl" />
+
     <form action="./username" method="POST">
         <input name="playerName" />
         <br/><br/>
