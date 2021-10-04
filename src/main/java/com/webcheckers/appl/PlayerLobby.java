@@ -35,8 +35,12 @@ public class PlayerLobby {
         return true;
     }
 
-    public int Number_of_Players() {
+    public int numberofPlayers() {
         return names.size();
+    }
+
+    public String getPlayerName(int i) {
+        return names.get(i).getName();
     }
 
 

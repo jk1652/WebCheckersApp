@@ -64,20 +64,31 @@ public class GetHomeRoute implements Route {
     // display a user message in the Home page
     vm.put("welcome", WELCOME_MSG);
 
-    String PLAYER_NAME = request.session().attribute(PostSignInRoute.USERNAME);
+    String playerName = request.session().attribute(PostSignInRoute.USERNAME);
 
-    if(!playerLobby.addPlayer(PLAYER_NAME)) {
+    if (!playerLobby.addPlayer(playerName)) {
       request.session().removeAttribute(PostSignInRoute.USERNAME);
       //PLAYER_NAME = null;
     }
 
-    if (PLAYER_NAME != null) {
-      vm.put("currentUser", PLAYER_NAME);
+    if (playerName != null) {
+      String playerList = new String();
+
+      for (int x = 0; x < playerLobby.numberofPlayers(); x++) {
+        if (playerLobby.getPlayerName(x) == playerName) {
+          continue;
+        }
+        playerList = playerList + (playerLobby.getPlayerName(x) + "\n");
+      }
+
+      vm.put("currentUser", playerName);
+      vm.put("playerList", playerList);
     }
     else {
       vm.put("message", Message.info("Current Number of Players: " +
-              String.valueOf(playerLobby.Number_of_Players())));
+              String.valueOf(playerLobby.numberofPlayers())));
     }
+
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));

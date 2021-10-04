@@ -20,6 +20,12 @@
         ${welcome.text}
     </p>
 
+    <#if playerList??>
+        <p>
+            ${playerList}
+        </p>
+    </#if>
+
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 
