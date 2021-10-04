@@ -27,6 +27,9 @@ public class PlayerLobby {
             return false;
         }
         names.add(player);
+
+        System.out.println(player.getName());
+
         return true;
     }
 

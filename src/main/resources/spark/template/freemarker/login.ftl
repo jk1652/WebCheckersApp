@@ -11,6 +11,7 @@
 
 <div class="body">
 
+    <form action="./username" method="POST">
         <input name="myGuess" />
         <br/><br/>
         <button type="submit">Ok</button>
