@@ -11,7 +11,10 @@
 
 <div class="body">
 
-        <input name="myGuess" />
+    <#include "message.ftl" />
+
+    <form action="./username" method="POST">
+        <input name="playerName" />
         <br/><br/>
         <button type="submit">Ok</button>
     </form>

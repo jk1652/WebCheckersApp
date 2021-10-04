@@ -1,10 +1,14 @@
 package com.webcheckers.ui;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Player;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -24,6 +28,7 @@ public class GetHomeRoute implements Route {
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
   private final TemplateEngine templateEngine;
+  private final PlayerLobby playerLobby;
 
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
@@ -31,10 +36,12 @@ public class GetHomeRoute implements Route {
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine) {
+  public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
+    this.playerLobby = playerLobby;
+
   }
 
   /**
@@ -56,7 +63,37 @@ public class GetHomeRoute implements Route {
     vm.put("title", "Welcome!");
 
     // display a user message in the Home page
-    vm.put("message", WELCOME_MSG);
+    vm.put("welcome", WELCOME_MSG);
+
+    String playerName = request.session().attribute(PostSignInRoute.USERNAME);
+
+    if (!playerLobby.addPlayer(playerName)) {
+      request.session().removeAttribute(PostSignInRoute.USERNAME);
+      //PLAYER_NAME = null;
+    }
+
+    if (playerName != null) {
+      ArrayList<Player> playerList = playerLobby.getPlayerList();
+
+
+      String players = new String();
+      // creates players full of player names
+      for (Player x : playerList) {
+        if (x.equals(new Player(playerName))) {
+          continue;
+        }
+        players = players + ("<li>" + x.getName() + "</li><br>");
+      }
+
+      vm.put("currentUser", playerName);
+      vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
+      vm.put("playerList", players);
+    }
+    else {
+      vm.put("message", Message.info("Current Number of Players: " +
+              String.valueOf(playerLobby.numberofPlayers())));
+    }
+
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));
