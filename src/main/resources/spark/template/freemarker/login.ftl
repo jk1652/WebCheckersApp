@@ -12,7 +12,7 @@
 <div class="body">
 
     <form action="./username" method="POST">
-        <input name="myGuess" />
+        <input name="playerName" />
         <br/><br/>
         <button type="submit">Ok</button>
     </form>

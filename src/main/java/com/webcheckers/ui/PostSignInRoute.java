@@ -70,6 +70,8 @@ public class PostSignInRoute implements Route {
 
         final String name = request.queryParams(USERNAME);
 
+        System.out.println(name);
+
         if (playerLobby.addPlayer(name)) {
             session.attribute(USERNAME, name);
             response.redirect(WebServer.HOME_URL);
