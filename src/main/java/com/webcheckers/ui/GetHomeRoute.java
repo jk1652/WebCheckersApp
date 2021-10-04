@@ -1,10 +1,12 @@
 package com.webcheckers.ui;
 
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
+import com.webcheckers.model.Player;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -57,6 +59,14 @@ public class GetHomeRoute implements Route {
 
     // display a user message in the Home page
     vm.put("message", WELCOME_MSG);
+
+
+
+    String PLAYER_NAME = request.session().attribute(PostSignInRoute.USERNAME);
+
+    if (PLAYER_NAME != null) {
+      vm.put("currentUser", PLAYER_NAME);
+    }
 
     // render the View
     return templateEngine.render(new ModelAndView(vm , "home.ftl"));

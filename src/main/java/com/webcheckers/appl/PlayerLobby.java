@@ -28,8 +28,6 @@ public class PlayerLobby {
         }
         names.add(player);
 
-        System.out.println(player.getName());
-
         return true;
     }
 

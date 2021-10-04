@@ -71,8 +71,6 @@ public class PostSignInRoute implements Route {
 
         final String name = request.queryParams(USERNAME);
 
-        System.out.println(name);
-
         if (playerLobby.addPlayer(name)) {
             session.attribute(USERNAME, name);
             response.redirect(WebServer.HOME_URL);
@@ -80,16 +78,9 @@ public class PostSignInRoute implements Route {
             return null;
         }
         else {
-            //vm.put(ERROR_MESSAGE_USERNAME_IN_USE, new Error(ERROR_MESSAGE_USERNAME_IN_USE));
             vm.put("message", ERROR_MESSAGE_USERNAME_IN_USE);
             return templateEngine.render(new ModelAndView(vm, "login.ftl"));
         }
-    }
-
-    private ModelAndView error(final Map<String, Object> vm, final String message) {
-        vm.put(USERNAME, message);
-        vm.put("message.type", "error");
-        return new ModelAndView(vm, "login.ftl");
     }
 
 }
