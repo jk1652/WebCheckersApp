@@ -38,7 +38,7 @@ public class PostSignInRoute implements Route {
     static final String ERROR_MESSAGE_USERNAME_IN_USE = "Invalid Username: Username in use.";
     static final String USERNAME = "playerName";
 
-    //private final PlayerLobby playerLobby;
+    private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
     /**
@@ -48,7 +48,7 @@ public class PostSignInRoute implements Route {
      * @param templateEngine template engine to use for rendering HTML page
      * @throws NullPointerException when the {@code playerLobby} or {@code templateEngine} parameter is null
      */
-    PostSignInRoute(PLayerLobby playerLobby, TemplateEngine templateEngine) {
+    PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -70,8 +70,22 @@ public class PostSignInRoute implements Route {
 
         final String name = request.queryParams(USERNAME);
 
-
-
-        return "a";
+        if (playerLobby.addPlayer(name)) {
+            session.attribute(USERNAME, name);
+            response.redirect(WebServer.HOME_URL);
+            halt();
+            return null;
+        }
+        else {
+            vm.put(ERROR_MESSAGE_USERNAME_IN_USE, new Error(ERROR_MESSAGE_USERNAME_IN_USE));
+            return templateEngine.render(error(vm, ERROR_MESSAGE_USERNAME_IN_USE));
+        }
     }
+
+    private ModelAndView error(final Map<String, Object> vm, final String message) {
+        vm.put(USERNAME, message);
+        vm.put("messageType", "error");
+        return new ModelAndView(vm, "login.ftl");
+    }
+
 }
