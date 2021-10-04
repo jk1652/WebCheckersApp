@@ -82,9 +82,10 @@ public class WebServer {
    * @throws NullPointerException
    *    If any of the parameters are {@code null}.
    */
-  public WebServer(final TemplateEngine templateEngine, PlayerLobby playerLobby, final Gson gson) {
+  public WebServer(final TemplateEngine templateEngine, final PlayerLobby playerLobby, final Gson gson) {
     // validation
     Objects.requireNonNull(templateEngine, "templateEngine must not be null");
+    Objects.requireNonNull(playerLobby, "playerLobby must not be null");
     Objects.requireNonNull(gson, "gson must not be null");
     //
     this.templateEngine = templateEngine;
@@ -144,7 +145,7 @@ public class WebServer {
     //// code clean; using small classes.
 
     // Shows the Checkers game Home page.
-    get(HOME_URL, new GetHomeRoute(templateEngine));
+    get(HOME_URL, new GetHomeRoute(templateEngine, playerLobby));
 
     get(SIGNIN_URL, new GetSignInRoute(templateEngine));
 

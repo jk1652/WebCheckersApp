@@ -22,6 +22,10 @@ public class PlayerLobby {
      * true if player was added
      */
     public Boolean addPlayer(String name) {
+        if (name == null) {
+            return false;
+        }
+
         Player player = new Player(name);
         if(names.contains(player)) {
             return false;
@@ -29,6 +33,10 @@ public class PlayerLobby {
         names.add(player);
 
         return true;
+    }
+
+    public int Number_of_Players() {
+        return names.size();
     }
 
 

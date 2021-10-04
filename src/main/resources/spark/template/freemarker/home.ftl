@@ -16,6 +16,10 @@
 
   <div class="body">
 
+    <p>
+        ${welcome.text}
+    </p>
+
     <!-- Provide a message to the user, if supplied. -->
     <#include "message.ftl" />
 

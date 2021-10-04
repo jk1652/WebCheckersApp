@@ -49,7 +49,7 @@ public class PostSignInRoute implements Route {
      * @param templateEngine template engine to use for rendering HTML page
      * @throws NullPointerException when the {@code playerLobby} or {@code templateEngine} parameter is null
      */
-    PostSignInRoute(PlayerLobby playerLobby, TemplateEngine templateEngine) {
+    PostSignInRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
@@ -66,13 +66,12 @@ public class PostSignInRoute implements Route {
     @Override
     public String handle(Request request, Response response) {
         final Map<String, Object> vm = new HashMap<>();
-        final Session session = request.session();
-        session.attribute("signingIn");
+
 
         final String name = request.queryParams(USERNAME);
 
         if (playerLobby.addPlayer(name)) {
-            session.attribute(USERNAME, name);
+            request.session().attribute(USERNAME, name);
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;
