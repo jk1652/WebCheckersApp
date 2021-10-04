@@ -21,4 +21,13 @@ public class Player {
         return this.name;
     }
 
+    @Override
+    public boolean equals(Object obj){
+        if (!(obj instanceof Player)) {
+            return false;
+        }
+        Player objPlayer = (Player) obj;
+        return objPlayer.getName().equals(this.getName());
+    }
+
 }
