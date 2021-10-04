@@ -67,11 +67,6 @@ public class GetHomeRoute implements Route {
 
     String playerName = request.session().attribute(PostSignInRoute.USERNAME);
 
-    if (!playerLobby.addPlayer(playerName)) {
-      request.session().removeAttribute(PostSignInRoute.USERNAME);
-      //PLAYER_NAME = null;
-    }
-
     if (playerName != null) {
       ArrayList<Player> playerList = playerLobby.getPlayerList();
 
