@@ -21,6 +21,11 @@
     </p>
 
     <#if playerList??>
+    	<p>Enter opponent name:</p>
+    	<form action="./game" method="POST">
+            <input name="opponentName" />
+            <button type="submit">Ok</button>
+        </form>
         <p>
             ${playerListTitle}
             <ul>

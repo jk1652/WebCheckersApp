@@ -65,13 +65,14 @@ public class GetGameRoute implements Route {
     Game game = gameManager.findPlayerGame(playerName);
     Map<String, Object> vm = new HashMap<>();
     if (game != null) {
+        vm.put("title", "Checkers!");
         vm.put("currentUser", new Player(playerName));
         vm.put("viewMode", Game.View.PLAY);
         vm.put("redPlayer", game.getRedPlayer());
         vm.put("whitePlayer", game.getWhitePlayer());
         vm.put("activeColor", game.getActiveColor());
         vm.put("board", game.getBoardView());
-        return templateEngine.render(new ModelAndView(vm , "home.ftl"));
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     } else {
     	response.redirect(WebServer.HOME_URL);
     	return null;

@@ -29,4 +29,30 @@ public class GameManager {
 	public Game findPlayerGame(String playerName) {
 		return findPlayerGame(new Player(playerName));
 	}
+	
+	public Game createGame(Player redPlayer, Player whitePlayer) {
+		Game game = new Game(redPlayer, whitePlayer);
+		active.add(game);
+		return game;
+	}
+	
+	public Game createGame(String redPlayer, String whitePlayer) {
+		return createGame(new Player(redPlayer), new Player(whitePlayer));
+	}
+	
+	private Game getGame(int gameID, ArrayList<Game> collection) {
+		for (Game game : collection) {
+			if (game.getGameID() == gameID)
+				return game;
+		}
+		return null;
+	}
+	
+	public Game getActiveGame(int gameID) {
+		return getGame(gameID, active);
+	}
+	
+	public Game getInactiveGame(int gameID) {
+		return getGame(gameID, inactive);
+	}
 }
