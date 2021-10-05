@@ -12,30 +12,68 @@ import java.util.List;
 public class Board implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
 
+    /**
+     * Board constructer when called creates a new array of
+     * rows to be used, calles create even and create odd to make code
+     * more ledgable
+     */
     public Board(){
         Piece.Color color = Piece.Color.RED;
-        for(int row = 0; row < 8; row++){
-
-            if(row > 3){color = Piece.Color.WHITE;}
-
-            ArrayList<Space> tempSpaces = new ArrayList<>();
-            for(int space = 0; space < 8; space++){
-                if(row % 2 == 0 && row != 4){
-                    if(space % 2 == 0){
-                        tempSpaces.add(new Space(space,false,null));
-                    } else {
-                        tempSpaces.add(new Space(space,true, new Piece(Piece.Type.SINGLE, color)));
-                    }
-                } else if(row != 3) {
-                    if (space % 2 == 0) {
-                        tempSpaces.add(new Space(space, true, new Piece(Piece.Type.SINGLE, color)));
-                    } else {
-                        tempSpaces.add(new Space(space,false,null));
-                    }
-                }
+        for(int row = 0; row < 8; row++) {
+            boolean place = true;
+            if( row == 3 || row == 4){place = false;}
+            if(row > 4){ color = Piece.Color.WHITE;}
+            if(row % 2 == 0){
+                rows.add(new Row(row,CreateEven(color,place)));
+            } else {
+                rows.add(new Row(row,CreateOdd(color,place)));
             }
-            rows.add(new Row(row,tempSpaces));
         }
+    }
+
+    /**
+     *
+     * @param color color of peices to be placed
+     * @param starter should there be peices in this row
+     * @return a array list of squares that can be imidetly put into a row instance
+     */
+    private ArrayList<Space> CreateEven(Piece.Color color, Boolean starter){
+        ArrayList<Space> tempSpaces = new ArrayList<>();
+        Piece piece = null;
+        if (starter){
+            piece = new Piece(Piece.Type.SINGLE, color);
+        }
+
+
+        for(int space = 0; space < 8; space++) {
+            if(space % 2 == 0){
+                tempSpaces.add(new Space(space,false,null));
+            } else {
+                tempSpaces.add(new Space(space,true, piece));
+            }
+        }
+        return tempSpaces;
+    }
+    /**
+     *
+     * @param color color of peices to be placed
+     * @param starter should there be peices in this row
+     * @return a array list of squares that can be imidetly put into a row instance
+     */
+    private ArrayList<Space> CreateOdd(Piece.Color color, Boolean starter){
+        Piece piece = null;
+        if (starter){
+            piece = new Piece(Piece.Type.SINGLE, color);
+        }
+        ArrayList<Space> tempSpaces = new ArrayList<>();
+        for(int space = 0; space < 8; space++) {
+            if(space % 2 != 0){
+                tempSpaces.add(new Space(space,false,null));
+            } else {
+                tempSpaces.add(new Space(space,true, piece));
+            }
+        }
+        return tempSpaces;
     }
 
     @Override
