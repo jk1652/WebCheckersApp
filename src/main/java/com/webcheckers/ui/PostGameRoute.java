@@ -6,6 +6,8 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
+import com.webcheckers.util.Message;
+
 import spark.*;
 
 import java.util.HashMap;
@@ -39,24 +41,30 @@ public class PostGameRoute implements Route {
         String opponentName = request.queryParams(OPPONENT_NAME);
         Integer gameID = request.session().attribute(GAME_ID_ATTRIBUTE);
         Game game;
-        if (gameID == null) { // create a game
-            game = gameManager.createGame(playerName, opponentName);
-            request.attribute(GAME_ID_ATTRIBUTE, game.getGameID());
+        if (gameManager.findPlayerGame(opponentName) == null) {
+		if (gameID == null) { // create a game
+		    game = gameManager.createGame(playerName, opponentName);
+		    request.attribute(GAME_ID_ATTRIBUTE, game.getGameID());
+		} else {
+		    game = gameManager.getActiveGame(gameID);
+		    if (game == null) { // There is no active game for this ID
+		        response.redirect(WebServer.HOME_URL);
+		        return null;
+		    }
+		}
+		Map<String, Object> vm = new HashMap<>();
+		vm.put("title", "Checkers!");
+		vm.put("currentUser", new Player(playerName));
+		vm.put("viewMode", Game.View.PLAY);
+		vm.put("redPlayer", game.getRedPlayer());
+		vm.put("whitePlayer", game.getWhitePlayer());
+		vm.put("activeColor", game.getActiveColor());
+		vm.put("board", game.getBoardView());
+		return templateEngine.render(new ModelAndView(vm , "game.ftl"));
         } else {
-            game = gameManager.getActiveGame(gameID);
-            if (game == null) { // There is no active game for this ID
-                response.redirect(WebServer.HOME_URL);
-                return null;
-            }
+        	request.session().attribute("message", Message.error("That player is already in a game!"));
+        	response.redirect(WebServer.HOME_URL);
+        	return null;
         }
-        Map<String, Object> vm = new HashMap<>();
-        vm.put("title", "Checkers!");
-        vm.put("currentUser", new Player(playerName));
-        vm.put("viewMode", Game.View.PLAY);
-        vm.put("redPlayer", game.getRedPlayer());
-        vm.put("whitePlayer", game.getWhitePlayer());
-        vm.put("activeColor", game.getActiveColor());
-        vm.put("board", game.getBoardView());
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
 }

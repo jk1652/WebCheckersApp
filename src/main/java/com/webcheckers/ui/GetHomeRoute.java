@@ -8,7 +8,9 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Game;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -27,21 +29,23 @@ public class GetHomeRoute implements Route {
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
 
+  
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
-
+  private final GameManager gameManager;
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
    *
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+  public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
+          final GameManager gameManager) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
     LOG.config("GetHomeRoute is initialized.");
     this.playerLobby = playerLobby;
-
+    this.gameManager = gameManager;
   }
 
   /**
@@ -70,7 +74,12 @@ public class GetHomeRoute implements Route {
     if (playerName != null) {
       ArrayList<Player> playerList = playerLobby.getPlayerList();
 
-
+      Game playerGame = gameManager.findPlayerGame(playerName);
+      if (playerGame != null) { // Player is on the wrong page.
+        request.attribute(PostGameRoute.GAME_ID_ATTRIBUTE, playerGame.getGameID());
+        response.redirect(WebServer.GAME_URL);
+        return null;
+      }
       String players = new String();
       // creates players full of player names
       for (Player x : playerList) {
@@ -83,6 +92,12 @@ public class GetHomeRoute implements Route {
       vm.put("currentUser", playerName);
       vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
       vm.put("playerList", players);
+      
+      Message message = request.session().attribute("message");
+      if (message != null) {
+      	vm.put("message", message);
+      	request.session().attribute("message", null); // reset the attribute
+      }
     }
     else {
       vm.put("message", Message.info("Current Number of Players: " +
