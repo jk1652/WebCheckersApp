@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Player;
 import spark.ModelAndView;
 import spark.Request;
@@ -16,31 +17,33 @@ import spark.Route;
 import spark.TemplateEngine;
 
 import com.webcheckers.util.Message;
+import com.webcheckers.model.Game;
 
 /**
- * The UI Controller to GET the Home page.
+ * The UI Controller to GET the Game page.
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-public class GetHomeRoute implements Route {
-  private static final Logger LOG = Logger.getLogger(GetHomeRoute.class.getName());
+public class GetGameRoute implements Route {
+  private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
 
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
-
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
-
+  private final GameManager gameManager;
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
    *
    * @param templateEngine
    *   the HTML template rendering engine
    */
-  public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby) {
+  public GetGameRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
+   final GameManager gameManager) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
     //
-    LOG.config("GetHomeRoute is initialized.");
+    LOG.config("GetGameRoute is initialized.");
     this.playerLobby = playerLobby;
+    this.gameManager = gameManager;
 
   }
 
@@ -57,40 +60,22 @@ public class GetHomeRoute implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    LOG.finer("GetHomeRoute is invoked.");
-    //
-    Map<String, Object> vm = new HashMap<>();
-    vm.put("title", "Welcome!");
-
-    // display a user message in the Home page
-    vm.put("welcome", WELCOME_MSG);
-
+    LOG.finer("GetGameRoute is invoked.");
     String playerName = request.session().attribute(PostSignInRoute.USERNAME);
-
-    if (playerName != null) {
-      ArrayList<Player> playerList = playerLobby.getPlayerList();
-
-
-      String players = new String();
-      // creates players full of player names
-      for (Player x : playerList) {
-        if (x.equals(new Player(playerName))) {
-          continue;
-        }
-        players = players + ("<li>" + x.getName() + "</li><br>");
-      }
-
-      vm.put("currentUser", playerName);
-      vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
-      vm.put("playerList", players);
+    Game game = gameManager.findPlayerGame(playerName);
+    Map<String, Object> vm = new HashMap<>();
+    if (game != null) {
+        vm.put("title", "Checkers!");
+        vm.put("currentUser", new Player(playerName));
+        vm.put("viewMode", Game.View.PLAY);
+        vm.put("redPlayer", game.getRedPlayer());
+        vm.put("whitePlayer", game.getWhitePlayer());
+        vm.put("activeColor", game.getActiveColor());
+        vm.put("board", game.getBoardView());
+        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+    } else {
+    	response.redirect(WebServer.HOME_URL);
+    	return null;
     }
-    else {
-      vm.put("message", Message.info("Current Number of Players: " +
-              String.valueOf(playerLobby.numberofPlayers())));
-    }
-
-
-    // render the View
-    return templateEngine.render(new ModelAndView(vm , "home.ftl"));
   }
 }

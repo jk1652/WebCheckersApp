@@ -14,11 +14,21 @@ public class Player {
     private String name;
 
     public Player(String name) {
-        LOG.fine("user created " + name);
+        //LOG.fine("user created " + name);
         this.name = name;
     }
     public String getName() {
         return this.name;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        if (!(obj instanceof Player)) {
+            return false;
+        }
+        Player objPlayer = (Player) obj;
+        return objPlayer.getName().equals(this.getName());
+    }
+
 
 }
