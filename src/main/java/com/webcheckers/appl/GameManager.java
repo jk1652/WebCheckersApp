@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 /**
+ * Holds the game states running on the web server.
  * @author David Pritchard
  */
 public class GameManager {
 	private ArrayList<Game> active, inactive;
+	private final Object lock = new Object();
 
 	public GameManager() {
 		active = new ArrayList<>();
@@ -19,11 +21,16 @@ public class GameManager {
 	 * @return the Game object the player is a participant in and null if the player is not a participant.
 	 */
 	public Game findPlayerGame(Player player) {
-		for (Game game : active) {
-			if (game.isParticipant(player))
-				return game; // Player is in this game.
+		Game result = null;
+		synchronized(lock) { // Make sure it isn't modified while searching.
+			for (Game game : active) {
+				if (game.isParticipant(player)) {
+					result = game; // Player is in this game.
+					break;
+				}
+			}
 		}
-		return null; //Not in any game.
+		return result;
 	}
 
 	public Game findPlayerGame(String playerName) {
@@ -32,7 +39,9 @@ public class GameManager {
 	
 	public Game createGame(Player redPlayer, Player whitePlayer) {
 		Game game = new Game(redPlayer, whitePlayer);
-		active.add(game);
+		synchronized(lock) { // Protect resource
+			active.add(game);
+		}
 		return game;
 	}
 	
@@ -41,17 +50,30 @@ public class GameManager {
 	}
 	
 	private Game getGame(int gameID, ArrayList<Game> collection) {
-		for (Game game : collection) {
-			if (game.getGameID() == gameID)
-				return game;
+		Game result = null;
+		synchronized(lock) { // Don't let the resource get modified yet.
+			for (Game game : collection) {
+				if (game.getGameID() == gameID) {
+					result = game;
+					break;
+				}
+			}
 		}
-		return null;
+		return result;
 	}
 	
+	/**
+	 * @param gameID the ID of the game to return
+	 * @return the Game object with that ID in the active games or null if no such game exists.
+	 */
 	public Game getActiveGame(int gameID) {
 		return getGame(gameID, active);
 	}
 	
+	/**
+	 * @param gameID the ID of the game to return
+	 * @return the Game object with that ID in the inactive games or null if no such game exists.
+	 */
 	public Game getInactiveGame(int gameID) {
 		return getGame(gameID, inactive);
 	}
