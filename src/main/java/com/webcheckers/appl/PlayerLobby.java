@@ -9,10 +9,10 @@ import java.util.logging.Logger;
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
-    private ArrayList<Player> names;
+    private ArrayList<Player> players;
 
     public PlayerLobby() {
-        names = new ArrayList<>();
+        players = new ArrayList<>();
     }
 
     /**
@@ -27,21 +27,21 @@ public class PlayerLobby {
         }
 
         Player player = new Player(name);
-        if(names.contains(player)) {
+        if(players.contains(player)) {
             return false;
         }
         LOG.fine("user added " + name);
-        names.add(player);
+        players.add(player);
         return true;
     }
 
     public int numberofPlayers() {
-        return names.size();
+        return players.size();
     }
 
 
     public ArrayList<Player> getPlayerList() {
-        return names;
+        return players;
     }
 
     public Boolean isValidName(String name){
@@ -51,6 +51,12 @@ public class PlayerLobby {
         else {
             return false;
         }
+    }
+
+    public void removePlayer(String name) {
+        Player player = new Player(name);
+
+        players.remove(name);
     }
 
 
