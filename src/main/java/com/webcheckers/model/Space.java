@@ -15,7 +15,7 @@ public class Space {
         this.piece = piece;
     }
 
-    public int getCellIndx(){
+    public int getCellIdx(){
         return cellIdx;
     }
 
