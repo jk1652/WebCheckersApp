@@ -80,7 +80,6 @@ public class PostSignInRoute implements Route {
         }
 
         if (playerLobby.addPlayer(name)) {
-            playerLobby.removePlayer(name);
             request.session().attribute(USERNAME, name);
             response.redirect(WebServer.HOME_URL);
             halt();

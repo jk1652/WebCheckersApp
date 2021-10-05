@@ -25,7 +25,9 @@ public class PostSignOutRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        Map<String, Object> vm = new HashMap<>();
+
+        String playerName = request.session().attribute(PostSignInRoute.USERNAME);
+        playerLobby.removePlayer(playerName);
         request.session().removeAttribute(PostSignInRoute.USERNAME);
         response.redirect(WebServer.HOME_URL);
         halt();

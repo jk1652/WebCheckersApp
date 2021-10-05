@@ -56,7 +56,13 @@ public class PlayerLobby {
     public void removePlayer(String name) {
         Player player = new Player(name);
 
-        players.remove(name);
+        players.remove(player);
+
+        //for (Player x : players) {
+        //    if (x.equals(new Player(name))) {
+        //        players.remove(x);
+         //   }
+       // }
     }
 
 
