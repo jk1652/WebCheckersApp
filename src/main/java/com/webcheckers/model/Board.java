@@ -76,6 +76,20 @@ public class Board implements Iterable<Row> {
         return tempSpaces;
     }
 
+    /**
+     * Returns the iterator ordered to display correctly for the player's viewpoints.
+     * @param color should the board be flipped.
+     */
+    public Iterator<Row> iterator(boolean flip) {
+    	if (flip) {
+    		ArrayList<Row> flipped = new ArrayList<>();
+    		for (int i = 0; i < 8; i++)
+    			flipped.add(rows.get(7 - i));
+    		return flipped.iterator();
+    	} else
+    		return iterator();
+    }
+    
     @Override
     public Iterator<Row> iterator() {
         return rows.iterator();

@@ -60,6 +60,7 @@ public class PostGameRoute implements Route {
 		vm.put("whitePlayer", game.getWhitePlayer());
 		vm.put("activeColor", game.getActiveColor());
 		vm.put("board", game.getBoardView());
+		vm.put("flip", game.getRedPlayer().getName().equals(playerName));
 		return templateEngine.render(new ModelAndView(vm , "game.ftl"));
         } else {
         	request.session().attribute("message", Message.error("That player is already in a game!"));
