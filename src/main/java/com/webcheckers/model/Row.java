@@ -16,15 +16,15 @@ public class Row implements Iterable<Space>{
     //
 
     private final int index;
-    private final ArrayList<Space> Spaces;
+    private final ArrayList<Space> spaces;
 
     //
     // Constructor
     //
 
-    public Row(int index, ArrayList<Space> Spaces){
+    public Row(int index, ArrayList<Space> spaces){
         this.index = index;
-        this.Spaces= Spaces;
+        this.spaces = spaces;
     }
 
     //
@@ -37,6 +37,16 @@ public class Row implements Iterable<Space>{
 
     @Override
     public Iterator<Space> iterator() {
-        return Spaces.iterator();
+        return spaces.iterator();
+    }
+   
+    public Iterator<Space> iterator(boolean flip) {
+    	if (flip) {
+    		ArrayList<Space> flipped = new ArrayList<>();
+    		for (int i = 0; i < 8; i++)
+    			flipped.add(spaces.get(7 - i));
+    		return flipped.iterator();
+    	} else
+    		return iterator();
     }
 }
