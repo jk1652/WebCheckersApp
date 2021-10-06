@@ -66,7 +66,7 @@ public class GetGameRoute implements Route {
     Map<String, Object> vm = new HashMap<>();
     if (game != null) {
         vm.put("title", "Checkers!");
-        vm.put("currentUser", new Player(playerName));
+        vm.put("currentUser", playerName);
         vm.put("viewMode", Game.View.PLAY);
         vm.put("redPlayer", game.getRedPlayer());
         vm.put("whitePlayer", game.getWhitePlayer());
