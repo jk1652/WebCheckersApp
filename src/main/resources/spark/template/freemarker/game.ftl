@@ -63,7 +63,7 @@
             <tbody>
             <#list board.iterator(flip) as row>
               <tr data-row="${row.index}">
-              <#list row.iterator() as space>
+              <#list row.iterator(flip) as space>
                 <td data-cell="${space.cellIdx}"
                     <#if space.isValid() >
                     class="Space"
