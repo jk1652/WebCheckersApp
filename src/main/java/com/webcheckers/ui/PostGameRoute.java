@@ -41,6 +41,21 @@ public class PostGameRoute implements Route {
         String opponentName = request.queryParams(OPPONENT_NAME);
         Integer gameID = request.session().attribute(GAME_ID_ATTRIBUTE);
         Game game;
+
+        Map<String, Object> vm = new HashMap<>();
+
+        if (playerLobby.addPlayer(opponentName)) {
+            request.session().attribute("message", Message.error("Selected Player is not in Lobby"));
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
+        if (playerName.equals(opponentName)) {
+            request.session().attribute("message", Message.error("Selected Player is Current User"));
+            response.redirect(WebServer.HOME_URL);
+            return null;
+        }
+
         if (gameManager.findPlayerGame(opponentName) == null) {
 		if (gameID == null) { // create a game
 		    game = gameManager.createGame(playerName, opponentName);
@@ -52,7 +67,7 @@ public class PostGameRoute implements Route {
 		        return null;
 		    }
 		}
-		Map<String, Object> vm = new HashMap<>();
+
 		vm.put("title", "Checkers!");
 		vm.put("currentUser", playerName);
 		vm.put("viewMode", Game.View.PLAY);
