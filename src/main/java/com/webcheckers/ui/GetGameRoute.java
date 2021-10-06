@@ -72,6 +72,7 @@ public class GetGameRoute implements Route {
         vm.put("whitePlayer", game.getWhitePlayer());
         vm.put("activeColor", game.getActiveColor());
         vm.put("board", game.getBoardView());
+        vm.put("flip", game.getRedPlayer().getName().equals(playerName));
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     } else {
     	response.redirect(WebServer.HOME_URL);
