@@ -8,7 +8,7 @@
   <script>
   window.gameData = {
     "gameID" : ${gameID!'null'},
-    "currentUser" : "${currentUser.name}",
+    "currentUser" : "${currentUser}",
     "viewMode" : "${viewMode}",
     "modeOptions" : ${modeOptionsAsJSON!'{}'},
     "redPlayer" : "${redPlayer.name}",

@@ -54,7 +54,7 @@ public class PostGameRoute implements Route {
 		}
 		Map<String, Object> vm = new HashMap<>();
 		vm.put("title", "Checkers!");
-		vm.put("currentUser", new Player(playerName));
+		vm.put("currentUser", playerName);
 		vm.put("viewMode", Game.View.PLAY);
 		vm.put("redPlayer", game.getRedPlayer());
 		vm.put("whitePlayer", game.getWhitePlayer());
