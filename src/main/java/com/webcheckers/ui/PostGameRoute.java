@@ -44,7 +44,7 @@ public class PostGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
-        if (playerLobby.addPlayer(opponentName)) {
+        if (!playerLobby.checkPlayerExist(opponentName)) {
             request.session().attribute("message", Message.error("Selected Player is not in Lobby"));
             response.redirect(WebServer.HOME_URL);
             return null;

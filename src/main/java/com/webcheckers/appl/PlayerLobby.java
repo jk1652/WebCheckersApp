@@ -35,6 +35,14 @@ public class PlayerLobby {
         return true;
     }
 
+    public Boolean checkPlayerExist(String name) {
+        Player player = new Player(name);
+        if(players.contains(player)) {
+            return true;
+        }
+        return false;
+    }
+
     public int numberofPlayers() {
         return players.size();
     }
