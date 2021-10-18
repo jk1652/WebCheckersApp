@@ -66,11 +66,6 @@ public class PlayerLobby {
 
         players.remove(player);
 
-        //for (Player x : players) {
-        //    if (x.equals(new Player(name))) {
-        //        players.remove(x);
-         //   }
-       // }
     }
 
 
