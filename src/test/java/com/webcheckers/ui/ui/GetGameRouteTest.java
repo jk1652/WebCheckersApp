@@ -1,4 +1,4 @@
-package com.webcheckers.ui.appl;
+package com.webcheckers.ui.ui;
 
 public class GetGameRouteTest {
 }
