@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import java.util.Map;
 
 @Tag("Model-tier")
 public class PlayerTest {
@@ -31,7 +30,7 @@ public class PlayerTest {
         // test if objects are not equal
         assertNotEquals(tester, badobject);
 
-        // equals checks for the name of player to be the same as it is unique
+        // equals checks only for the name of player to be the same as it has to be unique
         assertEquals(tester, new Player("test"));
 
         // bad match
