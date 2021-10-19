@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import java.security.PrivateKey;
-
 @Tag("Model-tier")
 public class SpaceTest {
     private Space CuT;
