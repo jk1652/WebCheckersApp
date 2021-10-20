@@ -4,7 +4,9 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.util.Message;
 import freemarker.template.Template;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -34,8 +36,9 @@ public class GetHomeRouteTest {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
-        playerLobby = mock(PlayerLobby.class);
-        gameManager = mock(GameManager.class);
+        playerLobby = new PlayerLobby();
+        gameManager = new GameManager();
+
 
         // create a unique CuT for each test
 
@@ -43,12 +46,7 @@ public class GetHomeRouteTest {
     }
 
     @Test
-    public void Homepage() {
-        // Arrange the test scenario: The user's guess is a valid number but is incorrect.
-        //when(request.queryParams(eq(PostSignInRoute.USERNAME))).thenReturn("playerName");
-        //when(playerLobby.addPlayer("name")).thenReturn(true);
-
-
+    public void NewPage() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
 
@@ -61,10 +59,55 @@ public class GetHomeRouteTest {
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
 
-        testHelper.assertViewModelAttribute(GetHomeRoute., );
+    }
 
-        Game playerGame = new Game(new Player("red"), new Player("white"));
-        assertNotNull(playerGame);
+    @Test
+    public void GameExists() {
+        when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
+
+        gameManager.createGame("test", "test2");
+
+
+        try {
+            CuT.handle(request, response);
+
+        } catch (HaltException e) {
+            // expected
+        }
+    }
+
+    @Test
+    public void AddPlayer() {
+        when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
+
+        playerLobby.addPlayer("test");
+
+        playerLobby.addPlayer("test2");
+
+
+        try {
+            CuT.handle(request, response);
+
+        } catch (HaltException e) {
+            // expected
+        }
+
+
+    }
+
+    @Test
+    public void messageExists() {
+        when(session.attribute("message")).thenReturn("test");
+
+
+        assertNotNull(session.attribute("message"));
+
+
+        try {
+            CuT.handle(request, response);
+        } catch (HaltException e) {
+            // expected
+        }
 
 
 
