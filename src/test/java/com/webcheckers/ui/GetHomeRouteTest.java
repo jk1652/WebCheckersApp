@@ -2,14 +2,17 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Player;
+import freemarker.template.Template;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
 public class GetHomeRouteTest {
@@ -31,8 +34,8 @@ public class GetHomeRouteTest {
         when(request.session()).thenReturn(session);
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
-        playerLobby = new PlayerLobby();
-        gameManager = new GameManager();
+        playerLobby = mock(PlayerLobby.class);
+        gameManager = mock(GameManager.class);
 
         // create a unique CuT for each test
 
@@ -41,9 +44,14 @@ public class GetHomeRouteTest {
 
     @Test
     public void Homepage() {
+        // Arrange the test scenario: The user's guess is a valid number but is incorrect.
+        //when(request.queryParams(eq(PostSignInRoute.USERNAME))).thenReturn("playerName");
+        //when(playerLobby.addPlayer("name")).thenReturn(true);
+
 
         final TemplateEngineTester testHelper = new TemplateEngineTester();
         when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+
 
         // Invoke the test
         CuT.handle(request, response);
@@ -52,6 +60,12 @@ public class GetHomeRouteTest {
         //   * model is a non-null Map
         testHelper.assertViewModelExists();
         testHelper.assertViewModelIsaMap();
+
+        testHelper.assertViewModelAttribute(GetHomeRoute., );
+
+        Game playerGame = new Game(new Player("red"), new Player("white"));
+        assertNotNull(playerGame);
+
 
 
     }
