@@ -2,18 +2,13 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
-import freemarker.template.Template;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import spark.*;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @Tag("UI-tier")
@@ -26,6 +21,7 @@ public class GetHomeRouteTest {
     private Session session;
     private TemplateEngine engine;
     private Response response;
+
     private PlayerLobby playerLobby;
     private GameManager gameManager;
 
@@ -45,6 +41,9 @@ public class GetHomeRouteTest {
         CuT = new GetHomeRoute(engine, playerLobby, gameManager);
     }
 
+    /**
+    * When logged out here is a fresh homepage to test
+    */
     @Test
     public void NewPage() {
         final TemplateEngineTester testHelper = new TemplateEngineTester();
@@ -61,6 +60,9 @@ public class GetHomeRouteTest {
 
     }
 
+    /**
+     * When logged in and a existing game is in view
+     */
     @Test
     public void GameExists() {
         when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
@@ -76,6 +78,9 @@ public class GetHomeRouteTest {
         }
     }
 
+    /**
+     * adding a player, altering view to reflect that
+     */
     @Test
     public void AddPlayer() {
         when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
@@ -84,33 +89,28 @@ public class GetHomeRouteTest {
 
         playerLobby.addPlayer("test2");
 
-
         try {
             CuT.handle(request, response);
 
         } catch (HaltException e) {
             // expected
         }
-
 
     }
 
+    /**
+     * logged in and message exists
+     */
     @Test
     public void messageExists() {
-        when(session.attribute("message")).thenReturn("test");
-
-
-        assertNotNull(session.attribute("message"));
-
+        when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
+        when(session.attribute("message")).thenReturn(Message.info("yo"));
 
         try {
             CuT.handle(request, response);
         } catch (HaltException e) {
             // expected
         }
-
-
-
     }
 
 }

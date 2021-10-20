@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 @Tag("Model-tier")
 public class PlayerTest {
 
+    /**
+     * Test if the player name works
+     */
     @Test
     public void test_PlayerName() {
         final Player tester = new Player("test");
@@ -21,6 +24,9 @@ public class PlayerTest {
 
     }
 
+    /**
+     * to check if the equals function works to compare Players
+     */
     @Test
     public void test_NameEquals() {
         final Player tester = new Player("test");
