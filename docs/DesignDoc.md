@@ -9,16 +9,17 @@ geometry: margin=1in
 > and appear in the generated PDF in italics._
 
 ## Team Information
-* Team name: TEAMNAME
+* Team name: Team 8
 * Team members
-  * MEMBER1
-  * MEMBER2
-  * MEMBER3
-  * MEMBER4
+  * Quentin Ramos
+  * Zane Kitchen Lipski
+  * Jaden Kitchen Lipski
+  * Spencer Creveling
+  * David Pritchard
 
 ## Executive Summary
 
-This is a summary of the project.
+The WebCheckers is a web based application that allows players to log in and play checkers against other players.
 
 ### Purpose
 > _Provide a very brief statement about the project and the most
