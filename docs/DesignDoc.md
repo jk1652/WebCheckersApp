@@ -89,8 +89,13 @@ with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
 
-> _Provide a summary of the application's user interface.  Describe, from
-> the user's perspective, the flow of the pages in the web application._
+From the perspective of a user, the user first logs in with a valid
+alphanumeric username. Upon logging in, the user views a list of players they
+are able to challenge, and can challenge one at a time. After challenging a
+listed player, the player is then directed to a game page and the player that
+controls the red pieces moves first and the players then take turns moving. A
+game can be finished when all of a player’s pieces are gone or a player
+resigns.
 
 
 ### UI Tier
