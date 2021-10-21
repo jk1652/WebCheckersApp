@@ -56,9 +56,12 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain-model-placeholder.png)
 
-> _Provide a high-level overview of the domain for this application. You
-> can discuss the more important domain entities and their relationship
-> to each other._
+> Player is one of our most important entities.
+> The player represents a user interacting with our application.
+> The player can either join a tourney, choose play against an AI player they can win/lose/retire a game view a board, control pieces
+> Another important entity is the game, which represents a checkers game.
+> A game contains a board made of squares with pieces on the board.
+> The pieces have certain movement rules.
 
 
 ## Architecture and Design
