@@ -4,7 +4,7 @@ package com.webcheckers.model;
  * @author: Quentin Ramos II
  */
 
-public class Piece {
+public abstract class Piece {
 
     //
     // Attributes
@@ -37,4 +37,7 @@ public class Piece {
         return color;
     }
 
+    public abstract boolean isValidMove(Move move);
+
+    public abstract boolean isValidJump(Move move);
 }
