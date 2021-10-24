@@ -75,10 +75,8 @@ public class Board implements Iterable<Row> {
         }
         return tempSpaces;
     }
-
     /**
      * Returns the iterator ordered to display correctly for the player's viewpoints.
-     * @param color should the board be flipped.
      */
     public Iterator<Row> iterator(boolean flip) {
     	if (flip) {

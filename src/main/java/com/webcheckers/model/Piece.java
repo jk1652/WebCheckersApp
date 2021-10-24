@@ -11,10 +11,11 @@ public class Piece {
     //
 
     public enum Type {SINGLE, KING}
-    private final Type type;
+    private Type type;
 
     public enum Color {RED, WHITE}
     private final Color color;
+
     //
     // Constructor
     //
