@@ -4,9 +4,13 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
-import spark.Request;
-import spark.Response;
-import spark.Route;
+import spark.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
+
+import static spark.Spark.halt;
 
 /**
  * Author: Zane Kitchen Lipski
@@ -14,10 +18,13 @@ import spark.Route;
  */
 
 public class PostValidateMove implements Route {
+    private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
 
-    private GameManager gameManager;
+    private final GameManager gameManager;
+    private final TemplateEngine templateEngine;
 
-    public PostValidateMove(GameManager gameManger) {
+    public PostValidateMove(final TemplateEngine templateEngine, final GameManager gameManager) {
+        this.templateEngine = templateEngine;
         this.gameManager = gameManager;
     }
 
@@ -25,13 +32,13 @@ public class PostValidateMove implements Route {
     public Object handle(Request request, Response response) throws Exception {
 
 
-        String name = request.queryParams(PostSignInRoute.USERNAME); //get player's name
+        String name = request.session().attribute(PostSignInRoute.USERNAME); //get player's name
+        LOG.config("player makes move: " + name);
         Game game = gameManager.findPlayerGame(name);
         if (game.getActiveColor() == Piece.Color.RED) { //checks who's turn it is
 
         }
 
-
-        return null;
+        return true;
     }
 }
