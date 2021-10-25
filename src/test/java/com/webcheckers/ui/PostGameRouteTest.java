@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PostGameRouteTest {
+class FPostGameRouteTest {
 	private Request request;
 	private Session session;
 	private Response response;

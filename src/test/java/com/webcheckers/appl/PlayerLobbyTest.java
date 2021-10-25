@@ -24,6 +24,8 @@ public class PlayerLobbyTest {
         // cannot add player that already exsists
         assertEquals(false, CuT.addPlayer("test"));
 
+        assertFalse(CuT.addPlayer(null));
+
     }
 
     @Test
