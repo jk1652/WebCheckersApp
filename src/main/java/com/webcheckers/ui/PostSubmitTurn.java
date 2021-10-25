@@ -13,16 +13,16 @@ import static spark.Spark.halt;
 
 public class PostSubmitTurn implements Route {
 
-    private final GameManager gameManager;
     private final TemplateEngine templateEngine;
+    private final GameManager gameManager;
 
-    PostSubmitTurn(final GameManager gameManager, final TemplateEngine templateEngine) {
+    PostSubmitTurn(final TemplateEngine templateEngine, final GameManager gameManager) {
         // validation
         Objects.requireNonNull(gameManager, "game must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
-        this.gameManager = gameManager;
         this.templateEngine = templateEngine;
+        this.gameManager = gameManager;
     }
 
     @Override
