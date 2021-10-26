@@ -90,20 +90,37 @@ public class Game {
 	}
 
 	public Boolean undoMove(){
-		return true;
+		if(validatedMoves.size() != 0){
+			board = validatedMoves.remove(validatedMoves.size() - 1);
+			return true;
+		}
+		return false;
 	}
 
 	public void submitMove(){
+		validatedMoves = new ArrayList<Board>();
+		if(activeColor == Piece.Color.RED){
+			activeColor = Piece.Color.WHITE;
+		} else {
+			activeColor = Piece.Color.RED;
+		}
 	}
 
 	public int getMoveSize(){
-		return 0;
+		return validatedMoves.size();
 	}
 
 	private void makeMove(Move move){
 		validatedMoves.add(board);
 		Board copyBoard = new Board(board);
-		
+			Piece temp = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).getPiece();
+			copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).setPiece(null);
+			copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).setPiece(temp);
+		if(move.isJump()){
+			copyBoard.getRow((move.getStart().getRow() + move.getEnd().getRow()) / 2).getSpace((move.getStart().getCol() + move.getEnd().getCol() / 2)).setPiece(null);
+		}
+
+		board = copyBoard;
 	}
 	
 	/**
