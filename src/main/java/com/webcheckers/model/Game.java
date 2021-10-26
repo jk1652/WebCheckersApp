@@ -43,7 +43,7 @@ public class Game {
 			return viewMode.equals(View.SPECTATOR);
 	}
 
-	public boolean validateMove(){
+	public boolean validateMove(Move move){
 		return true;
 	}
 
