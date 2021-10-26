@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+
 /**
  * @author David Pritchard
  */
@@ -10,6 +12,7 @@ public class Game {
 	private Piece.Color activeColor;
 	private Board board;
 	private int gameID;
+	private ArrayList<Board>  validatedMoves = new ArrayList<>();
 
 	
 	/**
@@ -91,13 +94,17 @@ public class Game {
 	}
 
 	public void submitMove(){
-
 	}
 
 	public int getMoveSize(){
 		return 0;
 	}
 
+	private void makeMove(Move move){
+		validatedMoves.add(board);
+		Board copyBoard = new Board(board);
+		
+	}
 	
 	/**
 	 * Check if a player is a participant in this game.

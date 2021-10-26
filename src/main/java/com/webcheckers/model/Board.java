@@ -29,6 +29,13 @@ public class Board implements Iterable<Row> {
         }
     }
 
+    public Board (Board board){
+        for(int x = 0; x < 8; x++){
+            rows.add(new Row(board.iterator().next()));
+        }
+    }
+
+
     /**
      *
      * @param color color of pieces to be placed

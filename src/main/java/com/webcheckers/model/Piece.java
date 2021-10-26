@@ -25,6 +25,12 @@ public class Piece {
         this.color = color;
     }
 
+    public Piece(Piece piece){
+        this.type = piece.getType();
+        this.color = piece.getColor();
+    }
+
+
     //
     // Public Methods
     //

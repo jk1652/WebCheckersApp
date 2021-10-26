@@ -15,6 +15,12 @@ public class Space {
         this.piece = piece;
     }
 
+    public Space(Space space){
+        this.cellIdx = space.cellIdx;
+        this.isValid = isValid();
+        this.piece = new Piece(space.piece);
+    }
+
     public int getCellIdx(){
         return cellIdx;
     }

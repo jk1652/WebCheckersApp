@@ -16,7 +16,7 @@ public class Row implements Iterable<Space>{
     //
 
     private final int index;
-    private final ArrayList<Space> spaces;
+    private ArrayList<Space> spaces = new ArrayList<>();
 
     //
     // Constructor
@@ -25,6 +25,13 @@ public class Row implements Iterable<Space>{
     public Row(int index, ArrayList<Space> spaces){
         this.index = index;
         this.spaces = spaces;
+    }
+
+    public Row(Row row){
+        this.index = row.index;
+        for(int x = 0; x < 8; x++){
+            spaces.add(row.iterator().next());
+        }
     }
 
     //
