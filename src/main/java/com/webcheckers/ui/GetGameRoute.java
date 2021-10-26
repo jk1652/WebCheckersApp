@@ -18,7 +18,7 @@ import spark.TemplateEngine;
 
 import com.webcheckers.util.Message;
 import com.webcheckers.model.Game;
-
+import com.webcheckers.model.Piece;
 /**
  * The UI Controller to GET the Game page.
  *
@@ -68,7 +68,7 @@ public class GetGameRoute implements Route {
         // Check if someone won.
         Piece.Color winner = game.getWinner(); 
         if (winner != null) {
-          Piece.Color userColor = game.getUserColor(playerName));[]
+          Piece.Color userColor = game.getUserColor(playerName);
           if (userColor.equals(winner))
             request.session().attribute("message", Message.error("You won!"));
           else
