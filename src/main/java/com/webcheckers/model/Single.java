@@ -15,7 +15,7 @@ public class Single extends Piece{
     //
 
     public void setKing(){
-
+        setType(Type.KING);
     }
 
     @Override
@@ -32,9 +32,7 @@ public class Single extends Piece{
         int initRow = move.getStart().getRow();
         int finalRow = move.getEnd().getRow();
 
-        // check if surrounding piece is opposite color
-
-        //
-        return false;
+        //check if move is only forward
+        return move.isJump() && (finalRow - initRow == 2);
     }
 }

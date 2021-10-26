@@ -21,8 +21,6 @@ public class King extends Piece{
 
     @Override
     public boolean isValidJump(Move move) {
-        // check if surrounding piece is opposite color
-
         return move.isJump();
     }
 }
