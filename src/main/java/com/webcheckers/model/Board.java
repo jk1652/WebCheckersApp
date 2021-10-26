@@ -31,6 +31,19 @@ public class Board implements Iterable<Row> {
         }
     }
 
+    public Piece.Color getWinner() {
+        boolean[] won = new boolean[] {false, false};
+        for (Row row : this) {
+            for (Space space : row) {
+                Piece piece = space.getPiece();
+                if (piece != null)
+                    won[piece.getColor().ordinal()] = true;
+                if (won[0] && won[1])
+                    return null;
+            }
+        }
+        return Piece.Color.values()[won[0] ? 0 : 1]; // return the value that is true
+    }
     /**
      *
      * @param color color of peices to be placed

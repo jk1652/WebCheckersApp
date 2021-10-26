@@ -65,6 +65,17 @@ public class GetGameRoute implements Route {
     Game game = gameManager.findPlayerGame(playerName);
     Map<String, Object> vm = new HashMap<>();
     if (game != null) {
+        // Check if someone won.
+        Piece.Color winner = game.getWinner(); 
+        if (winner != null) {
+          Piece.Color userColor = game.getUserColor(playerName));[]
+          if (userColor.equals(winner))
+            request.session().attribute("message", Message.error("You won!"));
+          else
+            request.session().attribute("message", Message.error("You lost.")); 
+          response.redirect(WebServer.HOME_URL);
+    	    return null;
+        }
         vm.put("title", "Checkers!");
         vm.put("currentUser", playerName);
         vm.put("viewMode", Game.View.PLAY);

@@ -57,6 +57,16 @@ public class Game {
 		return gameID;
 	}
 	
+	public Piece.Color getWinner() {
+		return board.getWinner();
+	}
+	
+	public Piece.Color getUserColor(String username) {
+		if (username.equals(redPlayer.getName()))
+			return Piece.Color.RED;
+		else
+			return Piece.Color.WHITE;
+	}
 	public Piece.Color getActiveColor() {
 		return activeColor;
 	}
