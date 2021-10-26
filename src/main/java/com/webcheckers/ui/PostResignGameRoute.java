@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -25,21 +26,9 @@ public class PostResignGameRoute implements Route {
         final Map<String, Object> vm = new HashMap<>();
 
         String name = request.session().attribute(PostSignInRoute.USERNAME); //get player's name
-        gameManager.finishGame(name);
 
-        Message msg = Message.error("Resigned from game, please redirect to the home page!");
+        Message msg = Message.info("Resigned from game, please redirect to the home page!");
 
-        //request.session().attribute("message", msg);
-        //vm.put("message", msg);
-
-        //request.session().attribute(msg.getText());
-        //return templateEngine.render(new ModelAndView(vm , "home.ftl"));
-        //response.redirect(WebServer.HOME_URL);
-        //halt();
-
-        // TODO:
-        // MAKE PAGE REDIRECT
-
-        return msg; //dont do this
+        return (new Gson()).toJson(msg);
     }
 }
