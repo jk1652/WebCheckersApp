@@ -174,4 +174,15 @@ public class Game {
 	public Board getBoardView() {
 		return board;
 	}
+
+	public void swapActiveColor(){
+		if (this.activeColor == Piece.Color.RED) {
+			this.activeColor = Piece.Color.WHITE;
+		}
+		else {
+			this.activeColor = Piece.Color.RED;
+		}
+	}
+
+
 }
