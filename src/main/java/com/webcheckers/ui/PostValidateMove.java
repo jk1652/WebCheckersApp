@@ -38,9 +38,7 @@ public class PostValidateMove implements Route {
 
         //TODO check that player making request is moving their color piece and it's their turn
 
-        if (game.getActiveColor() == Piece.Color.RED) { //checks who's turn it is
 
-        }
 
         return true;
     }

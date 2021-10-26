@@ -3,9 +3,10 @@ package com.webcheckers.model;
 public class Move {
     private final Position start;
     private final Position end;
-    public Move(Position start, Position end){
-        this.start = start;
-        this.end = end;
+
+    public Move(int startRow, int startCol, int endRow, int endCol){
+        this.start = new Position(startRow,startCol);
+        this.end = new Position(endRow,endCol);
     }
 
     public Position getStart(){
