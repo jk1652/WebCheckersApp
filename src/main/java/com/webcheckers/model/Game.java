@@ -13,6 +13,8 @@ public class Game {
 	private Board board;
 	private int gameID;
 	private ArrayList<Board>  validatedMoves = new ArrayList<>();
+	private ArrayList<Move> pastMoves = new ArrayList<>();
+
 
 	
 	/**
@@ -63,7 +65,11 @@ public class Game {
 
 		//Check if the piece is doing a valid move
 		if(move.isMove()){
-			return piece.isValidMove(move);
+			if((pastMoves.size() == 0 && piece.isValidMove(move))
+					|| (piece.isValidMove(move) && !pastMoves.get(pastMoves.size() -1).isMove())){
+				makeMove(move);
+				return true;
+			}
 		}
 
 		//Check if the jump sequence is valid
@@ -83,7 +89,11 @@ public class Game {
 				//check if there's a piece of opposite color
 				if(mid_space.getPiece()!= null &&
 						mid_space.getPiece().getColor() != activeColor){
-					return piece.isValidJump(move);
+					if((pastMoves.size() == 0 && piece.isValidMove(move))
+							||(piece.isValidJump(move) && !pastMoves.get(pastMoves.size() - 1).isMove())){
+						validateMove(move);
+						return true;
+					}
 				}
 		}
 		return false;
@@ -99,6 +109,7 @@ public class Game {
 
 	public void submitMove(){
 		validatedMoves = new ArrayList<Board>();
+		pastMoves = new ArrayList<Move>();
 		if(activeColor == Piece.Color.RED){
 			activeColor = Piece.Color.WHITE;
 		} else {
