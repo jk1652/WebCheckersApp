@@ -10,6 +10,7 @@ public class Game {
 	private Piece.Color activeColor;
 	private Board board;
 	private int gameID;
+
 	
 	/**
 	 * A value object for efficient storage of game information.
@@ -41,6 +42,23 @@ public class Game {
 		else
 			return viewMode.equals(View.SPECTATOR);
 	}
+
+	public boolean validateMove(){
+		return true;
+	}
+
+	public Boolean undoMove(){
+		return true;
+	}
+
+	public void submitMove(){
+
+	}
+
+	public int getMoveSize(){
+		return 0;
+	}
+
 	
 	/**
 	 * Check if a player is a participant in this game.
