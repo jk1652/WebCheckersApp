@@ -4,7 +4,7 @@ package com.webcheckers.model;
  * @author: Quentin Ramos II
  */
 
-public abstract class Piece {
+public class Piece {
 
     //
     // Attributes
@@ -37,11 +37,33 @@ public abstract class Piece {
         this.type = type;
     }
 
+    public void setKing(){
+        setType(Type.KING);
+    }
+
     public Color getColor(){
         return color;
     }
 
-    public abstract boolean isValidMove(Move move);
+    public boolean isValidMove(Move move){
+        if(type==Type.SINGLE){
+            int initRow = move.getStart().getRow();
+            int finalRow = move.getEnd().getRow();
 
-    public abstract boolean isValidJump(Move move);
+            //check if move is only forward
+            return move.isMove() && (finalRow - initRow == 1);
+        }
+        else{return move.isMove();}
+    }
+
+    public boolean isValidJump(Move move){
+        if(type==Type.SINGLE){
+            int initRow = move.getStart().getRow();
+            int finalRow = move.getEnd().getRow();
+
+            //check if jump is only forward
+            return move.isJump() && (finalRow - initRow == 2);
+        }
+        else{return move.isJump();}
+    }
 }

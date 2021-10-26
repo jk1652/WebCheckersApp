@@ -41,7 +41,7 @@ public class Board implements Iterable<Row> {
         ArrayList<Space> tempSpaces = new ArrayList<>();
         Piece piece = null;
         if (starter){
-            piece = new Single(Piece.Type.SINGLE, color);
+            piece = new Piece(Piece.Type.SINGLE, color);
         }
 
 
@@ -63,7 +63,7 @@ public class Board implements Iterable<Row> {
     private ArrayList<Space> CreateOdd(Piece.Color color, Boolean starter){
         Piece piece = null;
         if (starter){
-            piece = new Single(Piece.Type.SINGLE, color);
+            piece = new Piece(Piece.Type.SINGLE, color);
         }
         ArrayList<Space> tempSpaces = new ArrayList<>();
         for(int space = 0; space < 8; space++) {
