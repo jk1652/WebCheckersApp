@@ -1,5 +1,7 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
@@ -35,19 +37,25 @@ public class PostCheckTurn implements Route {
         if (game.getRedPlayer().equals(player) && activecolor == Piece.Color.RED){
             msg = Message.info("true");
             request.session().attribute("message", msg);
-            return true;
+            //return true;
         }
         // if white player asks if it is their turn and they are active
-        if (game.getWhitePlayer().equals(player) && activecolor == Piece.Color.WHITE) {
+        else if (game.getWhitePlayer().equals(player) && activecolor == Piece.Color.WHITE) {
             msg = Message.info("true");
             request.session().attribute("message", msg);
-            return true;
+            //return true;
         }
         // if player is not active
         else {
             msg = Message.info("false");
             request.session().attribute("message", msg);
-            return false;
+            //return false;
         }
+
+        String json;
+        Gson gson = new GsonBuilder().create();
+        json = gson.toJson( msg );
+        return json;
+
     }
 }
