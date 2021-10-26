@@ -34,9 +34,7 @@ public class PostSubmitTurn implements Route {
 
         //TODO Have turn effect actual model
 
-
-
-        //game.SubmitTurn();
+        game.submitMove();
 
         return null;
 

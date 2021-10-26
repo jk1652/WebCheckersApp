@@ -110,11 +110,7 @@ public class Game {
 	public void submitMove(){
 		validatedMoves = new ArrayList<Board>();
 		pastMoves = new ArrayList<Move>();
-		if(activeColor == Piece.Color.RED){
-			activeColor = Piece.Color.WHITE;
-		} else {
-			activeColor = Piece.Color.RED;
-		}
+		swapActiveColor();
 	}
 
 	public int getMoveSize(){
