@@ -61,7 +61,14 @@ public class GameManager {
 		}
 		return result;
 	}
-	
+
+	public void finishGame(String playerName){
+		// might need a way to tell if player won game
+		Game del = findPlayerGame(playerName);
+		active.remove(del);
+	}
+
+
 	/**
 	 * @param gameID the ID of the game to return
 	 * @return the Game object with that ID in the active games or null if no such game exists.
