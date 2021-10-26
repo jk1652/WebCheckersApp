@@ -1,27 +1,25 @@
 package com.webcheckers.model;
 
-/**
- * @author Spencer Creveling
+/*
+  @author Spencer Creveling
  * @author Quentin Ramos II
  */
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class Board implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
 
     /**
-     * Board constructer when called creates a new array of
-     * rows to be used, calles create even and create odd to make code
-     * more ledgable
+     * Board constructor when called creates a new array of
+     * rows to be used, calls create even and create odd to make code
+     * more legible
      */
     public Board(){
         Piece.Color color = Piece.Color.RED;
         for(int row = 0; row < 8; row++) {
-            boolean place = true;
-            if( row == 3 || row == 4){place = false;}
+            boolean place = row != 3 && row != 4;
             if(row > 4){ color = Piece.Color.WHITE;}
             if(row % 2 == 0){
                 rows.add(new Row(row,CreateEven(color,place)));
@@ -33,9 +31,9 @@ public class Board implements Iterable<Row> {
 
     /**
      *
-     * @param color color of peices to be placed
-     * @param starter should there be peices in this row
-     * @return a array list of squares that can be imidetly put into a row instance
+     * @param color color of pieces to be placed
+     * @param starter should there be pieces in this row
+     * @return a array list of squares that can be immediately put into a row instance
      */
     private ArrayList<Space> CreateEven(Piece.Color color, Boolean starter){
         ArrayList<Space> tempSpaces = new ArrayList<>();
@@ -56,9 +54,9 @@ public class Board implements Iterable<Row> {
     }
     /**
      *
-     * @param color color of peices to be placed
-     * @param starter should there be peices in this row
-     * @return a array list of squares that can be imidetly put into a row instance
+     * @param color color of pieces to be placed
+     * @param starter should there be pieces in this row
+     * @return a array list of squares that can be immediately put into a row instance
      */
     private ArrayList<Space> CreateOdd(Piece.Color color, Boolean starter){
         Piece piece = null;
@@ -86,6 +84,15 @@ public class Board implements Iterable<Row> {
     		return flipped.iterator();
     	} else
     		return iterator();
+    }
+
+    /**
+     * returns a specific row
+     * @param row_num the row number
+     * @return specific row
+     */
+    public Row getRow(int row_num){
+        return rows.get(row_num);
     }
     
     @Override

@@ -29,22 +29,34 @@ public class Piece {
     // Public Methods
     //
 
+    /**
+     * gets the type of a piece
+     * @return type
+     */
     public Type getType(){
         return type;
     }
 
-    public void setType(Type type){
-        this.type = type;
-    }
-
+    /**
+     * sets the type of the piece to a king piece
+     */
     public void setKing(){
-        setType(Type.KING);
+        this.type = Type.KING;
     }
 
+    /**
+     * gets the color of a piece
+     * @return color
+     */
     public Color getColor(){
         return color;
     }
 
+    /**
+     * Checks the validity of a simple move according to the piece type
+     * @param move the move a user implements
+     * @return whether or not the move is valid
+     */
     public boolean isValidMove(Move move){
         if(type==Type.SINGLE){
             int initRow = move.getStart().getRow();
@@ -56,6 +68,11 @@ public class Piece {
         else{return move.isMove();}
     }
 
+    /**
+     * Checks the validity of a jump according to the piece type
+     * @param move the move a user implements
+     * @return whether or not the move is valid
+     */
     public boolean isValidJump(Move move){
         if(type==Type.SINGLE){
             int initRow = move.getStart().getRow();

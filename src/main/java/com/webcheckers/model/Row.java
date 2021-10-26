@@ -31,8 +31,21 @@ public class Row implements Iterable<Space>{
     // Public Methods
     //
 
+    /**
+     * gets the index
+     * @return index
+     */
     public int getIndex() {
         return index;
+    }
+
+    /**
+     * gets a specific space at a specific index
+     * @param col the column number where that space is at
+     * @return the actual space itself
+     */
+    public Space getSpace(int col){
+        return spaces.get(col);
     }
 
     @Override

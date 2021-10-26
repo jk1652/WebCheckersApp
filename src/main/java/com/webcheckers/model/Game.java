@@ -26,8 +26,6 @@ public class Game {
 			gameID = GAME_COUNTER;
 			GAME_COUNTER++;
 		}
-		
-		
 	}
 	
 	/**
@@ -43,8 +41,49 @@ public class Game {
 			return viewMode.equals(View.SPECTATOR);
 	}
 
+	/**
+	 * Checks the validity of movement
+	 * @param move the move the player made
+	 * @return true if move is valid / False if move isn't
+	 */
 	public boolean validateMove(Move move){
-		return true;
+		//Retrieve the starting position
+		Position start_pos = move.getStart();
+		int initRow = start_pos.getRow();
+		int initCol = start_pos.getCol();
+
+		//Get the space according to the position
+		Space start_space = board.getRow(initRow).getSpace(initCol);
+
+		//Get the piece on that start position
+		Piece piece = start_space.getPiece();
+
+		//Check if the piece is doing a valid move
+		if(move.isMove()){
+			return piece.isValidMove(move);
+		}
+
+		//Check if the jump sequence is valid
+		if(move.isJump()){
+			//check if there's a piece between start and end
+
+				//get final position of piece
+				Position final_pos = move.getEnd();
+				int finalRow = final_pos.getRow();
+				int finalCol = final_pos.getCol();
+
+				//get space where piece should be
+				int midRow = ((initRow + finalRow)/2);
+				int midCol = ((initCol + finalCol)/2);
+				Space mid_space = board.getRow(midRow).getSpace(midCol);
+
+				//check if there's a piece of opposite color
+				if(mid_space.getPiece()!= null &&
+						mid_space.getPiece().getColor() != activeColor){
+					return piece.isValidJump(move);
+				}
+		}
+		return false;
 	}
 
 	public Boolean undoMove(){
