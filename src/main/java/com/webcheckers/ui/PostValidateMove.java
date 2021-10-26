@@ -35,6 +35,9 @@ public class PostValidateMove implements Route {
         String name = request.session().attribute(PostSignInRoute.USERNAME); //get player's name
         LOG.config("player makes move: " + name);
         Game game = gameManager.findPlayerGame(name);
+
+        //TODO check that player making request is moving their color piece
+
         if (game.getActiveColor() == Piece.Color.RED) { //checks who's turn it is
 
         }
