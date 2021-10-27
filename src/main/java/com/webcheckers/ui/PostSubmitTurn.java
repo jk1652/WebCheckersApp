@@ -11,11 +11,13 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
 public class PostSubmitTurn implements Route {
 
+    private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
     private final TemplateEngine templateEngine;
     private final GameManager gameManager;
 

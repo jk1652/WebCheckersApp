@@ -65,7 +65,7 @@ public class Game {
 		Piece piece = start_space.getPiece();
 
 		//Check if the piece is doing a valid move
-		if(move.isMove()){ return piece.isValidMove(move); }
+		if(move.isMove() && !forceJump()){ return piece.isValidMove(move); }
 
 		//check if there's a piece between start and end
 
