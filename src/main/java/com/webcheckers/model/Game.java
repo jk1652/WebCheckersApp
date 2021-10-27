@@ -106,6 +106,7 @@ public class Game {
 		Piece temp = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).getPiece();
 		copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).setPiece(null);
 		copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).setPiece(temp);
+		System.out.println("109: " + temp + "\t" + move);
 		if(temp.getColor() == Piece.Color.RED && move.getEnd().getRow() == 7){temp.setKing();}
 		if(temp.getColor() == Piece.Color.WHITE && move.getEnd().getRow() == 0){temp.setKing();}
 		if(move.isJump()){
