@@ -9,6 +9,7 @@ import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 import static spark.Spark.halt;
@@ -18,6 +19,14 @@ public class PostBackupMove implements Route {
     private final TemplateEngine templateEngine;
     private final GameManager gameManager;
 
+    /**
+     * The constructor for the {@code POST /backup} route handler.
+     *
+     *
+     * @param templateEngine template engine to use for rendering HTML page
+     * @param gameManager mangers for all the games
+     * @throws NullPointerException when the {@code playerLobby} or {@code templateEngine} parameter is null
+     */
     PostBackupMove(final TemplateEngine templateEngine, final GameManager gameManager) {
         // validation
         Objects.requireNonNull(gameManager, "game must not be null");
@@ -27,14 +36,19 @@ public class PostBackupMove implements Route {
         this.gameManager = gameManager;
     }
 
+    /**
+     * This backups a previously valid move
+     * @param request
+     * @param response
+     * @return json message
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
         String playerName = request.session().attribute(PostSignInRoute.USERNAME);
 
         Game game = gameManager.findPlayerGame(playerName);
-
-        //TODO Use stack of moves and pop top and error check on legal pop
 
         boolean check = game.undoMove();
 

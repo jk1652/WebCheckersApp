@@ -14,6 +14,12 @@ public class PostSignOutRoute implements Route {
     private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
+    /**
+     * The constructor for the {@code POST /signout} route handler.
+     *
+     * @param playerLobby
+     * @param templateEngine
+     */
     PostSignOutRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         // validation
         Objects.requireNonNull(playerLobby, "playerLobby must not be null");
@@ -23,6 +29,13 @@ public class PostSignOutRoute implements Route {
         this.templateEngine = templateEngine;
     }
 
+    /**
+     * This signs out a player after the clicking signout
+     * @param request
+     * @param response
+     * @return back to home page
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 

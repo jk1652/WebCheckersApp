@@ -23,6 +23,12 @@ public class PostGameRoute implements Route {
     private final GameManager gameManager;
     private final TemplateEngine templateEngine;
 
+    /**
+     * The constructor for the {@code POST /game} route handler.
+     * @param templateEngine
+     * @param playerLobby
+     * @param gameManager
+     */
     PostGameRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
             final GameManager gameManager) {
         // validation
@@ -35,6 +41,13 @@ public class PostGameRoute implements Route {
         this.gameManager = gameManager;
     }
 
+    /**
+     * sends game related information
+     * @param request
+     * @param response
+     * @return game info
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
         String playerName = request.session().attribute(PostSignInRoute.USERNAME);

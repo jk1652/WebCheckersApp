@@ -29,7 +29,11 @@ public class PostResignGameRoute implements Route {
     private final TemplateEngine templateEngine;
 
     /**
-     * PostResignGameRoute when Resign button is pressed
+     * The constructor for the {@code POST /resignGame} route handler.
+     *
+     * @param gson
+     * @param templateEngine
+     * @param gameManager
      */
     public PostResignGameRoute(final Gson gson, final TemplateEngine templateEngine, final GameManager gameManager){
         this.gson = gson;
@@ -37,6 +41,13 @@ public class PostResignGameRoute implements Route {
         this.gameManager = gameManager;
     }
 
+    /**
+     * sends resign game state
+     * @param request
+     * @param response
+     * @return reisgn game state json message
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 

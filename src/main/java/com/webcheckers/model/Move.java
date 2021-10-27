@@ -1,5 +1,10 @@
 package com.webcheckers.model;
 
+/**
+ * @author Spencer Creveling
+ * @author Quentin Ramos II
+ */
+
 public class Move {
     private final Position start;
     private final Position end;
@@ -55,6 +60,10 @@ public class Move {
         return row==2 && col==2;
     }
 
+    /**
+     * Purely for debugging purposes
+     * @return the state of the move
+     */
     @Override
     public String toString(){
         return "Start " + start.toString() + "\nEnd " + end.toString();

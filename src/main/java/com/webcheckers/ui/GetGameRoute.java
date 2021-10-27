@@ -35,7 +35,7 @@ public class GetGameRoute implements Route {
   private final PlayerLobby playerLobby;
   private final GameManager gameManager;
   /**
-   * Create the Spark Route (UI controller) to handle all {@code GET /} HTTP requests.
+   * Create the Spark Route (UI controller) to handle all {@code GET /Game} HTTP requests.
    *
    * @param templateEngine
    *   the HTML template rendering engine
@@ -59,7 +59,7 @@ public class GetGameRoute implements Route {
    *   the HTTP response
    *
    * @return
-   *   the rendered HTML for the Home page
+   *   the rendered HTML for the Game page
    */
   @Override
   public Object handle(Request request, Response response) {

@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ * @author Spencer Creveling
+ */
+
 public class Position {
     private final int row;
     private final int cell;
@@ -25,6 +29,11 @@ public class Position {
         return cell;
     }
 
+    /**
+     *
+     * @param object the position to be compared too
+     * @return if the positions are equal or not
+     */
     @Override
     public boolean equals(Object object){
         if(object instanceof Position){
@@ -34,6 +43,10 @@ public class Position {
         return false;
     }
 
+    /**
+     * for debugging only
+     * @return the state of the position
+     */
     @Override
     public String toString(){
         return "row " + row + "col " + cell;

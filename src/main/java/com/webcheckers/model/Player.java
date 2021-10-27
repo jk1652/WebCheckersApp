@@ -13,14 +13,23 @@ public class Player {
     private static final Logger LOG = Logger.getLogger(Player.class.getName());
     private String name;
 
+    /**
+     * Constructor for Player, creates player with name
+     */
     public Player(String name) {
-        //LOG.fine("user created " + name);
         this.name = name;
     }
+
+    /**
+     * returns name of player
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * checks if name is same between players as it should be unique
+     */
     @Override
     public boolean equals(Object obj){
         if (!(obj instanceof Player)) {

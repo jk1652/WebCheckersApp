@@ -2,33 +2,32 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.*;
-import com.webcheckers.util.Message;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.stubbing.Answer;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Session;
+import spark.TemplateEngine;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-
 /**
  * @Author Zane Kitchen Lipski
- * test PostValidateMove
+ * test PostResignGameRoute
  */
-public class PostValidateMoveTest {
+public class PostResignGameRouteTest {
     private Request request;
     private Session session;
     private Response response;
     private TemplateEngine engine;
 
     private GameManager gameManager;
+    private  Gson gson;
 
-    private PostValidateMove CuT;
+    private PostResignGameRoute CuT;
 
     @BeforeEach
     public void setup() {
@@ -38,7 +37,8 @@ public class PostValidateMoveTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
         gameManager = new GameManager();
-        CuT = new PostValidateMove(engine, gameManager);
+        gson = new Gson();
+        CuT = new PostResignGameRoute(gson, engine, gameManager);
     }
 
     /**
@@ -63,30 +63,4 @@ public class PostValidateMoveTest {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Valid Move test
-     * TODO
-     */
-    @Test
-    public void ValidMove() {
-        when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
-
-        Game game = gameManager.createGame("test", "test2");
-        gameManager.findPlayerGame("test");
-
-        Move move = new Move(new Position(5, 0), new Position(4, 1));
-        boolean yea = game.validateMove(move);
-        assertTrue(yea);
-        Move move2 = new Move(new Position(5, 0), new Position(3, 1));
-        assertFalse(game.validateMove(move2));
-
-        try {
-            CuT.handle(request, response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
