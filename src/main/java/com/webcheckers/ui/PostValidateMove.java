@@ -16,16 +16,17 @@ import java.util.logging.Logger;
 import static spark.Spark.halt;
 
 /**
- * Author: Zane Kitchen Lipski
+ * @Author Zane Kitchen Lipski
  * To check if a move made was valid
  */
-
 public class PostValidateMove implements Route {
     private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
 
     private final GameManager gameManager;
     private final TemplateEngine templateEngine;
-
+    /**
+     * PostValidateMove, uses gamemanger to find and mange game aspects
+     */
     public PostValidateMove(final TemplateEngine templateEngine, final GameManager gameManager) {
         this.templateEngine = templateEngine;
         this.gameManager = gameManager;
@@ -34,26 +35,24 @@ public class PostValidateMove implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
-
         String name = request.session().attribute(PostSignInRoute.USERNAME); //get player's name
         LOG.config("player makes move: " + name);
         Game game = gameManager.findPlayerGame(name);
 
-        //TODO check that player making request is moving their color piece and it's their turn
         Gson gson = new Gson();
-
+        //get move that was made
         Move move = gson.fromJson(request.queryParams("actionData"),Move.class);
+
         boolean yea = game.validateMove(move);
 
         Message msg;
-        if (yea) { //true
+        if (yea) { //if true: info msg and make move
             msg = Message.info(game.getValidity());
             game.makeMove(move);
             game.setKing(move);
         }
-        else { // if false: error msg
+        else { //if false: error msg
             msg = Message.error(game.getValidity());
-            // might need to add why move is invalid
         }
 
         String json;
