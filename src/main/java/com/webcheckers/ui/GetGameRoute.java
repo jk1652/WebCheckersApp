@@ -68,6 +68,11 @@ public class GetGameRoute implements Route {
     Game game = gameManager.findPlayerGame(playerName);
       Board board = game.getBoardView();
     Map<String, Object> vm = new HashMap<>();
+
+    if (board.getExitState()) {
+        gameManager.finishGame(playerName);
+    }
+
     if (game != null) {
         // Check if someone won.
         Piece.Color winner = game.getWinner(); 

@@ -13,6 +13,7 @@ public class Board implements Iterable<Row> {
 
     private Piece.Color winner = null;
     private boolean resign = Boolean.FALSE;
+    private boolean exit = Boolean.FALSE;
 
     /**
      * Board constructor when called creates a new array of
@@ -62,10 +63,17 @@ public class Board implements Iterable<Row> {
                         return null;
                 }
             }
+            exit = Boolean.TRUE;
             return Piece.Color.values()[won[0] ? 0 : 1]; // return the value that is true
         }
+        exit = Boolean.TRUE;
         return winner;
     }
+
+    public boolean getExitState() {
+        return exit;
+    }
+
     /**
      *
      * @param color color of pieces to be placed
