@@ -44,10 +44,12 @@ public class PostValidateMove implements Route {
 
         Move move = gson.fromJson(request.queryParams("actionData"),Move.class);
         boolean yea = game.validateMove(move);
+        System.out.println(move);
 
         Message msg;
         if (yea) { //true
             msg = Message.info("Valid Move");
+            game.makeMove(move);
         }
         else { // if false: error msg
             msg = Message.error("Invalid Move");

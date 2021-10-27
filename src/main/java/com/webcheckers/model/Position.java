@@ -2,11 +2,11 @@ package com.webcheckers.model;
 
 public class Position {
     private final int row;
-    private final int col;
+    private final int cell;
 
-    public Position(int row, int col){
+    public Position(int row, int cell){
         this.row = row;
-        this.col = col;
+        this.cell = cell;
     }
 
     /**
@@ -22,11 +22,11 @@ public class Position {
      * @return column
      */
     public int getCol(){
-        return col;
+        return cell;
     }
 
     @Override
     public String toString(){
-        return "row " + row + "col " + col;
+        return "row " + row + "col " + cell;
     }
 }
