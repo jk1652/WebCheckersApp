@@ -155,7 +155,13 @@ public class Game {
 		}
 		return false;
 	}
-	
+
+	public void setKing(Move move){
+		Piece piece = board.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).getPiece();
+		if(activeColor == Piece.Color.RED && move.getEnd().getRow() == 7){piece.setKing();}
+		if(activeColor == Piece.Color.WHITE && move.getEnd().getRow() == 0){piece.setKing();}
+	}
+
 	/**
 	 * Check if a player is a participant in this game.
 	 * @return true if the player is a participant.
