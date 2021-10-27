@@ -1,6 +1,7 @@
 package com.webcheckers.model;
 
 
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -13,26 +14,21 @@ public class Player {
     private String name;
 
     /**
-     *
-     * @param name name of player
+     * Constructor for Player, creates player with name
      */
     public Player(String name) {
-        //LOG.fine("user created " + name);
         this.name = name;
     }
 
     /**
-     *
-     * @return the name of the player
+     * returns name of player
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     *
-     * @param obj the player to be compared
-     * @return if they are equal or not
+     * checks if name is same between players as it should be unique
      */
     @Override
     public boolean equals(Object obj){

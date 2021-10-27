@@ -15,12 +15,19 @@ import spark.TemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ * @Author Zane Kitchen Lipski
+ * @Author Jaden Kitchen Lipski
+ * PostCheckTurn, check who's turn it is
+ */
 public class PostCheckTurn implements Route {
 
     private final GameManager gameManager;
     private final TemplateEngine templateEngine;
 
+    /**
+     * PostCheckTurn, player will ask if it is their turn
+     */
     public PostCheckTurn(final TemplateEngine templateEngine, final GameManager gameManager) {
         this.templateEngine = templateEngine;
         this.gameManager = gameManager;
@@ -28,7 +35,6 @@ public class PostCheckTurn implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-
 
         String name = request.session().attribute(PostSignInRoute.USERNAME); //get player's name
         Player player = new Player(name);
@@ -40,11 +46,11 @@ public class PostCheckTurn implements Route {
 
         Gson gson = new GsonBuilder().create();
         Message msg;
+        // when game is over update other player view
         if (board.getExitState()) {
             msg = Message.info("true");
             return gson.toJson( msg );
         }
-
 
         // if red player asks if it is their turn and they are active
         if (game.getRedPlayer().equals(player) && activecolor == Piece.Color.RED){
@@ -59,8 +65,6 @@ public class PostCheckTurn implements Route {
             msg = Message.info("false");
         }
 
-
         return gson.toJson( msg );
-
     }
 }
