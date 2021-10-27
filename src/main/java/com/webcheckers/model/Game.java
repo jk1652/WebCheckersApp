@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 /**
  * @author David Pritchard
+ * @author Quentin Ramos
+ * @author Spencer Creveling
+ * @author Zane Kitchen Lipski
  */
 public class Game {
 	private static int GAME_COUNTER = 0;
@@ -64,24 +67,25 @@ public class Game {
 		//Get the piece on that start position
 		Piece piece = start_space.getPiece();
 
+		//Makes sure you can't move again
 		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isMove()){
 			validity = "you cant move again";
 			return false;
 		}
 
+		//Makes sure you can't perform a simple move after a jump
 		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isJump() && move.isMove()){
 			validity = "you can not simple move after a jump";
 			return false;
 		}
 
+		//Ensures you are moving the same piece
 		if(pastMoves.size() > 0 && !move.getStart().equals(pastMoves.get(pastMoves.size() - 1).getEnd())){
 			validity = "you can not move two pieces";
 			return false;
 		}
 
-
-
-		//Check if the piece is doing a valid move
+		//Check if the piece is doing a jump move
 		if(forceJump() && move.isMove()) {
 			validity = "There is a jump available!";
 			return false;
@@ -110,7 +114,7 @@ public class Game {
 		int midCol = ((initCol + finalCol)/2);
 		Space mid_space = board.getRow(midRow).getSpace(midCol);
 
-		//check if move is a jump
+		//check if move is a jump and if another jump is available
 		if(move.isJump() && forceJump()){
 			//check if jumped over piece exists
 			if(mid_space.getPiece()== null) {
@@ -155,8 +159,8 @@ public class Game {
 	 */
 	public void submitMove(){
 		board = new Board(board);
-		validatedMoves = new ArrayList<Board>();
-		pastMoves = new ArrayList<Move>();
+		validatedMoves = new ArrayList<>();
+		pastMoves = new ArrayList<>();
 		swapActiveColor();
 	}
 
@@ -201,7 +205,7 @@ public class Game {
 	}
 
 	/**
-	 * checks all peices of active color and check if
+	 * checks all pieces of active color and check if
 	 * there is a capture that can be made
 	 * @return if there is a forced jump
 	 */
@@ -235,14 +239,14 @@ public class Game {
 					}
 					//checks see if the piece can jump down ie red pieces and kings
 					if(target.getColor() == Piece.Color.RED || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(bottomLeft!= null && bottomLeft.getPiece() != null && bottomLeft.getPiece().getColor() != target.getColor()){
 							//checks to see that the landing square is not occupied
 							if(board.getRow(x+2).getSpace(y-2).isValid()){
 								return true;
 							}
 						}
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(bottomRight!= null && bottomRight.getPiece() != null && bottomRight.getPiece().getColor() != target.getColor()){
 							//checks to see that the landing square is not occupied
 							if(board.getRow(x+2).getSpace(y+2).isValid()){
@@ -252,13 +256,13 @@ public class Game {
 					}
 					//checks see if the piece can jump down ie white pieces and kings
 					if(target.getColor() == Piece.Color.WHITE || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(topRight!= null && topRight.getPiece() != null && topRight.getPiece().getColor() != target.getColor()){
 							if(board.getRow(x-2).getSpace(y+2).isValid()){
 								return true;
 							}
 						}
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(topLeft!= null && topLeft.getPiece() != null && topLeft.getPiece().getColor() != target.getColor()){
 							//checks to see that the landing square is not occupied
 							if(board.getRow(x-2).getSpace(y-2).isValid()){
@@ -274,7 +278,7 @@ public class Game {
 	}
 
 	/**
-	 * checks if a peice has made it to the end row and if so
+	 * checks if a piece has made it to the end row and if so
 	 * if becomes a king
 	 * @param move where the piece is moving too
 	 */
@@ -293,14 +297,12 @@ public class Game {
 	}
 	/**
 	 * @return the gameID, a unique integer.
-	 * 
 	 */
 	public int getGameID() {
 		return gameID;
 	}
 
 	/**
-	 *
 	 * @return the color of the winner
 	 */
 	public Piece.Color getWinner() {
@@ -308,7 +310,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @param playerName the name of the player of interest
 	 * @return the name of the other player in this game
 	 */
@@ -320,7 +321,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @param username the player of interest
 	 * @return the color of said player
 	 */
@@ -332,7 +332,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return which color is currently allowed to move
 	 */
 	public Piece.Color getActiveColor() {
@@ -340,7 +339,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return the red player
 	 */
 	public Player getRedPlayer() {
@@ -348,7 +346,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return the white player
 	 */
 	public Player getWhitePlayer() {
@@ -356,7 +353,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return the current most valid state of the board
 	 */
 	public Board getBoardView() {
@@ -364,8 +360,7 @@ public class Game {
 	}
 
 	/**
-	 *
-	 * @return the string message about the validity of the last submiited move
+	 * @return the string message about the validity of the last submitted move
 	 */
 	public String getValidity(){
 		return validity;
