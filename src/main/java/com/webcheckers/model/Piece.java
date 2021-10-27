@@ -87,8 +87,11 @@ public class Piece {
             int initRow = move.getStart().getRow();
             int finalRow = move.getEnd().getRow();
 
-            //check if jump is only forward
-            return move.isJump() && (finalRow - initRow == 2);
+            //check if jump is only forward for red
+            if(color == Color.RED){return move.isJump() && (finalRow - initRow == 2);}
+
+            //check if jump is only forward for white
+            else{return move.isJump() && (initRow - finalRow == 2);}
         }
         else{return move.isJump();}
     }
