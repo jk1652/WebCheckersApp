@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
 import spark.*;
 
@@ -37,9 +38,10 @@ public class PostValidateMove implements Route {
         Game game = gameManager.findPlayerGame(name);
 
         //TODO check that player making request is moving their color piece and it's their turn
+        Gson gson = new Gson();
 
-
-
+        Move move = gson.fromJson(request.queryParams("actionData"),Move.class);
+        game.validateMove(move);
         return true;
     }
 }
