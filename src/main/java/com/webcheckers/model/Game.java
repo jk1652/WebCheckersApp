@@ -82,7 +82,7 @@ public class Game {
 
 
 		//Check if the piece is doing a valid move
-		if(forceJump()) {
+		if(forceJump() && move.isMove()) {
 			validity = "There is a jump available!";
 			return false;
 		}
@@ -187,41 +187,54 @@ public class Game {
 	}
 
 	public boolean forceJump() {
+
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
-				if (board.getRow(x).getSpace(y).getPiece() != null
-						&& board.getRow(x).getSpace(y).getPiece().getColor() == activeColor) {
+				Piece target = board.getRow(x).getSpace(y).getPiece();
+				Space topRight = null;
+				Space bottomRight = null;
+				Space topLeft = null;
+				Space bottomLeft = null;
+				if(target != null){
+					if(x < 6 && y < 6){
+						bottomRight = board.getRow(x+1).getSpace(y+1);
+					}
+					if(x < 6 && y > 1){
+						bottomLeft = board.getRow(x+1).getSpace(y-1);
+					}
+					if(x > 1 && y < 6){
+						topRight = board.getRow(x-1).getSpace(y+1);
+					}
+					if(x > 1 && y > 1){
+						topLeft = board.getRow(x-1).getSpace(y-1);
+					}
 
-					Piece target = board.getRow(x).getSpace(y).getPiece();
-
-					if (activeColor == Piece.Color.RED || target.getType() == Piece.Type.KING) {
-
-						if (x > 6 && y > 6 && board.getRow(x + 1).getSpace(y + 1).getPiece() != null
-								&& board.getRow(x + 1).getSpace(y + 1).getPiece().getColor() != target.getColor()
-								&& board.getRow(x + 2).getSpace(y + 2).getPiece() == null) {
-							return true;
+					if(target.getColor() == Piece.Color.RED || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
+						if(bottomLeft!= null && bottomLeft.getPiece() != null && bottomLeft.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x+2).getSpace(y-2).getPiece() == null){
+								return true;
+							}
 						}
-
-						if (x > 6 && y < 1 && board.getRow(x + 1).getSpace(y - 1).getPiece() != null
-								&& board.getRow(x + 1).getSpace(y - 1).getPiece().getColor() != target.getColor()
-								&& board.getRow(x + 2).getSpace(y - 2).getPiece() == null) {
-							return true;
-						}
-
-					} else if (activeColor == Piece.Color.WHITE || target.getType() == Piece.Type.KING) {
-
-						if (x < 1 && y > 6 && board.getRow(x - 1).getSpace(y + 1).getPiece() != null
-								&& board.getRow(x - 1).getSpace(y + 1).getPiece().getColor() != target.getColor()
-								&& board.getRow(x - 2).getSpace(y + 2).getPiece() == null) {
-							return true;
-						}
-
-						if (x < 1 && y < 1 && board.getRow(x - 1).getSpace(y - 1).getPiece() != null
-								&& board.getRow(x - 1).getSpace(y - 1).getPiece().getColor() != target.getColor()
-								&& board.getRow(x - 2).getSpace(y - 2).getPiece() == null) {
-							return true;
+						if(bottomRight!= null && bottomRight.getPiece() != null && bottomRight.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x+2).getSpace(y+2).getPiece() == null){
+								return true;
+							}
 						}
 					}
+
+					if(target.getColor() == Piece.Color.WHITE || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
+						if(topRight!= null && topRight.getPiece() != null && topRight.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x-2).getSpace(y+2).getPiece() == null){
+								return true;
+							}
+						}
+						if(topLeft!= null && topLeft.getPiece() != null && topLeft.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x-2).getSpace(y-2).getPiece() == null){
+								return true;
+							}
+						}
+					}
+
 				}
 			}
 		}

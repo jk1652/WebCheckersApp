@@ -17,7 +17,7 @@ public class Space {
 
     public Space(Space space){
         this.cellIdx = space.cellIdx;
-        this.isValid = space.isValid(); // h
+        this.isValid = space.naturalValid(); // h
     	if (space.piece != null)
             this.piece = new Piece(space.piece);
         else
@@ -31,6 +31,8 @@ public class Space {
     public boolean isValid(){
         return isValid && piece == null;
     }
+
+    private boolean naturalValid(){return isValid;}
 
     public Piece getPiece(){
         return piece;
