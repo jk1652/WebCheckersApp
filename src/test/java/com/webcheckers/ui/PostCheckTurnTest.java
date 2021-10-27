@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Author: Zane Kitchen Lipski
+ * @Author Zane Kitchen Lipski
  * test PostCheckTurn
  */
 public class PostCheckTurnTest {

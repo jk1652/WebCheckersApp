@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 
 /**
- * Author: Zane Kitchen Lipski
+ * @Author Zane Kitchen Lipski
  * test PostValidateMove
  */
 public class PostValidateMoveTest {
