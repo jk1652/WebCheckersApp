@@ -24,4 +24,9 @@ public class Position {
     public int getCol(){
         return col;
     }
+
+    @Override
+    public String toString(){
+        return "row " + row + "col " + col;
+    }
 }
