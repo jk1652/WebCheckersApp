@@ -1,8 +1,10 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -34,9 +36,20 @@ public class PostBackupMove implements Route {
 
         //TODO Use stack of moves and pop top and error check on legal pop
 
-        game.undoMove();
+        boolean check = game.undoMove();
 
-        return null;
+        Message msg;
+        if (check) { // true
+            msg = Message.info("Success, Backed up move");
+        }
+        else { // false when there are no moves to back up
+            msg = Message.error("No Moves in Stack");
+        }
+
+        Gson gson = new Gson();
+        String json;
+        json = gson.toJson(msg);
+        return json;
 
     }
 }
