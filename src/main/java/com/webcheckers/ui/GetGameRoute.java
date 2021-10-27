@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 import spark.ModelAndView;
 import spark.Request;
@@ -65,12 +66,13 @@ public class GetGameRoute implements Route {
     LOG.finer("GetGameRoute is invoked.");
     String playerName = request.session().attribute(PostSignInRoute.USERNAME);
     Game game = gameManager.findPlayerGame(playerName);
+      Board board = game.getBoardView();
     Map<String, Object> vm = new HashMap<>();
     if (game != null) {
         // Check if someone won.
         Piece.Color winner = game.getWinner(); 
 	final Map<String, Object> modeOptions = new HashMap<>(2);
- 	if (winner != null) {
+ 	if (winner != null && board.getResign() == Boolean.FALSE) {
           Piece.Color userColor = game.getUserColor(playerName);
 	  String winnerName;
 	  if (userColor.equals(winner))
@@ -79,10 +81,23 @@ public class GetGameRoute implements Route {
 	    winnerName = game.getOpponentName(playerName);  
 	  modeOptions.put("isGameOver", true);
 	  modeOptions.put("gameOverMessage", winnerName + " has captured all the pieces.");
-	} else {
+	} else if (winner == null && board.getResign() == Boolean.FALSE) {
 	  modeOptions.put("isGameOver", false);
 	  modeOptions.put("gameOverMessage", "");
 	}
+ 	else if (winner != null && board.getResign() == Boolean.TRUE) {
+ 	    Piece.Color userColor = game.getUserColor(playerName);
+ 	    String loserName;
+ 	    if (userColor.equals(winner))
+ 	        loserName = playerName;
+ 	    else
+            loserName = game.getOpponentName(playerName);
+ 	        modeOptions.put("isGameOver", true);
+            modeOptions.put("gameOverMessage", loserName + " has lost by resign.");
+ 	} else if (winner == null && board.getResign() == Boolean.TRUE) {
+            modeOptions.put("isGameOver", false);
+            modeOptions.put("gameOverMessage", "");
+ 	}
 	vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
 	vm.put("title", "Checkers!");
         vm.put("currentUser", playerName);

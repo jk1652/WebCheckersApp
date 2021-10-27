@@ -11,6 +11,9 @@ import java.util.Iterator;
 public class Board implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
 
+    private Piece.Color winner = null;
+    private boolean resign = Boolean.FALSE;
+
     /**
      * Board constructor when called creates a new array of
      * rows to be used, calls create even and create odd to make code
@@ -35,19 +38,30 @@ public class Board implements Iterable<Row> {
         }
     }
 
+    public void setWinner(Piece.Color color) {
+        winner = color;
+        resign = Boolean.TRUE;
+    }
+
+    public boolean getResign() {
+        return  resign;
+    }
 
     public Piece.Color getWinner() {
-        boolean[] won = new boolean[] {false, false};
-        for (Row row : this) {
-            for (Space space : row) {
-                Piece piece = space.getPiece();
-                if (piece != null)
-                    won[piece.getColor().ordinal()] = true;
-                if (won[0] && won[1])
-                    return null;
+        if (winner == null) {
+            boolean[] won = new boolean[]{false, false};
+            for (Row row : this) {
+                for (Space space : row) {
+                    Piece piece = space.getPiece();
+                    if (piece != null)
+                        won[piece.getColor().ordinal()] = true;
+                    if (won[0] && won[1])
+                        return null;
+                }
             }
+            return Piece.Color.values()[won[0] ? 0 : 1]; // return the value that is true
         }
-        return Piece.Color.values()[won[0] ? 0 : 1]; // return the value that is true
+        return winner;
     }
     /**
      *
