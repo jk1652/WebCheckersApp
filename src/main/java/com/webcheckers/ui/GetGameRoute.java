@@ -16,6 +16,8 @@ import spark.Response;
 import spark.Route;
 import spark.TemplateEngine;
 
+import com.google.gson.*;
+
 import com.webcheckers.util.Message;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
@@ -25,8 +27,8 @@ import com.webcheckers.model.Piece;
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetGameRoute implements Route {
+  private static Gson gson = new GsonBuilder().create();
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
-
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
@@ -67,16 +69,22 @@ public class GetGameRoute implements Route {
     if (game != null) {
         // Check if someone won.
         Piece.Color winner = game.getWinner(); 
-        if (winner != null) {
+	final Map<String, Object> modeOptions = new HashMap<>(2);
+ 	if (winner != null) {
           Piece.Color userColor = game.getUserColor(playerName);
-          if (userColor.equals(winner))
-            request.session().attribute("message", Message.error("You won!"));
-          else
-            request.session().attribute("message", Message.error("You lost.")); 
-          response.redirect(WebServer.HOME_URL);
-    	    return null;
-        }
-        vm.put("title", "Checkers!");
+	  String winnerName;
+	  if (userColor.equals(winner))
+            winnerName = playerName;
+	  else
+	    winnerName = game.getOpponentName(playerName);  
+	  modeOptions.put("isGameOver", true);
+	  modeOptions.put("gameOverMessage", winnerName + " has captured all the pieces.");
+	} else {
+	  modeOptions.put("isGameOver", false);
+	  modeOptions.put("gameOverMessage", "");
+	}
+	vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+	vm.put("title", "Checkers!");
         vm.put("currentUser", playerName);
         vm.put("viewMode", Game.View.PLAY);
         vm.put("redPlayer", game.getRedPlayer());

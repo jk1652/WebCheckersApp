@@ -148,6 +148,13 @@ public class Game {
 	public Piece.Color getWinner() {
 		return board.getWinner();
 	}
+
+	public String getOpponentName(String playerName) {
+		if (playerName.equals(redPlayer.getName()))
+			return whitePlayer.getName();
+		else
+			return redPlayer.getName();
+	}
 	
 	public Piece.Color getUserColor(String username) {
 		if (username.equals(redPlayer.getName()))

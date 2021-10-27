@@ -40,6 +40,7 @@ public class Move {
      * @return true if the action is moved
      * diagonally two spaces.
      */
+
     public boolean isJump(){
         //Start Coordinates
         int initRow = start.getRow();
