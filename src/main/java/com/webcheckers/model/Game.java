@@ -64,6 +64,23 @@ public class Game {
 		//Get the piece on that start position
 		Piece piece = start_space.getPiece();
 
+		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isMove()){
+			validity = "you cant move again";
+			return false;
+		}
+
+		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isJump() && move.isMove()){
+			validity = "you can not simple move after a jump";
+			return false;
+		}
+
+		if(pastMoves.size() > 0 && !move.getStart().equals(pastMoves.get(pastMoves.size() - 1).getEnd())){
+			validity = "you can not move two pieces";
+			return false;
+		}
+
+
+
 		//Check if the piece is doing a valid move
 		if(forceJump()) {
 			validity = "There is a jump available!";
@@ -121,6 +138,7 @@ public class Game {
 	public Boolean undoMove(){
 		if(validatedMoves.size() != 0){
 			board = validatedMoves.remove(validatedMoves.size() - 1);
+			pastMoves.remove(pastMoves.size()-1);
 			return true;
 		}
 		return false;
@@ -134,6 +152,7 @@ public class Game {
 	}
 
 	public void makeMove(Move move){
+		pastMoves.add(move);
 		validatedMoves.add(board);
 		Board copyBoard = new Board(board);
 		Piece temp = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).getPiece();

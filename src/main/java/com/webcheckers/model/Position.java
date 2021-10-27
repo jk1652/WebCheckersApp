@@ -26,6 +26,15 @@ public class Position {
     }
 
     @Override
+    public boolean equals(Object object){
+        if(object instanceof Position){
+            Position other = (Position) object;
+            return row == other.row && cell == other.cell;
+        }
+        return false;
+    }
+
+    @Override
     public String toString(){
         return "row " + row + "col " + cell;
     }
