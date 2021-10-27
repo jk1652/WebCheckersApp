@@ -372,6 +372,14 @@ public class Game {
 	}
 
 	/**
+	 *
+	 * @return size of validated moves
+	 */
+	public int getMoveSize(){
+		return validatedMoves.size();
+	}
+
+	/**
 	 * switches which color is active
 	 */
 	public void swapActiveColor(){
@@ -381,6 +389,14 @@ public class Game {
 		else {
 			this.activeColor = Piece.Color.RED;
 		}
+	}
+
+	/**
+	 * this is use for junit tests to create custom states.
+	 * @param board board to be imported
+	 */
+	public void setBoard(Board board){
+		this.board = board;
 	}
 
 
