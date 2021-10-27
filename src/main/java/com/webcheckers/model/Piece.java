@@ -21,7 +21,6 @@ public class Piece {
     //
 
     /**
-     *
      * @param type the type of piece to be made
      * @param color the color of the piece
      */
@@ -35,7 +34,6 @@ public class Piece {
     //
 
     /**
-     *
      * @param piece piece object to be deep copied
      */
     public Piece(Piece piece){

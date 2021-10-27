@@ -205,7 +205,7 @@ public class Game {
 	}
 
 	/**
-	 * checks all peices of active color and check if
+	 * checks all pieces of active color and check if
 	 * there is a capture that can be made
 	 * @return if there is a forced jump
 	 */
@@ -239,14 +239,14 @@ public class Game {
 					}
 					//checks see if the piece can jump down ie red pieces and kings
 					if(target.getColor() == Piece.Color.RED || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(bottomLeft!= null && bottomLeft.getPiece() != null && bottomLeft.getPiece().getColor() != target.getColor()){
 							//checks to see that the landing square is not occupied
 							if(board.getRow(x+2).getSpace(y-2).isValid()){
 								return true;
 							}
 						}
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(bottomRight!= null && bottomRight.getPiece() != null && bottomRight.getPiece().getColor() != target.getColor()){
 							//checks to see that the landing square is not occupied
 							if(board.getRow(x+2).getSpace(y+2).isValid()){
@@ -256,13 +256,13 @@ public class Game {
 					}
 					//checks see if the piece can jump down ie white pieces and kings
 					if(target.getColor() == Piece.Color.WHITE || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(topRight!= null && topRight.getPiece() != null && topRight.getPiece().getColor() != target.getColor()){
 							if(board.getRow(x-2).getSpace(y+2).isValid()){
 								return true;
 							}
 						}
-						//checks to see that the peice in the jump path exists and is not the same color
+						//checks to see that the piece in the jump path exists and is not the same color
 						if(topLeft!= null && topLeft.getPiece() != null && topLeft.getPiece().getColor() != target.getColor()){
 							//checks to see that the landing square is not occupied
 							if(board.getRow(x-2).getSpace(y-2).isValid()){
@@ -278,7 +278,7 @@ public class Game {
 	}
 
 	/**
-	 * checks if a peice has made it to the end row and if so
+	 * checks if a piece has made it to the end row and if so
 	 * if becomes a king
 	 * @param move where the piece is moving too
 	 */
@@ -297,14 +297,12 @@ public class Game {
 	}
 	/**
 	 * @return the gameID, a unique integer.
-	 * 
 	 */
 	public int getGameID() {
 		return gameID;
 	}
 
 	/**
-	 *
 	 * @return the color of the winner
 	 */
 	public Piece.Color getWinner() {
@@ -312,7 +310,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @param playerName the name of the player of interest
 	 * @return the name of the other player in this game
 	 */
@@ -324,7 +321,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @param username the player of interest
 	 * @return the color of said player
 	 */
@@ -336,7 +332,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return which color is currently allowed to move
 	 */
 	public Piece.Color getActiveColor() {
@@ -344,7 +339,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return the red player
 	 */
 	public Player getRedPlayer() {
@@ -352,7 +346,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return the white player
 	 */
 	public Player getWhitePlayer() {
@@ -360,7 +353,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return the current most valid state of the board
 	 */
 	public Board getBoardView() {
@@ -368,7 +360,6 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return the string message about the validity of the last submitted move
 	 */
 	public String getValidity(){

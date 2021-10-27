@@ -10,7 +10,6 @@ public class Space {
     private Piece piece;
 
     /**
-     *
      * @param cellIdx the index of the space
      * @param isValid if it is a white of black square
      * @param piece the piece that is placed on the space
@@ -22,7 +21,6 @@ public class Space {
     }
 
     /**
-     *
      * @param space the space object to be deep copied
      */
     public Space(Space space){
@@ -35,7 +33,6 @@ public class Space {
     }
 
     /**
-     *
      * @return the index of the space
      */
     public int getCellIdx(){
@@ -43,7 +40,6 @@ public class Space {
     }
 
     /**
-     *
      * @return if this space is valid for a piece to be placed
      */
     public boolean isValid(){
@@ -60,7 +56,6 @@ public class Space {
     }
 
     /**
-     *
      * @return the piece on the space
      */
     public Piece getPiece(){
@@ -68,7 +63,6 @@ public class Space {
     }
 
     /**
-     *
      * @param piece sets the current piece on the space
      */
     public void setPiece(Piece piece){
