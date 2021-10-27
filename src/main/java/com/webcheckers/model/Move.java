@@ -54,4 +54,9 @@ public class Move {
         int col = Math.abs(initCol-finalCol);
         return row==2 && col==2;
     }
+
+    @Override
+    public String toString(){
+        return "Start " + start.toString() + "\nEnd " + end.toString();
+    }
 }
