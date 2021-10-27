@@ -41,7 +41,7 @@ public class PostValidateMove implements Route {
         Gson gson = new Gson();
 
         Move move = gson.fromJson(request.queryParams("actionData"),Move.class);
-        game.validateMove(move);
+        game.makeMove(move);
         return true;
     }
 }

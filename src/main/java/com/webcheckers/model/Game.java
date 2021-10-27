@@ -64,37 +64,23 @@ public class Game {
 		Piece piece = start_space.getPiece();
 
 		//Check if the piece is doing a valid move
-		if(move.isMove()){
-			if((pastMoves.size() == 0 && piece.isValidMove(move))
-					|| (piece.isValidMove(move) && !pastMoves.get(pastMoves.size() -1).isMove())){
-				makeMove(move);
-				return true;
-			}
-		}
+		if(move.isMove()){ return piece.isValidMove(move); }
 
-		//Check if the jump sequence is valid
-		if(move.isJump()){
-			//check if there's a piece between start and end
+		//check if there's a piece between start and end
 
-				//get final position of piece
-				Position final_pos = move.getEnd();
-				int finalRow = final_pos.getRow();
-				int finalCol = final_pos.getCol();
+		//get final position of piece
+		Position final_pos = move.getEnd();
+		int finalRow = final_pos.getRow();
+		int finalCol = final_pos.getCol();
 
-				//get space where piece should be
-				int midRow = ((initRow + finalRow)/2);
-				int midCol = ((initCol + finalCol)/2);
-				Space mid_space = board.getRow(midRow).getSpace(midCol);
+		//get space where piece should be
+		int midRow = ((initRow + finalRow)/2);
+		int midCol = ((initCol + finalCol)/2);
+		Space mid_space = board.getRow(midRow).getSpace(midCol);
 
-				//check if there's a piece of opposite color
-				if(mid_space.getPiece()!= null &&
-						mid_space.getPiece().getColor() != activeColor){
-					if((pastMoves.size() == 0 && piece.isValidMove(move))
-							||(piece.isValidJump(move) && !pastMoves.get(pastMoves.size() - 1).isMove())){
-						validateMove(move);
-						return true;
-					}
-				}
+		//check if there's a piece of opposite color
+		if(mid_space.getPiece()!= null && mid_space.getPiece().getColor() != activeColor){
+			return piece.isValidJump(move);
 		}
 		return false;
 	}
@@ -117,17 +103,18 @@ public class Game {
 		return validatedMoves.size();
 	}
 
-	private void makeMove(Move move){
-		validatedMoves.add(board);
-		Board copyBoard = new Board(board);
+	public void makeMove(Move move){
+		if(validateMove(move)){
+			validatedMoves.add(board);
+			Board copyBoard = new Board(board);
 			Piece temp = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).getPiece();
 			copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).setPiece(null);
 			copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).setPiece(temp);
-		if(move.isJump()){
-			copyBoard.getRow((move.getStart().getRow() + move.getEnd().getRow()) / 2).getSpace((move.getStart().getCol() + move.getEnd().getCol() / 2)).setPiece(null);
+			if(move.isJump()){
+				copyBoard.getRow((move.getStart().getRow() + move.getEnd().getRow()) / 2).getSpace((move.getStart().getCol() + move.getEnd().getCol() / 2)).setPiece(null);
+			}
+			board = copyBoard;
 		}
-
-		board = copyBoard;
 	}
 	
 	/**
