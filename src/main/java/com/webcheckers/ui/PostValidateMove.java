@@ -24,14 +24,24 @@ public class PostValidateMove implements Route {
 
     private final GameManager gameManager;
     private final TemplateEngine templateEngine;
+
     /**
-     * PostValidateMove, uses gamemanger to find and mange game aspects
+     * The constructor for the {@code POST /validateMove} route handler.
+     * @param templateEngine
+     * @param gameManager
      */
     public PostValidateMove(final TemplateEngine templateEngine, final GameManager gameManager) {
         this.templateEngine = templateEngine;
         this.gameManager = gameManager;
     }
 
+    /**
+     * sends valid move to model
+     * @param request
+     * @param response
+     * @return json message
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 

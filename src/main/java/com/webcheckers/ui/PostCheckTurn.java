@@ -26,13 +26,23 @@ public class PostCheckTurn implements Route {
     private final TemplateEngine templateEngine;
 
     /**
-     * PostCheckTurn, player will ask if it is their turn
+     * The constructor for the {@code POST /checkTurn} route handler.
+     *
+     * @param templateEngine
+     * @param gameManager
      */
     public PostCheckTurn(final TemplateEngine templateEngine, final GameManager gameManager) {
         this.templateEngine = templateEngine;
         this.gameManager = gameManager;
     }
 
+    /**
+     * sends checkturn request
+     * @param request
+     * @param response
+     * @return json message
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 

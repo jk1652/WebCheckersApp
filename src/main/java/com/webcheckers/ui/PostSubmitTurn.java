@@ -26,7 +26,9 @@ public class PostSubmitTurn implements Route {
     private final GameManager gameManager;
 
     /**
-     * PostSubmitTurn, check params are not null
+     * The constructor for the {@code POST /submitTurn} route handler.
+     * @param templateEngine
+     * @param gameManager
      */
     PostSubmitTurn(final TemplateEngine templateEngine, final GameManager gameManager) {
         // validation
@@ -37,6 +39,13 @@ public class PostSubmitTurn implements Route {
         this.gameManager = gameManager;
     }
 
+    /**
+     * This sends a submitted turn
+     * @param request
+     * @param response
+     * @return json message type
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 

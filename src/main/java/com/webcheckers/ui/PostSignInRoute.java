@@ -62,9 +62,10 @@ public class PostSignInRoute implements Route {
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @throws NoSuchElementException when an invalid result is returned after making a guess
+     * This signs a player in
+     * @param request
+     * @param response
+     * @return back to home page while signed in
      */
     @Override
     public String handle(Request request, Response response) {
