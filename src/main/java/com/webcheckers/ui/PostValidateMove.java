@@ -5,8 +5,10 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
+import com.webcheckers.util.Message;
 import spark.*;
 
+import javax.servlet.ServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -41,7 +43,19 @@ public class PostValidateMove implements Route {
         Gson gson = new Gson();
 
         Move move = gson.fromJson(request.queryParams("actionData"),Move.class);
-        game.validateMove(move);
-        return true;
+        boolean yea = game.validateMove(move);
+
+        Message msg;
+        if (yea) { //true
+            msg = Message.info("Valid Move");
+        }
+        else { // if false: error msg
+            msg = Message.error("Invalid Move");
+            // might need to add why move is invalid
+        }
+
+        String json;
+        json = gson.toJson(msg);
+        return json;
     }
 }
