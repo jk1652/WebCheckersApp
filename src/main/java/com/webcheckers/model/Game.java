@@ -113,12 +113,55 @@ public class Game {
 		board = copyBoard;
 	}
 
+	public boolean forceJump() {
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				if (board.getRow(x).getSpace(y).getPiece() != null
+						&& board.getRow(x).getSpace(y).getPiece().getColor() == activeColor) {
+
+					Piece target = board.getRow(x).getSpace(y).getPiece();
+
+					if (activeColor == Piece.Color.RED || target.getType() == Piece.Type.KING) {
+
+						if (x > 6 && y > 6 && board.getRow(x + 1).getSpace(y + 1).getPiece() != null
+								&& board.getRow(x + 1).getSpace(y + 1).getPiece().getColor() != target.getColor()
+								&& board.getRow(x + 2).getSpace(y + 2).getPiece() == null) {
+							return true;
+						}
+
+						if (x > 6 && y < 1 && board.getRow(x + 1).getSpace(y - 1).getPiece() != null
+								&& board.getRow(x + 1).getSpace(y - 1).getPiece().getColor() != target.getColor()
+								&& board.getRow(x + 2).getSpace(y - 2).getPiece() == null) {
+							return true;
+						}
+
+					} else if (activeColor == Piece.Color.WHITE || target.getType() == Piece.Type.KING) {
+
+						if (x < 1 && y > 6 && board.getRow(x - 1).getSpace(y + 1).getPiece() != null
+								&& board.getRow(x - 1).getSpace(y + 1).getPiece().getColor() != target.getColor()
+								&& board.getRow(x - 2).getSpace(y + 2).getPiece() == null) {
+							return true;
+						}
+
+						if (x < 1 && y < 1 && board.getRow(x - 1).getSpace(y - 1).getPiece() != null
+								&& board.getRow(x - 1).getSpace(y - 1).getPiece().getColor() != target.getColor()
+								&& board.getRow(x - 2).getSpace(y - 2).getPiece() == null) {
+							return true;
+						}
+					}
+				}
+
+			}
+		}
+		return false;
+	}
+
 	public void setKing(Move move){
 		Piece piece = board.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).getPiece();
 		if(activeColor == Piece.Color.RED && move.getEnd().getRow() == 7){piece.setKing();}
 		if(activeColor == Piece.Color.WHITE && move.getEnd().getRow() == 0){piece.setKing();}
 	}
-	
+
 	/**
 	 * Check if a player is a participant in this game.
 	 * @return true if the player is a participant.
