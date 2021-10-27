@@ -70,4 +70,14 @@ public class Row implements Iterable<Space>{
     	} else
     		return iterator();
     }
+
+    @Override
+    public String toString() {
+	String s = "";
+	for (Space space : this) {
+		Piece piece = space.getPiece();
+		s += piece == null ? "_" : piece.getColor().ordinal();
+	}
+	return s;
+    }
 }

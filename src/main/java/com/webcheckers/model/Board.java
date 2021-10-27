@@ -119,4 +119,12 @@ public class Board implements Iterable<Row> {
     public Iterator<Row> iterator() {
         return rows.iterator();
     }
+
+    @Override
+    public String toString() {
+	String s = "";
+	for (Row row : this)
+		s += row.toString() + "\n";
+	return s;
+    }
 }
