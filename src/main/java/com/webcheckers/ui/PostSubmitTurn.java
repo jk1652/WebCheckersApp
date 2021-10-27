@@ -37,11 +37,17 @@ public class PostSubmitTurn implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
-        //TODO Have turn effect actual model
+        boolean check = game.forceJump();
 
-        game.submitMove();
+        Message msg;
+        if (check) {
+            msg = Message.error("Jump available");
+        }
+        else {
+            game.submitMove();
+            msg = Message.info("Turn Submitted");
+        }
 
-        Message msg = Message.info("Turn Submitted");
 
         Gson gson = new GsonBuilder().create();
         return gson.toJson( msg );
