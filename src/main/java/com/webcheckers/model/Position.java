@@ -1,5 +1,9 @@
 package com.webcheckers.model;
 
+/**
+ * @author Spencer Creveling
+ */
+
 public class Position {
     private final int row;
     private final int cell;

@@ -11,9 +11,9 @@ public class Piece {
     //
 
     public enum Type {SINGLE, KING}
-    private Type type;
-
     public enum Color {RED, WHITE}
+
+    private Type type;
     private final Color color;
 
     //
@@ -30,11 +30,15 @@ public class Piece {
         this.color = color;
     }
 
+    //
+    // Copy Constructor
+    //
+
     /**
      *
      * @param piece piece object to be deep copied
      */
-    public Piece(Piece piece){	
+    public Piece(Piece piece){
         this.type = piece.getType();
         this.color = piece.getColor();
     }

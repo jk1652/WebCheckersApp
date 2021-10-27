@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 /**
  * @author David Pritchard
+ * @author Quentin Ramos
+ * @author Spencer Creveling
+ * @author Zane Kitchen Lipski
  */
 public class Game {
 	private static int GAME_COUNTER = 0;
@@ -64,24 +67,25 @@ public class Game {
 		//Get the piece on that start position
 		Piece piece = start_space.getPiece();
 
+		//Makes sure you can't move again
 		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isMove()){
 			validity = "you cant move again";
 			return false;
 		}
 
+		//Makes sure you can't perform a simple move after a jump
 		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isJump() && move.isMove()){
 			validity = "you can not simple move after a jump";
 			return false;
 		}
 
+		//Ensures you are moving the same piece
 		if(pastMoves.size() > 0 && !move.getStart().equals(pastMoves.get(pastMoves.size() - 1).getEnd())){
 			validity = "you can not move two pieces";
 			return false;
 		}
 
-
-
-		//Check if the piece is doing a valid move
+		//Check if the piece is doing a jump move
 		if(forceJump() && move.isMove()) {
 			validity = "There is a jump available!";
 			return false;
@@ -110,7 +114,7 @@ public class Game {
 		int midCol = ((initCol + finalCol)/2);
 		Space mid_space = board.getRow(midRow).getSpace(midCol);
 
-		//check if move is a jump
+		//check if move is a jump and if another jump is available
 		if(move.isJump() && forceJump()){
 			//check if jumped over piece exists
 			if(mid_space.getPiece()== null) {
@@ -155,8 +159,8 @@ public class Game {
 	 */
 	public void submitMove(){
 		board = new Board(board);
-		validatedMoves = new ArrayList<Board>();
-		pastMoves = new ArrayList<Move>();
+		validatedMoves = new ArrayList<>();
+		pastMoves = new ArrayList<>();
 		swapActiveColor();
 	}
 
@@ -365,7 +369,7 @@ public class Game {
 
 	/**
 	 *
-	 * @return the string message about the validity of the last submiited move
+	 * @return the string message about the validity of the last submitted move
 	 */
 	public String getValidity(){
 		return validity;

@@ -55,7 +55,9 @@ public class Space {
      * boolean should be set regardless of piece status
      * @return if the space is valid regardless of contends
      */
-    private boolean naturalValid(){return isValid;}
+    private boolean naturalValid(){
+        return isValid;
+    }
 
     /**
      *
@@ -69,5 +71,7 @@ public class Space {
      *
      * @param piece sets the current piece on the space
      */
-    public void setPiece(Piece piece){this.piece = piece;}
+    public void setPiece(Piece piece){
+        this.piece = piece;
+    }
 }
