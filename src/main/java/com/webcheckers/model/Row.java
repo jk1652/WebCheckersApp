@@ -31,7 +31,7 @@ public class Row implements Iterable<Space>{
         this.index = row.index;
         for(int x = 0; x < 8; x++){
             spaces.add(row.iterator().next());
-        }
+        }	
     }
 
 

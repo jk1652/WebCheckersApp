@@ -17,8 +17,11 @@ public class Space {
 
     public Space(Space space){
         this.cellIdx = space.cellIdx;
-        this.isValid = isValid();
-        this.piece = new Piece(space.piece);
+        this.isValid = space.isValid(); // h
+    	if (space.piece != null)
+            this.piece = new Piece(space.piece);
+        else
+            this.piece = null;
     }
 
     public int getCellIdx(){

@@ -30,9 +30,12 @@ public class Board implements Iterable<Row> {
     }
 
     public Board (Board board){
-        for(int x = 0; x < 8; x++){
-            rows.add(new Row(board.iterator().next()));
-        }
+     	for (int row = 0; row < 8; row++) {
+		ArrayList<Space> spaces = new ArrayList<>();
+		for (Space space : board.getRow(row))
+			spaces.add(new Space(space));
+		rows.add(new Row(row, spaces));
+	}
     }
 
 
