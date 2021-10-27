@@ -65,7 +65,21 @@ public class Game {
 		Piece piece = start_space.getPiece();
 
 		//Check if the piece is doing a valid move
-		if(move.isMove() && !forceJump()){ return piece.isValidMove(move); }
+		if(forceJump()) {
+			validity = "There is a jump available!";
+			return false;
+		}
+		else{
+			if(move.isMove()){
+				if(piece.isValidMove(move)){
+					validity = "Simple move is valid.";
+					return true;
+				}
+				else{
+					validity = "Your piece can't move backwards.";
+					return false;}
+			}
+		}
 
 		//check if there's a piece between start and end
 
@@ -79,9 +93,27 @@ public class Game {
 		int midCol = ((initCol + finalCol)/2);
 		Space mid_space = board.getRow(midRow).getSpace(midCol);
 
-		//check if there's a piece of opposite color
-		if(mid_space.getPiece()!= null && mid_space.getPiece().getColor() != activeColor){
-			return piece.isValidJump(move);
+		//check if move is a jump
+		if(move.isJump()){
+			//check if jumped over piece exists
+			if(mid_space.getPiece()== null) {
+				validity = "You can't jump over nothing.";
+			}
+			else{
+				//check if jumped over piece is the same color
+				if (mid_space.getPiece().getColor() == activeColor){
+					validity = "You can't jump over your own piece.";
+				}
+				else{
+					//check if jump was successful
+					if(piece.isValidJump(move)){
+						validity = "Jump was successful.";
+						return true;
+					}
+					validity = "You can't jump backwards.";
+				}
+			}
+			return false;
 		}
 		return false;
 	}
@@ -150,7 +182,6 @@ public class Game {
 						}
 					}
 				}
-
 			}
 		}
 		return false;
@@ -208,6 +239,10 @@ public class Game {
 	
 	public Board getBoardView() {
 		return board;
+	}
+
+	public String getValidity(){
+		return validity;
 	}
 
 	public void swapActiveColor(){
