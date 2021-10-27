@@ -38,12 +38,14 @@ public class PostCheckTurn implements Route {
 
         Board board = game.getBoardView();
 
+        Gson gson = new GsonBuilder().create();
+        Message msg;
         if (board.getExitState()) {
-            gameManager.finishGame(name);
-            return null;
+            msg = Message.info("true");
+            return gson.toJson( msg );
         }
 
-        Message msg;
+
         // if red player asks if it is their turn and they are active
         if (game.getRedPlayer().equals(player) && activecolor == Piece.Color.RED){
             msg = Message.info("true");
@@ -57,7 +59,7 @@ public class PostCheckTurn implements Route {
             msg = Message.info("false");
         }
 
-        Gson gson = new GsonBuilder().create();
+
         return gson.toJson( msg );
 
     }

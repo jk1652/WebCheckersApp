@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.*;
@@ -57,8 +58,14 @@ public class PostResignGameRoute implements Route {
         //return json;
         //response.redirect(WebServer.HOME_URL);
 
-
-        board.setWinner(game.getUserColor(playerName));
+        //player asking color
+        Piece.Color userColor = game.getUserColor(playerName);
+        if (userColor == game.getActiveColor()){
+            board.setWinner(game.getUserColor(playerName));
+        }
+        else {
+            msg = Message.error("Can't resign now");
+        }
 
         return (gson.toJson(msg));
 
