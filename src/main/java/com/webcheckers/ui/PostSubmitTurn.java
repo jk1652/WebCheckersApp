@@ -39,9 +39,9 @@ public class PostSubmitTurn implements Route {
 
         game.submitMove();
 
-        request.session().attribute("message", Message.info("Turn Submitted"));
-        response.redirect(WebServer.GAME_URL);
-        return null;
+        Message msg = Message.info("Turn Submitted");
 
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson( msg );
     }
 }
