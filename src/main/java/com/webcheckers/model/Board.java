@@ -33,6 +33,12 @@ public class Board implements Iterable<Row> {
         }
     }
 
+    /**
+     * this constructer is used to create deep copys of past
+     * board states so when the move stack is cleard the board
+     * is not renderd null
+     * @param board board object to be copied
+     */
     public Board (Board board){
      	for (int row = 0; row < 8; row++) {
 		ArrayList<Space> spaces = new ArrayList<>();
@@ -42,15 +48,28 @@ public class Board implements Iterable<Row> {
 	}
     }
 
+    /**
+     * this function is used to set the winner of the game
+     * @param color the color of the the winning player
+     */
     public void setWinner(Piece.Color color) {
         winner = color;
         resign = Boolean.TRUE;
     }
 
+    /**
+     * this function is used to check if a player has resigned.
+     * @return if a player has resigned
+     */
     public boolean getResign() {
         return  resign;
     }
 
+    /**
+     * this function is used to check if a player has won
+     *though capturing all pieces
+     * @return the color of the winner if their is one
+     */
     public Piece.Color getWinner() {
         if (winner == null) {
             boolean[] won = new boolean[]{false, false};
@@ -70,12 +89,17 @@ public class Board implements Iterable<Row> {
         return winner;
     }
 
+    /**
+     * this function is used to check how the game was exited
+     * ie via win or forfit
+     * @return the exit status
+     */
     public boolean getExitState() {
         return exit;
     }
 
     /**
-     *
+     *returns an even row on the checkers board
      * @param color color of pieces to be placed
      * @param starter should there be pieces in this row
      * @return a array list of squares that can be immediately put into a row instance
@@ -98,7 +122,7 @@ public class Board implements Iterable<Row> {
         return tempSpaces;
     }
     /**
-     *
+     *created an odd row on the checker board
      * @param color color of pieces to be placed
      * @param starter should there be pieces in this row
      * @return a array list of squares that can be immediately put into a row instance
