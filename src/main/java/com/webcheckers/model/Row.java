@@ -22,11 +22,20 @@ public class Row implements Iterable<Space>{
     // Constructor
     //
 
+    /**
+     *
+     * @param index the index of the row
+     * @param spaces an iterable of spaces
+     */
     public Row(int index, ArrayList<Space> spaces){
         this.index = index;
         this.spaces = spaces;
     }
 
+    /**
+     *
+     * @param row the row object to be deep copied
+     */
     public Row(Row row){
         this.index = row.index;
         for(int x = 0; x < 8; x++){
@@ -56,11 +65,20 @@ public class Row implements Iterable<Space>{
         return spaces.get(col);
     }
 
+    /**
+     *
+     * @return the proper iterator
+     */
     @Override
     public Iterator<Space> iterator() {
         return spaces.iterator();
     }
-   
+
+    /**
+     *
+     * @param flip if the iterator should be forwards or nackwards
+     * @return the appropriate iterator
+     */
     public Iterator<Space> iterator(boolean flip) {
     	if (flip) {
     		ArrayList<Space> flipped = new ArrayList<>();
@@ -71,6 +89,10 @@ public class Row implements Iterable<Space>{
     		return iterator();
     }
 
+    /**
+     * for debug purposes only
+     * @return the stat of the row in string format
+     */
     @Override
     public String toString() {
 	String s = "";

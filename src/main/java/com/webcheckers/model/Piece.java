@@ -20,11 +20,20 @@ public class Piece {
     // Constructor
     //
 
+    /**
+     *
+     * @param type the type of piece to be made
+     * @param color the color of the piece
+     */
     public Piece(Type type, Color color){
         this.type = type;
         this.color = color;
     }
 
+    /**
+     *
+     * @param piece piece object to be deep copied
+     */
     public Piece(Piece piece){	
         this.type = piece.getType();
         this.color = piece.getColor();

@@ -55,6 +55,10 @@ public class Move {
         return row==2 && col==2;
     }
 
+    /**
+     * Purely for debugging purposes
+     * @return the state of the move
+     */
     @Override
     public String toString(){
         return "Start " + start.toString() + "\nEnd " + end.toString();
