@@ -50,6 +50,7 @@ public class PostValidateMove implements Route {
         if (yea) { //true
             msg = Message.info("Valid Move");
             game.makeMove(move);
+            game.setKing(move);
         }
         else { // if false: error msg
             msg = Message.error("Invalid Move");

@@ -178,7 +178,7 @@ public class WebServer {
     post(VALIDATE_URL, new PostValidateMove(templateEngine, gameManager));
     post(CHECK_URL, new PostCheckTurn(templateEngine, gameManager));
 
-    post(RESIGN_URL, new PostResignGameRoute(templateEngine, gameManager));
+    post(RESIGN_URL, new PostResignGameRoute(gson, templateEngine, gameManager));
 
     post(BACKUP_MOVE_URL, new PostBackupMove(templateEngine, gameManager));
     post(SUBMIT_TURN_URL, new PostSubmitTurn(templateEngine, gameManager));
