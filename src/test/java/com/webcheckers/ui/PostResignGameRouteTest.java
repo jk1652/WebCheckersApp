@@ -1,5 +1,6 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
@@ -15,17 +16,18 @@ import static org.mockito.Mockito.when;
 
 /**
  * @Author Zane Kitchen Lipski
- * test PostSubmitTurn
+ * test PostResignGameRoute
  */
-public class PostSubmitTurnTest {
+public class PostResignGameRouteTest {
     private Request request;
     private Session session;
     private Response response;
     private TemplateEngine engine;
 
     private GameManager gameManager;
+    private  Gson gson;
 
-    private PostSubmitTurn CuT;
+    private PostResignGameRoute CuT;
 
     @BeforeEach
     public void setup() {
@@ -35,7 +37,8 @@ public class PostSubmitTurnTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
         gameManager = new GameManager();
-        CuT = new PostSubmitTurn(engine, gameManager);
+        gson = new Gson();
+        CuT = new PostResignGameRoute(gson, engine, gameManager);
     }
 
     /**
