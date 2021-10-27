@@ -14,13 +14,20 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import static spark.Spark.halt;
-
+/**
+ * @Author Zane Kitchen Lipski
+ * @Author Jaden Kitchen Lipski
+ * PostSubmitTurn, check when a turn is being submitted
+ */
 public class PostSubmitTurn implements Route {
 
     private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
     private final TemplateEngine templateEngine;
     private final GameManager gameManager;
 
+    /**
+     * PostSubmitTurn, check params are not null
+     */
     PostSubmitTurn(final TemplateEngine templateEngine, final GameManager gameManager) {
         // validation
         Objects.requireNonNull(gameManager, "game must not be null");
@@ -37,17 +44,17 @@ public class PostSubmitTurn implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
+        //checks if there is a forceable jump on the game board
         boolean check = game.forceJump();
 
         Message msg;
-        if (check) {
+        if (check) { //error
             msg = Message.error("Jump available");
         }
-        else {
+        else { //good
             game.submitMove();
             msg = Message.info("Turn Submitted");
         }
-
 
         Gson gson = new GsonBuilder().create();
         return gson.toJson( msg );
