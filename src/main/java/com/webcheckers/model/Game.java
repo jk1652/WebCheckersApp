@@ -111,7 +111,7 @@ public class Game {
 		Space mid_space = board.getRow(midRow).getSpace(midCol);
 
 		//check if move is a jump
-		if(move.isJump()){
+		if(move.isJump() && forceJump()){
 			//check if jumped over piece exists
 			if(mid_space.getPiece()== null) {
 				validity = "You can't jump over nothing.";
@@ -211,12 +211,12 @@ public class Game {
 
 					if(target.getColor() == Piece.Color.RED || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
 						if(bottomLeft!= null && bottomLeft.getPiece() != null && bottomLeft.getPiece().getColor() != target.getColor()){
-							if(board.getRow(x+2).getSpace(y-2).getPiece() == null){
+							if(board.getRow(x+2).getSpace(y-2).isValid()){
 								return true;
 							}
 						}
 						if(bottomRight!= null && bottomRight.getPiece() != null && bottomRight.getPiece().getColor() != target.getColor()){
-							if(board.getRow(x+2).getSpace(y+2).getPiece() == null){
+							if(board.getRow(x+2).getSpace(y+2).isValid()){
 								return true;
 							}
 						}
@@ -224,12 +224,12 @@ public class Game {
 
 					if(target.getColor() == Piece.Color.WHITE || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
 						if(topRight!= null && topRight.getPiece() != null && topRight.getPiece().getColor() != target.getColor()){
-							if(board.getRow(x-2).getSpace(y+2).getPiece() == null){
+							if(board.getRow(x-2).getSpace(y+2).isValid()){
 								return true;
 							}
 						}
 						if(topLeft!= null && topLeft.getPiece() != null && topLeft.getPiece().getColor() != target.getColor()){
-							if(board.getRow(x-2).getSpace(y-2).getPiece() == null){
+							if(board.getRow(x-2).getSpace(y-2).isValid()){
 								return true;
 							}
 						}
