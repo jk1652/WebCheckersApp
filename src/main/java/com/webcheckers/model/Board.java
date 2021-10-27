@@ -1,12 +1,13 @@
 package com.webcheckers.model;
 
-/*
-  @author Spencer Creveling
- * @author Quentin Ramos II
- */
-
 import java.util.ArrayList;
 import java.util.Iterator;
+
+/**
+ * @author Spencer Creveling
+ * @author Quentin Ramos II
+ * @author David Pritchard
+ */
 
 public class Board implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
@@ -147,9 +148,9 @@ public class Board implements Iterable<Row> {
 
     @Override
     public String toString() {
-	String s = "";
+	StringBuilder s = new StringBuilder();
 	for (Row row : this)
-		s += row.toString() + "\n";
-	return s;
+		s.append(row.toString()).append("\n");
+	return s.toString();
     }
 }

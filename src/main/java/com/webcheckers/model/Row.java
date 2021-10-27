@@ -3,7 +3,6 @@ package com.webcheckers.model;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 /**
  * @author: Spencer Creveling
  * @author: Quentin Ramos II
@@ -73,11 +72,11 @@ public class Row implements Iterable<Space>{
 
     @Override
     public String toString() {
-	String s = "";
+	StringBuilder s = new StringBuilder();
 	for (Space space : this) {
 		Piece piece = space.getPiece();
-		s += piece == null ? "_" : piece.getColor().ordinal();
+		s.append(piece == null ? "_" : piece.getColor().ordinal());
 	}
-	return s;
+	return s.toString();
     }
 }

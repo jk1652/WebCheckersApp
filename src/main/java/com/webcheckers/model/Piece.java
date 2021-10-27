@@ -11,9 +11,9 @@ public class Piece {
     //
 
     public enum Type {SINGLE, KING}
-    private Type type;
-
     public enum Color {RED, WHITE}
+
+    private Type type;
     private final Color color;
 
     //
@@ -24,6 +24,10 @@ public class Piece {
         this.type = type;
         this.color = color;
     }
+
+    //
+    // Copy Constructor
+    //
 
     public Piece(Piece piece){	
         this.type = piece.getType();

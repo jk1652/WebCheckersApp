@@ -31,10 +31,10 @@ public class PlayerTest {
     public void test_NameEquals() {
         final Player tester = new Player("test");
         final Player other = new Player("other");
-        final Object badobject = new Object();
+        final Object badObject = new Object();
 
         // test if objects are not equal
-        assertNotEquals(tester, badobject);
+        assertNotEquals(tester, badObject);
 
         // equals checks only for the name of player to be the same as it has to be unique
         assertEquals(tester, new Player("test"));

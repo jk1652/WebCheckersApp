@@ -32,11 +32,15 @@ public class Space {
         return isValid && piece == null;
     }
 
-    private boolean naturalValid(){return isValid;}
+    private boolean naturalValid(){
+        return isValid;
+    }
 
     public Piece getPiece(){
         return piece;
     }
 
-    public void setPiece(Piece piece){this.piece = piece;}
+    public void setPiece(Piece piece){
+        this.piece = piece;
+    }
 }

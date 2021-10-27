@@ -1,5 +1,10 @@
 package com.webcheckers.model;
 
+/**
+ * @author Spencer Creveling
+ * @author Quentin Ramos II
+ */
+
 public class Move {
     private final Position start;
     private final Position end;
