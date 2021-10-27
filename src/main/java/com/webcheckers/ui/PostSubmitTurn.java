@@ -1,8 +1,11 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
@@ -36,7 +39,10 @@ public class PostSubmitTurn implements Route {
 
         game.submitMove();
 
-        return null;
+        Message msg = Message.info("Turn Submitted");
+
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson( msg );
 
     }
 }
