@@ -155,11 +155,33 @@ public class Game {
 		pastMoves.add(move);
 		validatedMoves.add(board);
 		Board copyBoard = new Board(board);
-		Piece temp = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).getPiece();
-		copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).setPiece(null);
-		copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).setPiece(temp);
+
+		//Get initial and final spaces
+		Space initSpace = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol());
+		Space endSpace = copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol());
+
+		//Get the piece on the initial space
+		Piece initPiece = initSpace.getPiece();
+
+		if(move.isMove()){
+			//set original space to null
+			initSpace.setPiece(null);
+
+			//set end space to initial piece
+			endSpace.setPiece(initPiece);
+		}
 		if(move.isJump()){
-			copyBoard.getRow((move.getStart().getRow() + move.getEnd().getRow()) / 2).getSpace((move.getStart().getCol() + move.getEnd().getCol() / 2)).setPiece(null);
+			//set original space to null
+			initSpace.setPiece(null);
+
+			//set space in between to null
+			int midRow = ((move.getStart().getRow() + move.getEnd().getRow())/2);
+			int midCol = ((move.getStart().getCol() + move.getEnd().getCol())/2);
+			Space midSpace = copyBoard.getRow(midRow).getSpace(midCol);
+			midSpace.setPiece(null);
+
+			//set end space to initial piece
+			endSpace.setPiece(initPiece);
 		}
 		board = copyBoard;
 	}
