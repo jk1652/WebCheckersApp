@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import java.util.ArrayList;
+
 /**
  * @author David Pritchard
  */
@@ -10,6 +12,11 @@ public class Game {
 	private Piece.Color activeColor;
 	private Board board;
 	private int gameID;
+	private ArrayList<Board>  validatedMoves = new ArrayList<>();
+	private ArrayList<Move> pastMoves = new ArrayList<>();
+	private String validity;
+
+
 	
 	/**
 	 * A value object for efficient storage of game information.
@@ -25,8 +32,6 @@ public class Game {
 			gameID = GAME_COUNTER;
 			GAME_COUNTER++;
 		}
-		
-		
 	}
 	
 	/**
@@ -41,7 +46,207 @@ public class Game {
 		else
 			return viewMode.equals(View.SPECTATOR);
 	}
-	
+
+	/**
+	 * Checks the validity of movement
+	 * @param move the move the player made
+	 * @return true if move is valid / False if move isn't
+	 */
+	public boolean validateMove(Move move){
+		//Retrieve the starting position
+		Position start_pos = move.getStart();
+		int initRow = start_pos.getRow();
+		int initCol = start_pos.getCol();
+
+		//Get the space according to the position
+		Space start_space = board.getRow(initRow).getSpace(initCol);
+
+		//Get the piece on that start position
+		Piece piece = start_space.getPiece();
+
+		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isMove()){
+			validity = "you cant move again";
+			return false;
+		}
+
+		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isJump() && move.isMove()){
+			validity = "you can not simple move after a jump";
+			return false;
+		}
+
+		if(pastMoves.size() > 0 && !move.getStart().equals(pastMoves.get(pastMoves.size() - 1).getEnd())){
+			validity = "you can not move two pieces";
+			return false;
+		}
+
+
+
+		//Check if the piece is doing a valid move
+		if(forceJump() && move.isMove()) {
+			validity = "There is a jump available!";
+			return false;
+		}
+		else{
+			if(move.isMove()){
+				if(piece.isValidMove(move)){
+					validity = "Simple move is valid.";
+					return true;
+				}
+				else{
+					validity = "Your piece can't move backwards.";
+					return false;}
+			}
+		}
+
+		//check if there's a piece between start and end
+
+		//get final position of piece
+		Position final_pos = move.getEnd();
+		int finalRow = final_pos.getRow();
+		int finalCol = final_pos.getCol();
+
+		//get space where piece should be
+		int midRow = ((initRow + finalRow)/2);
+		int midCol = ((initCol + finalCol)/2);
+		Space mid_space = board.getRow(midRow).getSpace(midCol);
+
+		//check if move is a jump
+		if(move.isJump()){
+			//check if jumped over piece exists
+			if(mid_space.getPiece()== null) {
+				validity = "You can't jump over nothing.";
+			}
+			else{
+				//check if jumped over piece is the same color
+				if (mid_space.getPiece().getColor() == activeColor){
+					validity = "You can't jump over your own piece.";
+				}
+				else{
+					//check if jump was successful
+					if(piece.isValidJump(move)){
+						validity = "Jump was successful.";
+						return true;
+					}
+					validity = "You can't jump backwards.";
+				}
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public Boolean undoMove(){
+		if(validatedMoves.size() != 0){
+			board = validatedMoves.remove(validatedMoves.size() - 1);
+			pastMoves.remove(pastMoves.size()-1);
+			return true;
+		}
+		return false;
+	}
+
+	public void submitMove(){
+		board = new Board(board);
+		validatedMoves = new ArrayList<Board>();
+		pastMoves = new ArrayList<Move>();
+		swapActiveColor();
+	}
+
+	public void makeMove(Move move){
+		pastMoves.add(move);
+		validatedMoves.add(board);
+		Board copyBoard = new Board(board);
+
+		//Get initial and final spaces
+		Space initSpace = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol());
+		Space endSpace = copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol());
+
+		//Get the piece on the initial space
+		Piece initPiece = initSpace.getPiece();
+
+		if(move.isMove()){
+			//set original space to null
+			initSpace.setPiece(null);
+
+			//set end space to initial piece
+			endSpace.setPiece(initPiece);
+		}
+		if(move.isJump()){
+			//set original space to null
+			initSpace.setPiece(null);
+
+			//set space in between to null
+			int midRow = ((move.getStart().getRow() + move.getEnd().getRow())/2);
+			int midCol = ((move.getStart().getCol() + move.getEnd().getCol())/2);
+			Space midSpace = copyBoard.getRow(midRow).getSpace(midCol);
+			midSpace.setPiece(null);
+
+			//set end space to initial piece
+			endSpace.setPiece(initPiece);
+		}
+		board = copyBoard;
+	}
+
+	public boolean forceJump() {
+
+		for (int x = 0; x < 8; x++) {
+			for (int y = 0; y < 8; y++) {
+				Piece target = board.getRow(x).getSpace(y).getPiece();
+				Space topRight = null;
+				Space bottomRight = null;
+				Space topLeft = null;
+				Space bottomLeft = null;
+				if(target != null){
+					if(x < 6 && y < 6){
+						bottomRight = board.getRow(x+1).getSpace(y+1);
+					}
+					if(x < 6 && y > 1){
+						bottomLeft = board.getRow(x+1).getSpace(y-1);
+					}
+					if(x > 1 && y < 6){
+						topRight = board.getRow(x-1).getSpace(y+1);
+					}
+					if(x > 1 && y > 1){
+						topLeft = board.getRow(x-1).getSpace(y-1);
+					}
+
+					if(target.getColor() == Piece.Color.RED || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
+						if(bottomLeft!= null && bottomLeft.getPiece() != null && bottomLeft.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x+2).getSpace(y-2).getPiece() == null){
+								return true;
+							}
+						}
+						if(bottomRight!= null && bottomRight.getPiece() != null && bottomRight.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x+2).getSpace(y+2).getPiece() == null){
+								return true;
+							}
+						}
+					}
+
+					if(target.getColor() == Piece.Color.WHITE || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
+						if(topRight!= null && topRight.getPiece() != null && topRight.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x-2).getSpace(y+2).getPiece() == null){
+								return true;
+							}
+						}
+						if(topLeft!= null && topLeft.getPiece() != null && topLeft.getPiece().getColor() != target.getColor()){
+							if(board.getRow(x-2).getSpace(y-2).getPiece() == null){
+								return true;
+							}
+						}
+					}
+
+				}
+			}
+		}
+		return false;
+	}
+
+	public void setKing(Move move){
+		Piece piece = board.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).getPiece();
+		if(activeColor == Piece.Color.RED && move.getEnd().getRow() == 7){piece.setKing();}
+		if(activeColor == Piece.Color.WHITE && move.getEnd().getRow() == 0){piece.setKing();}
+	}
+
 	/**
 	 * Check if a player is a participant in this game.
 	 * @return true if the player is a participant.
@@ -57,6 +262,23 @@ public class Game {
 		return gameID;
 	}
 	
+	public Piece.Color getWinner() {
+		return board.getWinner();
+	}
+
+	public String getOpponentName(String playerName) {
+		if (playerName.equals(redPlayer.getName()))
+			return whitePlayer.getName();
+		else
+			return redPlayer.getName();
+	}
+	
+	public Piece.Color getUserColor(String username) {
+		if (username.equals(redPlayer.getName()))
+			return Piece.Color.RED;
+		else
+			return Piece.Color.WHITE;
+	}
 	public Piece.Color getActiveColor() {
 		return activeColor;
 	}
@@ -72,4 +294,19 @@ public class Game {
 	public Board getBoardView() {
 		return board;
 	}
+
+	public String getValidity(){
+		return validity;
+	}
+
+	public void swapActiveColor(){
+		if (this.activeColor == Piece.Color.RED) {
+			this.activeColor = Piece.Color.WHITE;
+		}
+		else {
+			this.activeColor = Piece.Color.RED;
+		}
+	}
+
+
 }

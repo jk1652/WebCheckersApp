@@ -15,6 +15,15 @@ public class Space {
         this.piece = piece;
     }
 
+    public Space(Space space){
+        this.cellIdx = space.cellIdx;
+        this.isValid = space.naturalValid(); // h
+    	if (space.piece != null)
+            this.piece = new Piece(space.piece);
+        else
+            this.piece = null;
+    }
+
     public int getCellIdx(){
         return cellIdx;
     }
@@ -23,7 +32,11 @@ public class Space {
         return isValid && piece == null;
     }
 
+    private boolean naturalValid(){return isValid;}
+
     public Piece getPiece(){
         return piece;
     }
+
+    public void setPiece(Piece piece){this.piece = piece;}
 }

@@ -1,27 +1,29 @@
 package com.webcheckers.model;
 
-/**
- * @author Spencer Creveling
+/*
+  @author Spencer Creveling
  * @author Quentin Ramos II
  */
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class Board implements Iterable<Row> {
     private ArrayList<Row> rows = new ArrayList<>();
 
+    private Piece.Color winner = null;
+    private boolean resign = Boolean.FALSE;
+    private boolean exit = Boolean.FALSE;
+
     /**
-     * Board constructer when called creates a new array of
-     * rows to be used, calles create even and create odd to make code
-     * more ledgable
+     * Board constructor when called creates a new array of
+     * rows to be used, calls create even and create odd to make code
+     * more legible
      */
     public Board(){
         Piece.Color color = Piece.Color.RED;
         for(int row = 0; row < 8; row++) {
-            boolean place = true;
-            if( row == 3 || row == 4){place = false;}
+            boolean place = row != 3 && row != 4;
             if(row > 4){ color = Piece.Color.WHITE;}
             if(row % 2 == 0){
                 rows.add(new Row(row,CreateEven(color,place)));
@@ -31,11 +33,52 @@ public class Board implements Iterable<Row> {
         }
     }
 
+    public Board (Board board){
+     	for (int row = 0; row < 8; row++) {
+		ArrayList<Space> spaces = new ArrayList<>();
+		for (Space space : board.getRow(row))
+			spaces.add(new Space(space));
+		rows.add(new Row(row, spaces));
+	}
+    }
+
+    public void setWinner(Piece.Color color) {
+        winner = color;
+        resign = Boolean.TRUE;
+    }
+
+    public boolean getResign() {
+        return  resign;
+    }
+
+    public Piece.Color getWinner() {
+        if (winner == null) {
+            boolean[] won = new boolean[]{false, false};
+            for (Row row : this) {
+                for (Space space : row) {
+                    Piece piece = space.getPiece();
+                    if (piece != null)
+                        won[piece.getColor().ordinal()] = true;
+                    if (won[0] && won[1])
+                        return null;
+                }
+            }
+            exit = Boolean.TRUE;
+            return Piece.Color.values()[won[0] ? 0 : 1]; // return the value that is true
+        }
+        exit = Boolean.TRUE;
+        return winner;
+    }
+
+    public boolean getExitState() {
+        return exit;
+    }
+
     /**
      *
-     * @param color color of peices to be placed
-     * @param starter should there be peices in this row
-     * @return a array list of squares that can be imidetly put into a row instance
+     * @param color color of pieces to be placed
+     * @param starter should there be pieces in this row
+     * @return a array list of squares that can be immediately put into a row instance
      */
     private ArrayList<Space> CreateEven(Piece.Color color, Boolean starter){
         ArrayList<Space> tempSpaces = new ArrayList<>();
@@ -56,9 +99,9 @@ public class Board implements Iterable<Row> {
     }
     /**
      *
-     * @param color color of peices to be placed
-     * @param starter should there be peices in this row
-     * @return a array list of squares that can be imidetly put into a row instance
+     * @param color color of pieces to be placed
+     * @param starter should there be pieces in this row
+     * @return a array list of squares that can be immediately put into a row instance
      */
     private ArrayList<Space> CreateOdd(Piece.Color color, Boolean starter){
         Piece piece = null;
@@ -75,10 +118,8 @@ public class Board implements Iterable<Row> {
         }
         return tempSpaces;
     }
-
     /**
      * Returns the iterator ordered to display correctly for the player's viewpoints.
-     * @param color should the board be flipped.
      */
     public Iterator<Row> iterator(boolean flip) {
     	if (flip) {
@@ -89,9 +130,26 @@ public class Board implements Iterable<Row> {
     	} else
     		return iterator();
     }
-    
+
+    /**
+     * returns a specific row
+     * @param row_num the row number
+     * @return specific row
+     */
+    public Row getRow(int row_num){
+        return rows.get(row_num);
+    }
+
     @Override
     public Iterator<Row> iterator() {
         return rows.iterator();
+    }
+
+    @Override
+    public String toString() {
+	String s = "";
+	for (Row row : this)
+		s += row.toString() + "\n";
+	return s;
     }
 }
