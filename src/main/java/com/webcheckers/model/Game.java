@@ -94,27 +94,24 @@ public class Game {
 	}
 
 	public void submitMove(){
+		board = new Board(board);
 		validatedMoves = new ArrayList<Board>();
 		pastMoves = new ArrayList<Move>();
 		swapActiveColor();
 	}
 
-	public int getMoveSize(){
-		return validatedMoves.size();
-	}
-
 	public void makeMove(Move move){
-		if(validateMove(move)){
-			validatedMoves.add(board);
-			Board copyBoard = new Board(board);
-			Piece temp = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).getPiece();
-			copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).setPiece(null);
-			copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).setPiece(temp);
-			if(move.isJump()){
-				copyBoard.getRow((move.getStart().getRow() + move.getEnd().getRow()) / 2).getSpace((move.getStart().getCol() + move.getEnd().getCol() / 2)).setPiece(null);
-			}
-			board = copyBoard;
+		validatedMoves.add(board);
+		Board copyBoard = new Board(board);
+		Piece temp = copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).getPiece();
+		copyBoard.getRow(move.getStart().getRow()).getSpace(move.getStart().getCol()).setPiece(null);
+		copyBoard.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).setPiece(temp);
+		if(temp.getColor() == Piece.Color.RED && move.getEnd().getRow() == 7){temp.setKing();}
+		if(temp.getColor() == Piece.Color.WHITE && move.getEnd().getRow() == 0){temp.setKing();}
+		if(move.isJump()){
+			copyBoard.getRow((move.getStart().getRow() + move.getEnd().getRow()) / 2).getSpace((move.getStart().getCol() + move.getEnd().getCol() / 2)).setPiece(null);
 		}
+		board = copyBoard;
 	}
 	
 	/**
