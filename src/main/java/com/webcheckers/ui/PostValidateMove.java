@@ -43,7 +43,7 @@ public class PostValidateMove implements Route {
     public Object handle(Request request, Response response) throws Exception {
 
         String name = request.session().attribute(PostSignInRoute.USERNAME); //get player's name
-        LOG.config("player makes move: " + name);
+        LOG.config("player " + name + " makes a move");
         Game game = gameManager.findPlayerGame(name);
 
         Gson gson = new Gson();

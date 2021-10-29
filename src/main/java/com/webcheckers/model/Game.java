@@ -222,6 +222,11 @@ public class Game {
 		return false;
 	}
 
+	/**
+	 * checks to see if a piece can jump
+	 * @param start starting position of a piece
+	 * @return true if piece can jump, false if it can't
+	 */
 	public boolean canJump(Position start){
 		Piece current = board.getRow(start.getRow()).getSpace(start.getCol()).getPiece();
 		ArrayList<Boolean> booleans = new ArrayList<>();
@@ -289,6 +294,7 @@ public class Game {
 	public boolean isParticipant(Player player) {
 		return player.equals(redPlayer) || player.equals(whitePlayer);
 	}
+
 	/**
 	 * @return the gameID, a unique integer.
 	 */
@@ -361,13 +367,15 @@ public class Game {
 	}
 
 	/**
-	 *
 	 * @return size of validated moves
 	 */
 	public int getMoveSize(){
 		return validatedMoves.size();
 	}
 
+	/**
+	 * @return arraylist of past moves
+	 */
 	public ArrayList<Move> getPastMoves() {
 		return pastMoves;
 	}
