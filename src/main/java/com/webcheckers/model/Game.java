@@ -208,7 +208,7 @@ public class Game {
 	}
 
 	/**
-	 * checks all pieces of active color and check if
+	 * checks all pieces of active color and checks if
 	 * there is a capture that can be made
 	 * @return if there is a forced jump
 	 */
@@ -229,7 +229,6 @@ public class Game {
 	 */
 	public boolean canJump(Position start){
 		Piece current = board.getRow(start.getRow()).getSpace(start.getCol()).getPiece();
-		ArrayList<Boolean> booleans = new ArrayList<>();
 		//red singles or king pieces
 		if(start.getRow() + 2 <= 7){
 			if(start.getCol() + 2 <= 7){
@@ -237,18 +236,14 @@ public class Game {
 				Space midRightRow = board.getRow(start.getRow()+1).getSpace(start.getCol()+1);
 				if(midRightRow.getPiece()!=null && midRightRow.getPiece().getColor() != current.getColor() &&
 						endRightRow.isValid()){
-					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){
-						booleans.add(true);}
-				}
+					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){return true;}}
 			}
 			if(start.getCol() - 2 >= 0){
 				Space endLeftRow = board.getRow(start.getRow()+2).getSpace(start.getCol()-2);
 				Space midLeftRow = board.getRow(start.getRow()+1).getSpace(start.getCol()-1);
 				if(midLeftRow.getPiece()!=null && midLeftRow.getPiece().getColor() != current.getColor() &&
 						endLeftRow.isValid()){
-					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){
-						booleans.add(true);}
-				}
+					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){return true;}}
 			}
 		}
 		//white singles or king pieces
@@ -258,21 +253,16 @@ public class Game {
 				Space midBRightRow = board.getRow(start.getRow()-1).getSpace(start.getCol()+1);
 				if(midBRightRow.getPiece()!=null && midBRightRow.getPiece().getColor() != current.getColor() &&
 						endBRightRow.isValid()){
-					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){
-						booleans.add(true);}
-					}
+					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){return true;}}
 			}
 			if(start.getCol() - 2 >= 0){
 				Space endBLeftRow = board.getRow(start.getRow()-2).getSpace(start.getCol()-2);
 				Space midBLeftRow = board.getRow(start.getRow()-1).getSpace(start.getCol()-1);
 				if(midBLeftRow.getPiece()!=null && midBLeftRow.getPiece().getColor() != current.getColor() &&
 						endBLeftRow.isValid()){
-					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){
-						booleans.add(true);}
-				}
+					return current.getColor() == Piece.Color.WHITE || current.getType() == Piece.Type.KING;}
 			}
 		}
-		for (Boolean temp : booleans) {if (temp) {return true;}}
 		return false;
 	}
 
