@@ -3,17 +3,16 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
 import com.webcheckers.util.Message;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.TemplateEngine;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import static spark.Spark.halt;
 /**
  * @Author Zane Kitchen Lipski
  * @Author Jaden Kitchen Lipski
@@ -27,8 +26,8 @@ public class PostSubmitTurn implements Route {
 
     /**
      * The constructor for the {@code POST /submitTurn} route handler.
-     * @param templateEngine
-     * @param gameManager
+     * @param templateEngine the template engine
+     * @param gameManager the game manager for all games
      */
     PostSubmitTurn(final TemplateEngine templateEngine, final GameManager gameManager) {
         // validation
@@ -41,10 +40,10 @@ public class PostSubmitTurn implements Route {
 
     /**
      * This sends a submitted turn
-     * @param request
-     * @param response
+     * @param request the request
+     * @param response the response
      * @return json message type
-     * @throws Exception
+     * @throws Exception thrown
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -53,17 +52,14 @@ public class PostSubmitTurn implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
-        //checks if there is a forceable jump on the game board
-        boolean check = game.forceJump();
-
+        //checks if there is a forcible jump on the game board
+        Move latest = game.getPastMoves().get(game.getPastMoves().size() - 1);
         Message msg;
-        if (check) { //error
-            msg = Message.error("Jump available");
+        if(latest.isJump()){
+            if (game.canJump(latest.getEnd())) {msg = Message.error("Another Jump can be made");}
+            else {game.submitMove(); msg = Message.info("Turn Submitted");}
         }
-        else { //good
-            game.submitMove();
-            msg = Message.info("Turn Submitted");
-        }
+        else {game.submitMove();msg = Message.info("Turn Submitted");}
 
         Gson gson = new GsonBuilder().create();
         return gson.toJson( msg );

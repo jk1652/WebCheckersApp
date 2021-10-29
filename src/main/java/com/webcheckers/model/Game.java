@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import java.nio.channels.Pipe;
 import java.util.ArrayList;
 
 /**
@@ -67,9 +68,19 @@ public class Game {
 		//Get the piece on that start position
 		Piece piece = start_space.getPiece();
 
-		//Makes sure you can't move again
+		//get final position of piece
+		Position final_pos = move.getEnd();
+		int finalRow = final_pos.getRow();
+		int finalCol = final_pos.getCol();
+
+		//get middle space where piece should be for jump
+		int midRow = ((initRow + finalRow)/2);
+		int midCol = ((initCol + finalCol)/2);
+		Space mid_space = board.getRow(midRow).getSpace(midCol);
+
+		//Makes sure you can't do a simple move again
 		if(pastMoves.size() > 0 && pastMoves.get(pastMoves.size() - 1).isMove()){
-			validity = "you cant move again";
+			validity = "you can not move again";
 			return false;
 		}
 
@@ -85,56 +96,48 @@ public class Game {
 			return false;
 		}
 
-		//Check if the piece is doing a jump move
+		//If a simple move is tried while a jump is available
 		if(forceJump() && move.isMove()) {
-			validity = "There is a jump available!";
+			validity = "There is a jump available";
 			return false;
 		}
-		else{
-			if(move.isMove()){
-				if(piece.isValidMove(move)){
-					validity = "Simple move is valid.";
-					return true;
-				}
-				else{
-					validity = "Your piece can't move backwards.";
-					return false;}
+		//Check piece type and validity of move
+		else if(move.isMove()){
+			//Check piece type and validity of move
+			if(piece.isValidMove(move)){
+				validity = "Valid simple move performed.";
+				return true;
+			}
+			//Single tried moving backwards
+			else{
+				validity = "Your piece can't move backwards.";
+				return false;
 			}
 		}
-
-		//check if there's a piece between start and end
-
-		//get final position of piece
-		Position final_pos = move.getEnd();
-		int finalRow = final_pos.getRow();
-		int finalCol = final_pos.getCol();
-
-		//get space where piece should be
-		int midRow = ((initRow + finalRow)/2);
-		int midCol = ((initCol + finalCol)/2);
-		Space mid_space = board.getRow(midRow).getSpace(midCol);
-
-		//check if move is a jump and if another jump is available
-		if(move.isJump() && forceJump()){
+		//If a jump is tried
+		else if(move.isJump()){
 			//check if jumped over piece exists
-			if(mid_space.getPiece()== null) {
+			if(mid_space.getPiece() == null) {
 				validity = "You can't jump over nothing.";
 			}
-			else{
-				//check if jumped over piece is the same color
-				if (mid_space.getPiece().getColor() == activeColor){
-					validity = "You can't jump over your own piece.";
-				}
-				else{
-					//check if jump was successful
-					if(piece.isValidJump(move)){
-						validity = "Jump was successful.";
-						return true;
-					}
-					validity = "You can't jump backwards.";
-				}
+			//check if jumped over piece is the same color
+			else if(mid_space.getPiece().getColor() == activeColor){
+				validity = "You can't jump over your own piece.";
 			}
-			return false;
+
+			else{
+				//check if jump was successful
+				if(piece.isValidJump(move)){
+					validity = "Valid jump move performed.";
+					return true;
+				}
+				//Single tried jumping back
+				validity = "You can't jump backwards.";
+			}
+		}
+		//If move is not jump or move
+		else{
+			validity = "Invalid movement, do a valid checkers move";
 		}
 		return false;
 	}
@@ -210,70 +213,61 @@ public class Game {
 	 * @return if there is a forced jump
 	 */
 	public boolean forceJump() {
+		ArrayList<Boolean> booleans = new ArrayList<>();
+		for (int x = 0; x < 8; x++) {for (int y = 0; y < 8; y++) {
+			Piece target = board.getRow(x).getSpace(y).getPiece();
+			if(target != null && target.getColor() == activeColor){booleans.add(canJump(new Position(x,y)));}
+		}}
+		for (Boolean temp : booleans) {if (temp) {return true;}}
+		return false;
+	}
 
-		for (int x = 0; x < 8; x++) {
-			for (int y = 0; y < 8; y++) {
-				Piece target = board.getRow(x).getSpace(y).getPiece();
-				// all these are holders to make code more readable
-				Space topRight = null;
-				Space bottomRight = null;
-				Space topLeft = null;
-				Space bottomLeft = null;
-				//checks to make sure there is a piece
-				if(target != null){
-					//checks to make sure the jump in this direction wont lead out of bounds
-					if(x < 6 && y < 6){
-						bottomRight = board.getRow(x+1).getSpace(y+1);
-					}
-					//checks to make sure the jump in this direction wont lead out of bounds
-					if(x < 6 && y > 1){
-						bottomLeft = board.getRow(x+1).getSpace(y-1);
-					}
-					//checks to make sure the jump in this direction wont lead out of bounds
-					if(x > 1 && y < 6){
-						topRight = board.getRow(x-1).getSpace(y+1);
-					}
-					//checks to make sure the jump in this direction wont lead out of bounds
-					if(x > 1 && y > 1){
-						topLeft = board.getRow(x-1).getSpace(y-1);
-					}
-					//checks see if the piece can jump down ie red pieces and kings
-					if(target.getColor() == Piece.Color.RED || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
-						//checks to see that the piece in the jump path exists and is not the same color
-						if(bottomLeft!= null && bottomLeft.getPiece() != null && bottomLeft.getPiece().getColor() != target.getColor()){
-							//checks to see that the landing square is not occupied
-							if(board.getRow(x+2).getSpace(y-2).isValid()){
-								return true;
-							}
-						}
-						//checks to see that the piece in the jump path exists and is not the same color
-						if(bottomRight!= null && bottomRight.getPiece() != null && bottomRight.getPiece().getColor() != target.getColor()){
-							//checks to see that the landing square is not occupied
-							if(board.getRow(x+2).getSpace(y+2).isValid()){
-								return true;
-							}
-						}
-					}
-					//checks see if the piece can jump down ie white pieces and kings
-					if(target.getColor() == Piece.Color.WHITE || (target.getType() == Piece.Type.KING && target.getColor() == activeColor)){
-						//checks to see that the piece in the jump path exists and is not the same color
-						if(topRight!= null && topRight.getPiece() != null && topRight.getPiece().getColor() != target.getColor()){
-							if(board.getRow(x-2).getSpace(y+2).isValid()){
-								return true;
-							}
-						}
-						//checks to see that the piece in the jump path exists and is not the same color
-						if(topLeft!= null && topLeft.getPiece() != null && topLeft.getPiece().getColor() != target.getColor()){
-							//checks to see that the landing square is not occupied
-							if(board.getRow(x-2).getSpace(y-2).isValid()){
-								return true;
-							}
-						}
-					}
-
+	public boolean canJump(Position start){
+		Piece current = board.getRow(start.getRow()).getSpace(start.getCol()).getPiece();
+		ArrayList<Boolean> booleans = new ArrayList<>();
+		//red singles or king pieces
+		if(start.getRow() + 2 <= 7){
+			if(start.getCol() + 2 <= 7){
+				Space endRightRow = board.getRow(start.getRow()+2).getSpace(start.getCol()+2);
+				Space midRightRow = board.getRow(start.getRow()+1).getSpace(start.getCol()+1);
+				if(midRightRow.getPiece()!=null && midRightRow.getPiece().getColor() != current.getColor() &&
+						endRightRow.isValid()){
+					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){
+						booleans.add(true);}
+				}
+			}
+			if(start.getCol() - 2 >= 0){
+				Space endLeftRow = board.getRow(start.getRow()+2).getSpace(start.getCol()-2);
+				Space midLeftRow = board.getRow(start.getRow()+1).getSpace(start.getCol()-1);
+				if(midLeftRow.getPiece()!=null && midLeftRow.getPiece().getColor() != current.getColor() &&
+						endLeftRow.isValid()){
+					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){
+						booleans.add(true);}
 				}
 			}
 		}
+		//white singles or king pieces
+		if(start.getRow() - 2 >= 0){
+			if(start.getCol() + 2 <= 7){
+				Space endBRightRow = board.getRow(start.getRow()-2).getSpace(start.getCol()+2);
+				Space midBRightRow = board.getRow(start.getRow()-1).getSpace(start.getCol()+1);
+				if(midBRightRow.getPiece()!=null && midBRightRow.getPiece().getColor() != current.getColor() &&
+						endBRightRow.isValid()){
+					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){
+						booleans.add(true);}
+					}
+			}
+			if(start.getCol() - 2 >= 0){
+				Space endBLeftRow = board.getRow(start.getRow()-2).getSpace(start.getCol()-2);
+				Space midBLeftRow = board.getRow(start.getRow()-1).getSpace(start.getCol()-1);
+				if(midBLeftRow.getPiece()!=null && midBLeftRow.getPiece().getColor() != current.getColor() &&
+						endBLeftRow.isValid()){
+					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){
+						booleans.add(true);}
+				}
+			}
+		}
+		for (Boolean temp : booleans) {if (temp) {return true;}}
 		return false;
 	}
 
@@ -372,6 +366,10 @@ public class Game {
 	 */
 	public int getMoveSize(){
 		return validatedMoves.size();
+	}
+
+	public ArrayList<Move> getPastMoves() {
+		return pastMoves;
 	}
 
 	/**
