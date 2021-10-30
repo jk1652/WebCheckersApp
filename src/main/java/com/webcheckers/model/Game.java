@@ -19,6 +19,7 @@ public class Game {
 	private ArrayList<Board>  validatedMoves = new ArrayList<>();
 	private ArrayList<Move> pastMoves = new ArrayList<>();
 	private String validity;
+	private ArrayList<Move> possibleJumps = new ArrayList<>();
 
 
 	
@@ -223,47 +224,103 @@ public class Game {
 	}
 
 	/**
-	 * checks to see if a piece can jump
+	 * checks to see if a piece can jump | adds jump to list for CPU if possible
 	 * @param start starting position of a piece
 	 * @return true if piece can jump, false if it can't
 	 */
 	public boolean canJump(Position start){
 		Piece current = board.getRow(start.getRow()).getSpace(start.getCol()).getPiece();
+		ArrayList<Boolean> booleans = new ArrayList<>();
 		//red singles or king pieces
 		if(start.getRow() + 2 <= 7){
 			if(start.getCol() + 2 <= 7){
+				Position end = new Position(start.getRow()+2,start.getCol()+2);
 				Space endRightRow = board.getRow(start.getRow()+2).getSpace(start.getCol()+2);
 				Space midRightRow = board.getRow(start.getRow()+1).getSpace(start.getCol()+1);
 				if(midRightRow.getPiece()!=null && midRightRow.getPiece().getColor() != current.getColor() &&
 						endRightRow.isValid()){
-					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){return true;}}
+					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){
+						booleans.add(true); possibleJumps.add(new Move(start,end));
+				}}
 			}
 			if(start.getCol() - 2 >= 0){
+				Position end = new Position(start.getRow()+2,start.getCol()-2);
 				Space endLeftRow = board.getRow(start.getRow()+2).getSpace(start.getCol()-2);
 				Space midLeftRow = board.getRow(start.getRow()+1).getSpace(start.getCol()-1);
 				if(midLeftRow.getPiece()!=null && midLeftRow.getPiece().getColor() != current.getColor() &&
 						endLeftRow.isValid()){
-					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){return true;}}
+					if(current.getColor() == Piece.Color.RED || current.getType()== Piece.Type.KING){
+						booleans.add(true); possibleJumps.add(new Move(start,end));
+				}}
 			}
 		}
 		//white singles or king pieces
 		if(start.getRow() - 2 >= 0){
 			if(start.getCol() + 2 <= 7){
+				Position end = new Position(start.getRow()-2,start.getCol()+2);
 				Space endBRightRow = board.getRow(start.getRow()-2).getSpace(start.getCol()+2);
 				Space midBRightRow = board.getRow(start.getRow()-1).getSpace(start.getCol()+1);
 				if(midBRightRow.getPiece()!=null && midBRightRow.getPiece().getColor() != current.getColor() &&
 						endBRightRow.isValid()){
-					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){return true;}}
+					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){
+						booleans.add(true); possibleJumps.add(new Move(start,end));
+				}}
 			}
 			if(start.getCol() - 2 >= 0){
+				Position end = new Position(start.getRow()-2,start.getCol()-2);
 				Space endBLeftRow = board.getRow(start.getRow()-2).getSpace(start.getCol()-2);
 				Space midBLeftRow = board.getRow(start.getRow()-1).getSpace(start.getCol()-1);
 				if(midBLeftRow.getPiece()!=null && midBLeftRow.getPiece().getColor() != current.getColor() &&
 						endBLeftRow.isValid()){
-					return current.getColor() == Piece.Color.WHITE || current.getType() == Piece.Type.KING;}
+					if(current.getColor() == Piece.Color.WHITE || current.getType()== Piece.Type.KING){
+						booleans.add(true); possibleJumps.add(new Move(start,end));
+				}}
 			}
 		}
+		for (Boolean temp : booleans) {return temp;}
 		return false;
+	}
+
+	/**
+	 * gets a list of moves from one position
+	 * @param start starting position
+	 * @return list of moves from that position
+	 */
+	public ArrayList<Move> canMove(Position start){
+		ArrayList<Move> moves = new ArrayList<>();
+		Piece piece = board.getRow(start.getRow()).getSpace(start.getCol()).getPiece();
+		if(piece != null && piece.getColor() == activeColor){
+			//right move
+			if(start.getRow() + 1 <= 7){
+				if(start.getCol() + 1 <= 7){
+					Position end = new Position(start.getRow()+1, start.getCol()+1);
+					Space last = board.getRow(start.getRow()+1).getSpace(start.getCol()+1);
+					Move move = new Move(start,end);
+					if(last.isValid() && piece.isValidMove(move)){moves.add(move);}
+				}
+				if(start.getCol() - 1 >= 0){
+					Position end = new Position(start.getRow()+1, start.getCol()-1);
+					Space last = board.getRow(start.getRow()+1).getSpace(start.getCol()-1);
+					Move move = new Move(start,end);
+					if(last.isValid() && piece.isValidMove(move)){moves.add(move);}
+				}
+			}
+			if(start.getRow() - 1 >= 0){
+				if(start.getCol() + 1 <= 7){
+					Position end = new Position(start.getRow()-1, start.getCol()+1);
+					Space last = board.getRow(start.getRow()-1).getSpace(start.getCol()+1);
+					Move move = new Move(start,end);
+					if(last.isValid() && piece.isValidMove(move)){moves.add(move);}
+				}
+				if(start.getCol() - 1 >= 0){
+					Position end = new Position(start.getRow()-1, start.getCol()-1);
+					Space last = board.getRow(start.getRow()-1).getSpace(start.getCol()-1);
+					Move move = new Move(start,end);
+					if(last.isValid() && piece.isValidMove(move)){moves.add(move);}
+				}
+			}
+		}
+		return moves;
 	}
 
 	/**
@@ -368,6 +425,13 @@ public class Game {
 	 */
 	public ArrayList<Move> getPastMoves() {
 		return pastMoves;
+	}
+
+	/**
+	 * @return arraylist of possible jump moves
+	 */
+	public ArrayList<Move> getPossibleJumps() {
+		return possibleJumps;
 	}
 
 	/**
