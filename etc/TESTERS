@@ -1,0 +1,10 @@
+Start application:
+mvn compile exec:java
+
+Connect to webpage:
+http://localhost:4567/
+
+To test games between local players:
+open the webpage in different type browsers and use a different account login in each browser
+(eg. run one account in microsoft edge and the other in google chrome, this allows you to select another player online
+from the same machine)
