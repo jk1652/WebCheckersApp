@@ -19,6 +19,8 @@ import spark.TemplateEngine;
 
 import com.webcheckers.util.Message;
 
+import javax.imageio.metadata.IIOMetadataNode;
+
 /**
  * The UI Controller to GET the Home page.
  *
@@ -80,17 +82,44 @@ public class GetHomeRoute implements Route {
         response.redirect(WebServer.GAME_URL);
         return null;
       }
-      String players = new String();
+      String players = "";
+      String readyPlayers = "";
+      String inGamePlayers = "";
       // creates players full of player names
       for (Player x : playerList) {
         if (x.equals(new Player(playerName))) {
           continue;
         }
-        players = players + ("<li>" + x.getName() + "</li><br>");
+        // if player is in NOT in a game make name GREEN
+        if (gameManager.findPlayerGame(x) == null){
+          readyPlayers =  readyPlayers + ("<li style=\"color:#52BE80 ;\">" + x.getName() + "</li>");
+        }
+        // if player is in a game make their name RED
+        else {
+          inGamePlayers = inGamePlayers + ("<li style=\"color:#CB4335;\">" + x.getName() + "</li>");
+        }
       }
 
+
       vm.put("currentUser", playerName);
-      vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
+
+      // if there are no players online, declares so
+      if (!readyPlayers.equals("") || !inGamePlayers.equals("")) {
+        if (readyPlayers.equals("")){
+          readyPlayers = "<p> No players available</p>";
+        }
+        if (inGamePlayers.equals("")){
+          inGamePlayers = "<p> No players in a game</p>";
+        }
+
+        players = "<h2> Available Players</h2>" + readyPlayers +
+                "<h2> Already in a game</h2>" + inGamePlayers;
+        vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
+      }
+      else {
+        vm.put("playerListTitle", "<h2><b> No Players Online </h2></b>");
+      }
+
       vm.put("playerList", players);
       
       Message message = request.session().attribute("message");
