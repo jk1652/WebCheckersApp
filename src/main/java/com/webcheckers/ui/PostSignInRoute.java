@@ -36,8 +36,8 @@ import static spark.Spark.halt;
 
 public class PostSignInRoute implements Route {
 
-    static final Message ERROR_MESSAGE_USERNAME_IN_USE = Message.info("Invalid Username: Username in use.");
-    static final Message ERROR_MESSAGE_USERNAME_INVALID = Message.info("Invalid Username: Username needs to include " +
+    static final Message ERROR_MESSAGE_USERNAME_IN_USE = Message.error("Invalid Username: Username in use.");
+    static final Message ERROR_MESSAGE_USERNAME_INVALID = Message.error("Invalid Username: Username needs to include " +
             "at least one alphanumeric character.");
 
     static final String USERNAME = "playerName";
