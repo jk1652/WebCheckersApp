@@ -4,19 +4,16 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
-import com.webcheckers.model.Piece;
 import com.webcheckers.util.Message;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.TemplateEngine;
 
-import javax.servlet.ServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import static spark.Spark.halt;
-
 /**
- * @Author Zane Kitchen Lipski
+ * @author Zane Kitchen Lipski
  * To check if a move made was valid
  */
 public class PostValidateMove implements Route {
@@ -27,8 +24,8 @@ public class PostValidateMove implements Route {
 
     /**
      * The constructor for the {@code POST /validateMove} route handler.
-     * @param templateEngine
-     * @param gameManager
+     * @param templateEngine the template engine
+     * @param gameManager the game manager for all games
      */
     public PostValidateMove(final TemplateEngine templateEngine, final GameManager gameManager) {
         this.templateEngine = templateEngine;
@@ -37,16 +34,16 @@ public class PostValidateMove implements Route {
 
     /**
      * sends valid move to model
-     * @param request
-     * @param response
+     * @param request the request
+     * @param response the response
      * @return json message
-     * @throws Exception
+     * @throws Exception thrown
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
         String name = request.session().attribute(PostSignInRoute.USERNAME); //get player's name
-        LOG.config("player makes move: " + name);
+        LOG.config("player " + name + " makes a move");
         Game game = gameManager.findPlayerGame(name);
 
         Gson gson = new Gson();
@@ -56,10 +53,10 @@ public class PostValidateMove implements Route {
         boolean yea = game.validateMove(move);
 
         Message msg;
+
         if (yea) { //if true: info msg and make move
             msg = Message.info(game.getValidity());
-            game.makeMove(move);
-            game.setKing(move);
+            game.makeMove(move); game.setKing(move);
         }
         else { //if false: error msg
             msg = Message.error(game.getValidity());
