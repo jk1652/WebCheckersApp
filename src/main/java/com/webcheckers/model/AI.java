@@ -13,9 +13,8 @@ public class AI extends Player{
      * @param game the game it's in
      * @return move
      */
-    public Move getValidMove(Game game){
+    public ArrayList<ArrayList<Move>> allAIMoves(Game game){
         Board board = game.getBoardView();
-        Move move;
 
         //get a list of all valid simple moves
         ArrayList<Move> moves = new ArrayList<>();
@@ -36,21 +35,8 @@ public class AI extends Player{
                 jumps.addAll(game.getPossibleJumps());
         }}}
 
-        //gets a random number from each list according to size
-        int random1 = (int)(Math.random() * (moves.size()) + 1);
-        int random2 = (int)(Math.random() * (jumps.size()) + 1);
-
-        //check if there are any jump moves if not do a random simple move
-        if(jumps.isEmpty()){move = moves.get(random1);}
-        else{move = jumps.get(random2);}
-        return move;
-    }
-
-    /**
-     * makes a valid move for CPU
-     * @param game game it's in
-     */
-    public void makeMove(Game game){
-        game.makeMove(getValidMove(game));
+        ArrayList<ArrayList<Move>> allMoves = new ArrayList<>();
+        allMoves.add(jumps); allMoves.add(moves);
+        return allMoves;
     }
 }
