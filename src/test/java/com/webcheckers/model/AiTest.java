@@ -21,6 +21,35 @@ public class AiTest {
     }
 
     @Test
+    public void simpleMovedefensive(){
+        //runs this multiple times do the ai random decision making
+        int x = 100;
+        while(x != 0) {
+            Game CuT = new Game(mock(Player.class), AI.difficulty.defensive);
+            CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
+            CuT.submitMove();
+            assertFalse(CuT.forceJump());
+            x -= 1;
+        }
+    }
+
+    @Test
+    public void simpleMoveagrressive(){
+        //runs this multiple times do the ai random decision making
+        int x = 100;
+        while(x != 0) {
+            Game CuT = new Game(mock(Player.class), AI.difficulty.agressive);
+            CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
+            CuT.submitMove();
+            if(!CuT.forceJump()) {
+                System.out.println(CuT.forceJump());
+                System.out.println(CuT.getBoardView().toString());
+            }
+            x -= 1;
+        }
+    }
+
+    @Test
     public void forceJump(){
         //runs this multiple times do the ai random decision making
         int x = 5;
