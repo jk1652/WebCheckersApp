@@ -9,11 +9,12 @@ public class AI extends Player{
     }
 
     /**
-     * gets a valid move for CPU to do
+     * returns a specific arraylist of moves
      * @param game the game it's in
-     * @return move
+     * @return if there's a jump, returns list of jumps
+     * else it returns a list of simple moves
      */
-    public ArrayList<ArrayList<Move>> allAIMoves(Game game){
+    public ArrayList<Move> AIMoves(Game game){
         Board board = game.getBoardView();
 
         //get a list of all valid simple moves
@@ -35,8 +36,7 @@ public class AI extends Player{
                 jumps.addAll(game.getPossibleJumps());
         }}}
 
-        ArrayList<ArrayList<Move>> allMoves = new ArrayList<>();
-        allMoves.add(jumps); allMoves.add(moves);
-        return allMoves;
+        if(game.forceJump()){return jumps;}
+        else{return moves;}
     }
 }
