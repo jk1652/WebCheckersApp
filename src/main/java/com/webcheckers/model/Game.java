@@ -2,6 +2,7 @@ package com.webcheckers.model;
 
 import java.nio.channels.Pipe;
 import java.util.ArrayList;
+import com.webcheckers.model.AI;
 
 /**
  * @author David Pritchard
@@ -20,6 +21,7 @@ public class Game {
 	private ArrayList<Move> pastMoves = new ArrayList<>();
 	private String validity;
 	private ArrayList<Move> possibleJumps = new ArrayList<>();
+	private Boolean singleplayer = false;
 
 
 	
@@ -31,6 +33,18 @@ public class Game {
 	public Game(Player redPlayer, Player whitePlayer) {
 		this.redPlayer = redPlayer;
 		this.whitePlayer = whitePlayer;
+		activeColor = Piece.Color.RED;
+		board = new Board();
+		synchronized(this) { // protect shared resource
+			gameID = GAME_COUNTER;
+			GAME_COUNTER++;
+		}
+	}
+
+	public Game(Player redPlayer,AI.difficulty dif ){
+		this.redPlayer = redPlayer;
+		this.whitePlayer = new AI(dif);
+		singleplayer = true;
 		activeColor = Piece.Color.RED;
 		board = new Board();
 		synchronized(this) { // protect shared resource
@@ -166,6 +180,12 @@ public class Game {
 		validatedMoves = new ArrayList<>();
 		pastMoves = new ArrayList<>();
 		swapActiveColor();
+		if(activeColor.equals(Piece.Color.WHITE) && singleplayer){
+			if(whitePlayer instanceof AI){
+				AI ai = (AI)whitePlayer;
+				ai.AIMakeMove(this);
+			}
+		}
 	}
 
 	/**

@@ -35,6 +35,20 @@ public class Board implements Iterable<Row> {
     }
 
     /**
+     * makes an empty board for debug purposes
+     * @param empty just to diferrentiate the 2 construters pass whatever you want
+     */
+    public Board(String empty){
+        for(int row = 0; row < 8; row++) {
+            if (row % 2 == 0) {
+                rows.add(new Row(row, CreateEven(null, false)));
+            } else {
+                rows.add(new Row(row, CreateOdd(null, false)));
+            }
+        }
+    }
+
+    /**
      * this constructer is used to create deep copys of past
      * board states so when the move stack is cleard the board
      * is not renderd null
