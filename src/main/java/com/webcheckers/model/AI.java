@@ -26,7 +26,7 @@ public class AI extends Player{
             if(piece.getColor() == Piece.Color.WHITE){
                 //If there is a jump add the jump
                 if(game.canJump(start)){jumps.addAll(game.getPossibleJumps());}
-                //else if add valid moves a piece can make
+                //else add valid moves a piece can make
                 ArrayList<Move> tempMoves = game.canMove(start);
                 moves.addAll(tempMoves);
         }}}
