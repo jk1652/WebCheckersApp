@@ -126,12 +126,61 @@ public class GameTest {
 
         assertFalse(CuT.validateMove(new Move(new Position(4,3), new Position(6,5))));
 
-
-        System.out.println(CuT.getBoardView().toString());
     }
 
     @Test
     public void testSetKing(){
+        Board board = new Board();
+        // makes a clear board
+        for(int x = 0; x < 8; x++){
+            for(int y = 0; y < 8; y++){
+                board.getRow(x).getSpace(y).setPiece(null);
+            }
+        }
+        //inserting piece of interest
+        board.getRow(1).getSpace(0).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+        board.getRow(6).getSpace(1).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
 
+        Game CuT = new Game(mock(Player.class),mock(Player.class));
+
+        CuT.setBoard(board);
+
+        assertTrue(CuT.validateMove(new Move(new Position(1,0),new Position(0,1))));
+        CuT.makeMove(new Move(new Position(1,0),new Position(0,1)));
+        CuT.setKing(new Move(new Position(1,0),new Position(0,1)));
+
+        CuT.submitMove();
+
+        assertTrue(CuT.validateMove(new Move(new Position(6,1),new Position(7,0))));
+        CuT.makeMove(new Move(new Position(6,1),new Position(7,0)));
+        CuT.setKing(new Move(new Position(6,1),new Position(7,0)));
     }
+
+
+@Test
+public void moreJumpTests() {
+    Board board = new Board();
+    // makes a clear board
+    for (int x = 0; x < 8; x++) {
+        for (int y = 0; y < 8; y++) {
+            board.getRow(x).getSpace(y).setPiece(null);
+        }
+    }
+
+    board.getRow(2).getSpace(3).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+    board.getRow(3).getSpace(4).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+
+    board.getRow(7).getSpace(0).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+
+    Game CuT = new Game(mock(Player.class),mock(Player.class));
+    CuT.setBoard(board);
+
+    assertFalse(CuT.validateMove(new Move(new Position(2,3),new Position(4,5))));
+
+
+    System.out.println(CuT.getBoardView().toString());
+
+
+}
+
 }
