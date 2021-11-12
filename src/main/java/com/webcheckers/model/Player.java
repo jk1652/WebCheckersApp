@@ -1,13 +1,10 @@
 package com.webcheckers.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * A single player
@@ -17,13 +14,14 @@ import java.util.Date;
 public class Player {
     private static final Logger LOG = Logger.getLogger(Player.class.getName());
     private String name;
-    private Map<String, Game> saved;
+    private Map<String, Game> saved = new HashMap<>();
 
     /**
      * Constructor for Player, creates player with name
      */
     public Player(String name) {
         this.name = name;
+        this.saved = saved;
     }
 
     /**
@@ -39,6 +37,14 @@ public class Player {
         String gameInfo = "";
         gameInfo = "vs. " + game.getOpponentName(this.name) + " @ " + formatter.format(date);
         saved.put(gameInfo, game);
+    }
+
+    public void removeSaveGame(Game game) {
+        //something
+    }
+
+    public Map getSaved() {
+        return saved;
     }
 
     /**

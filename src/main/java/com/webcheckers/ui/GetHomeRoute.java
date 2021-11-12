@@ -73,8 +73,12 @@ public class GetHomeRoute implements Route {
 
     String playerName = request.session().attribute(PostSignInRoute.USERNAME);
 
+    Player player = playerLobby.getPlayer(playerName);
+
     if (playerName != null) {
       ArrayList<Player> playerList = playerLobby.getPlayerList();
+
+      //System.out.println(player.getSaved());
 
       Game playerGame = gameManager.findPlayerGame(playerName);
       if (playerGame != null) { // Player is on the wrong page.

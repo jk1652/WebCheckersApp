@@ -74,6 +74,8 @@ public class WebServer {
 
   public static final String SUBMIT_TURN_URL = "/submitTurn";
 
+  public static final String SAVE_URL = "/save";
+
 
   //
   // Attributes
@@ -182,6 +184,8 @@ public class WebServer {
 
     post(BACKUP_MOVE_URL, new PostBackupMove(templateEngine, gameManager));
     post(SUBMIT_TURN_URL, new PostSubmitTurn(templateEngine, gameManager));
+
+    post(SAVE_URL, new PostSaveGameRoute(gson, templateEngine, playerLobby, gameManager));
 
     //
     LOG.config("WebServer is initialized.");

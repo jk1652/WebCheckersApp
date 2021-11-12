@@ -68,10 +68,14 @@ public class PlayerLobby {
 
     }
 
-
-
-
-
+    public Player getPlayer(String name) {
+        for (Player x : players) {
+            if (x.getName() == name) {
+                return x;
+            }
+        }
+        return null;
+    }
 
 
 }

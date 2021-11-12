@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
@@ -22,11 +23,12 @@ import static spark.Spark.halt;
  * @Author Jaden Kitchen Lipski
  * PostResignGameRoute
  */
-public class PostResignGameRoute implements Route {
+public class PostSaveGameRoute implements Route {
     private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
 
     private final Gson gson;
     private final GameManager gameManager;
+    private final PlayerLobby playerLobby;
     private final TemplateEngine templateEngine;
 
     /**
@@ -36,9 +38,10 @@ public class PostResignGameRoute implements Route {
      * @param templateEngine
      * @param gameManager
      */
-    public PostResignGameRoute(final Gson gson, final TemplateEngine templateEngine, final GameManager gameManager){
+    public PostSaveGameRoute(final Gson gson, final TemplateEngine templateEngine, final PlayerLobby playerLobby, final GameManager gameManager){
         this.gson = gson;
         this.templateEngine = templateEngine;
+        this.playerLobby = playerLobby;
         this.gameManager = gameManager;
     }
 
@@ -52,25 +55,27 @@ public class PostResignGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
+        Map<String, Object> vm = new HashMap<>();
+
         String playerName = request.session().attribute(PostSignInRoute.USERNAME);
 
+        Player player = playerLobby.getPlayer(playerName);
+
         Game game = gameManager.findPlayerGame(playerName);
-        Board board = game.getBoardView();
 
-        Message msg;
-        msg = Message.info(playerName + " Resigned from game, please redirect to the home page!");
-        LOG.config(playerName + " Resigned from game, please redirect to the home page!");
+        player.saveGame(game);
 
-        //check if player asking to resign is active color
-        Piece.Color userColor = game.getUserColor(playerName);
-        if (userColor == game.getActiveColor()){
-            board.setWinner(game.getUserColor(playerName));
-        }
-        else {
-            msg = Message.error("Can't resign now");
-        }
+        Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
-        return (gson.toJson(msg));
+        otherPlayer.saveGame(game);
+
+        request.session().attribute("message", Message.info("Game was Saved"));
+        gameManager.finishGame(playerName);
+        response.redirect(WebServer.HOME_URL);
+        return null;
+
+        //vm.put("message", Message.info("Game Saved"));
+        //return templateEngine.render(new ModelAndView(vm, "home.ftl"));
 
     }
 }

@@ -54,6 +54,11 @@
           <fieldset id="game-toolbar">
             <legend>Controls</legend>
             <div class="toolbar"></div>
+
+            <form action="./save" method="POST">
+            <button type="submit" name="saveGame">Save Game</button>
+            </form>
+
           </fieldset>
           
         </div>
