@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 public class Player {
     private static final Logger LOG = Logger.getLogger(Player.class.getName());
     private String name;
+    private boolean Saved_Games_went_up = false;
     private Map<String, Game> saved = new HashMap<>();
 
     /**
@@ -46,6 +47,19 @@ public class Player {
     public Map getSaved() {
         return saved;
     }
+
+    public void savedGamesDidGoUp() {
+        Saved_Games_went_up = true;
+    }
+
+    public void savedGamesOnLVL() {
+        Saved_Games_went_up = false;
+    }
+
+    public boolean currentSavedGamesWentUp() {
+        return Saved_Games_went_up;
+    }
+
 
     /**
      * checks if name is same between players as it should be unique

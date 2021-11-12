@@ -65,11 +65,13 @@ public class PostSaveGameRoute implements Route {
         Game game = gameManager.findPlayerGame(playerName);
 
         player.saveGame(game);
+        //player.savedGamesDidGoUp();
 
         Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
         if (otherPlayer != null) {
             otherPlayer.saveGame(game);
+            otherPlayer.savedGamesDidGoUp();
         }
 
         request.session().attribute("message", Message.info("Game was Saved"));

@@ -34,6 +34,7 @@ public class GetGameRoute implements Route {
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
   private final GameManager gameManager;
+
   /**
    * Create the Spark Route (UI controller) to handle all {@code GET /Game} HTTP requests.
    *
@@ -47,7 +48,6 @@ public class GetGameRoute implements Route {
     LOG.config("GetGameRoute is initialized.");
     this.playerLobby = playerLobby;
     this.gameManager = gameManager;
-
   }
 
   /**
@@ -122,7 +122,16 @@ public class GetGameRoute implements Route {
         vm.put("flip", game.getRedPlayer().getName().equals(playerName));
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     } else {
-        request.session().attribute("message", Message.info("Game was Resigned"));
+        //request.session().attribute("message", Message.info("Game was Resigned"));
+
+        if (playerLobby.getPlayer(playerName).currentSavedGamesWentUp()) {
+            request.session().attribute("message", Message.info("Game was Saved"));
+            playerLobby.getPlayer(playerName).savedGamesOnLVL();
+        }
+        else {
+            request.session().attribute("message", Message.info("Game was Resigned"));
+        }
+
     	response.redirect(WebServer.HOME_URL);
     	return null;
     }
