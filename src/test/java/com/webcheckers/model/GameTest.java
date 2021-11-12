@@ -61,12 +61,12 @@ public class GameTest {
         //moves a peice
         assertTrue(CuT.validateMove(new Move(new Position(2,1), new Position(3,2))));
         CuT.makeMove(new Move(new Position(2,1), new Position(3,2)));
-        assertEquals("Simple move is valid.",CuT.getValidity());
+        assertEquals("Valid simple move performed.",CuT.getValidity());
 
         assertEquals(1,CuT.getMoveSize());
         //tries to move again
         assertFalse(CuT.validateMove(new Move(new Position(2,3), new Position(3,4))));
-        assertEquals("you cant move again",CuT.getValidity());
+        assertEquals("you can not move again",CuT.getValidity());
 
         //tries to move the wrong peice
         assertFalse(CuT.validateMove(new Move(new Position(0,7), new Position(1,6))));
@@ -79,17 +79,17 @@ public class GameTest {
 
         //moves a piece simply to force a jump
         assertTrue(CuT.validateMove(new Move(new Position(5,4), new Position(4,3))));
-        assertEquals("Simple move is valid.",CuT.getValidity());
+        assertEquals("Valid simple move performed.",CuT.getValidity());
         CuT.makeMove(new Move(new Position(5,4), new Position(4,3)));
 
         CuT.submitMove();
 
         assertTrue(CuT.forceJump());
         assertFalse(CuT.validateMove(new Move(new Position(2,3), new Position(3,4))));
-        assertEquals("There is a jump available!",CuT.getValidity());
+        assertEquals("There is a jump available",CuT.getValidity());
 
         assertTrue(CuT.validateMove(new Move(new Position(3,2), new Position(5,4))));
-        assertEquals("Jump was successful.",CuT.getValidity());
+        assertEquals("Valid jump move performed.",CuT.getValidity());
 
         CuT.makeMove(new Move(new Position(3,2), new Position(5,4)));
 
