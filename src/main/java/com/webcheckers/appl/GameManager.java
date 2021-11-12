@@ -1,15 +1,19 @@
 package com.webcheckers.appl;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import com.webcheckers.model.AI;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+import com.webcheckers.ui.WebServer;
+
 /**
  * Holds the game states running on the web server.
  * @author David Pritchard
  */
 public class GameManager {
+	private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
 	private ArrayList<Game> active, inactive;
 	private final Object lock = new Object();
 
@@ -74,6 +78,7 @@ public class GameManager {
 
 	public void finishGame(String playerName){
 		// might need a way to tell if player won game
+		LOG.config(playerName + " deleted game");
 		Game del = findPlayerGame(playerName);
 		active.remove(del);
 	}

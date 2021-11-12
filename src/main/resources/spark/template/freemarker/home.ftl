@@ -21,6 +21,8 @@
         ${welcome.text}
     </p></b>
 
+    <#include "message.ftl" />
+
     <#if playerList??>
     	<p>Enter opponent name to challenge:</p>
     	<form action="./game" method="POST">
@@ -43,7 +45,7 @@
     </#if>
 
     <!-- Provide a message to the user, if supplied. -->
-    <#include "message.ftl" />
+
 
 
     <!-- TODO: future content on the Home:

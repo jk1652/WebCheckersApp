@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
@@ -55,6 +56,8 @@ public class PostResignGameRoute implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
         Board board = game.getBoardView();
+
+        //Gson gson = new GsonBuilder().create();
 
         Message msg;
         msg = Message.info(playerName + " Resigned from game, please redirect to the home page!");

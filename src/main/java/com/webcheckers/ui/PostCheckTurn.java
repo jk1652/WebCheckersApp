@@ -50,12 +50,19 @@ public class PostCheckTurn implements Route {
         Player player = new Player(name);
         Game game = gameManager.findPlayerGame(name);
 
+        Gson gson = new GsonBuilder().create();
+        Message msg;
+
+        if (game == null) {
+            msg = Message.info("true");
+            return gson.toJson( msg );
+        }
+
         Piece.Color activecolor = game.getActiveColor();
 
         Board board = game.getBoardView();
 
-        Gson gson = new GsonBuilder().create();
-        Message msg;
+
         // when game is over update other player view
         if (board.getExitState()) {
             msg = Message.info("true");

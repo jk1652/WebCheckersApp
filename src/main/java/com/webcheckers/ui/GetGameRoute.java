@@ -66,11 +66,18 @@ public class GetGameRoute implements Route {
     LOG.finer("GetGameRoute is invoked.");
     String playerName = request.session().attribute(PostSignInRoute.USERNAME);
     Game game = gameManager.findPlayerGame(playerName);
-      Board board = game.getBoardView();
+
     Map<String, Object> vm = new HashMap<>();
 
-    if (board.getExitState()) {
+    Board board = null;
+
+    if (game != null) {
+        board = game.getBoardView();
+    }
+
+    if (board != null && board.getExitState()) {
         gameManager.finishGame(playerName);
+        game = gameManager.findPlayerGame(playerName);
     }
 
     if (game != null) {
@@ -114,6 +121,7 @@ public class GetGameRoute implements Route {
         vm.put("flip", game.getRedPlayer().getName().equals(playerName));
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     } else {
+        request.session().attribute("message", Message.info("Game was Resigned"));
     	response.redirect(WebServer.HOME_URL);
     	return null;
     }
