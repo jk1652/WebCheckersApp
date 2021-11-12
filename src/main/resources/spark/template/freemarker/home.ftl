@@ -17,18 +17,21 @@
 
   <div class="body">
 
-    <p>
+    <p><b>
         ${welcome.text}
-    </p>
+    </p></b>
 
     <#if playerList??>
-    	<p>Enter opponent name:</p>
+    	<p>Enter opponent name to challenge:</p>
     	<form action="./game" method="POST">
             <input name="opponentName" />
             <button type="submit">Ok</button>
         </form>
+        <br>
         <form action="./game" method="POST">
-            <button type="submit" name="AI">Play AI?</button>
+            <button type="submit" name="easy">Play easy AI?</button>
+            <button type="submit" name="med">Play med AI?</button>
+            <button type="submit" name="hard">Play hard AI?</button>
         </form>
 
         <p>

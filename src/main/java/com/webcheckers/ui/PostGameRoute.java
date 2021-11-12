@@ -54,14 +54,22 @@ public class PostGameRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         String playerName = request.session().attribute(PostSignInRoute.USERNAME);
         String opponentName = request.queryParams(OPPONENT_NAME);
-        String ai = request.queryParams("AI");
+        String easy = request.queryParams("easy");
+        String med = request.queryParams("med");
+        String hard = request.queryParams("hard");
         Integer gameID = request.session().attribute(GAME_ID_ATTRIBUTE);
         Game game;
 
-        // used . as a player can't sign in as .
-        if (ai != null){
+        // if ai is selected
+        if (easy != null){
             //start AI game
-            LOG.fine("ai triggered: " + ai);
+            LOG.fine("ai easy triggered");
+        }
+        else if (med != null){
+            LOG.fine("ai med");
+        }
+        else if (hard != null) {
+            LOG.fine("ai hard");
         }
         else {
             LOG.fine("ai null");
