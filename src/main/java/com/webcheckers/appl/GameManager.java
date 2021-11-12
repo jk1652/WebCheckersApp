@@ -83,6 +83,12 @@ public class GameManager {
 		active.remove(del);
 	}
 
+	public Game LoadGame(Game game){
+		LOG.config("load game");
+		active.add(game);
+		return game;
+	}
+
 
 	/**
 	 * @param gameID the ID of the game to return

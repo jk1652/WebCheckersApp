@@ -40,11 +40,11 @@ public class Player {
         saved.put(gameInfo, game);
     }
 
-    public void removeSaveGame(Game game) {
-        //something
+    public void removeSaveGame(String key) {
+        saved.remove(key);
     }
 
-    public Map getSaved() {
+    public Map<String, Game> getSaved() {
         return saved;
     }
 

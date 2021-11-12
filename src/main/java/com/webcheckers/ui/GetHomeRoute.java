@@ -1,10 +1,6 @@
 package com.webcheckers.ui;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Logger;
 
 import com.webcheckers.appl.PlayerLobby;
@@ -18,8 +14,6 @@ import spark.Route;
 import spark.TemplateEngine;
 
 import com.webcheckers.util.Message;
-
-import javax.imageio.metadata.IIOMetadataNode;
 
 /**
  * The UI Controller to GET the Home page.
@@ -135,6 +129,33 @@ public class GetHomeRoute implements Route {
     else {
       vm.put("message", Message.info("Current Number of Players: " +
               String.valueOf(playerLobby.numberofPlayers())));
+    }
+
+    // for saved games
+    if (playerName != null){
+      Player user = playerLobby.getPlayer(playerName);
+      Map<String, Game> saveGames = user.getSaved();
+
+      if (saveGames != null){
+        String msg = "";
+        Set<String> keys = saveGames.keySet();
+        int i = 0;
+        for (String x: keys){
+          //msg = "<a href=\"/game\" onclick=\"gameManger.LoadGame(" + saveGames.get(x) + ");\">" + msg + x + "<br></a>";
+
+          msg = msg + "<form action=\"./load\" method=\"POST\">\n" +
+                  "            <button type=\"submit\" name=\"" + Integer.toString(++i) + "\">" + x + "</button>\n" +
+                  "            </form>";
+
+          //msg = msg + "<form id=\"load\" action=\"/load\" method=\"post\"> "
+          //        + "<a href=\"/load\"  >" + x + "</a></form><br>";
+
+          //name=\"" + x + "\"
+        }
+        if (keys.size() > 0) {
+          vm.put("saveList", msg);
+        }
+      }
     }
 
 

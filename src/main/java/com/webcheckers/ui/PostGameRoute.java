@@ -58,8 +58,14 @@ public class PostGameRoute implements Route {
         String easy = request.queryParams("easy");
         String med = request.queryParams("med");
         String hard = request.queryParams("hard");
+        String LoadGame = request.queryParams("test");
         Integer gameID = request.session().attribute(GAME_ID_ATTRIBUTE);
         Game game = null;
+
+        if (LoadGame != null){
+            LOG.fine("load game");
+        }
+
 
         // if ai is selected
         if (easy != null){

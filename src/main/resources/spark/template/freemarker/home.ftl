@@ -35,6 +35,12 @@
             <button type="submit" name="med">Play med AI?</button>
             <button type="submit" name="hard">Play hard AI?</button>
         </form>
+        <#if saveList??>
+            <br>
+            <h2>Saved Games</h2>
+            ${saveList}
+        </#if>
+
 
         <p>
             ${playerListTitle}
