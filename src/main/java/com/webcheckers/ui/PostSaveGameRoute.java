@@ -67,15 +67,14 @@ public class PostSaveGameRoute implements Route {
 
         Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
-        otherPlayer.saveGame(game);
+        if (otherPlayer != null) {
+            otherPlayer.saveGame(game);
+        }
 
         request.session().attribute("message", Message.info("Game was Saved"));
         gameManager.finishGame(playerName);
         response.redirect(WebServer.HOME_URL);
         return null;
-
-        //vm.put("message", Message.info("Game Saved"));
-        //return templateEngine.render(new ModelAndView(vm, "home.ftl"));
 
     }
 }

@@ -77,6 +77,7 @@ public class GetGameRoute implements Route {
 
     if (board != null && board.getExitState()) {
         gameManager.finishGame(playerName);
+        LOG.finer("Game was Resigned.");
         game = gameManager.findPlayerGame(playerName);
     }
 
