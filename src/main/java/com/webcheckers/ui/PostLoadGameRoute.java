@@ -6,6 +6,7 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
+import com.webcheckers.util.Message;
 import spark.*;
 
 import java.text.SimpleDateFormat;
@@ -80,17 +81,33 @@ public class PostLoadGameRoute implements Route {
 
         Game game = gameManager.LoadGame(user.getSaved().get(loadGame));
 
-        user.removeSaveGame(loadGame);
-
         Player oppo = playerLobby.getPlayer(game.getOpponentName(playerName));
 
+        System.out.println(game.getOpponentName(playerName));
+
+        Map<String, Object> vm = new HashMap<>();
+
+        if (!game.getOpponentName(playerName).equals("CPU")) {
+            System.out.println("checking player");
+            if (playerLobby.getPlayer(game.getOpponentName(playerName)) == null) {
+                System.out.println("we made it here");
+                gameManager.finishGame(playerName);
+                request.session().attribute("message", Message.error("Selected Player is not Online"));
+                response.redirect(WebServer.HOME_URL);
+                return null;
+            }
+            else {
+                System.out.println("oppo is not null");
+            }
+        }
+
+        user.removeSaveGame(loadGame);
 
         if (oppo != null){
             oppo.getSaved().values().remove(game);
-
         }
 
-        Map<String, Object> vm = new HashMap<>();
+
 
         if (game != null) {
 
