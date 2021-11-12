@@ -13,18 +13,18 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AiTest {
 
     @Test
-    public void simpleMoveStupid(){
+    public void simpleMoveStupid() {
         Game CuT = new Game(mock(Player.class), AI.difficulty.stupid);
-        CuT.makeMove(new Move(new Position(2,1),new Position(3,2)));
+        CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
         CuT.submitMove();
         assertEquals(CuT.getActiveColor(), Piece.Color.RED);
     }
 
     @Test
-    public void simpleMovedefensive(){
+    public void simpleMovedefensive() {
         //runs this multiple times do the ai random decision making
         int x = 100;
-        while(x != 0) {
+        while (x != 0) {
             Game CuT = new Game(mock(Player.class), AI.difficulty.defensive);
             CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
             CuT.submitMove();
@@ -34,17 +34,14 @@ public class AiTest {
     }
 
     @Test
-    public void simpleMoveagrressive(){
+    public void simpleMoveagrressive() {
         //runs this multiple times do the ai random decision making
         int x = 100;
-        while(x != 0) {
+        while (x != 0) {
             Game CuT = new Game(mock(Player.class), AI.difficulty.agressive);
             CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
             CuT.submitMove();
-            if(!CuT.forceJump()) {
-                System.out.println(CuT.forceJump());
-                System.out.println(CuT.getBoardView().toString());
-            }
+            assertTrue(CuT.forceJump());
             x -= 1;
         }
     }
