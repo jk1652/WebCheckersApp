@@ -1,6 +1,8 @@
 package com.webcheckers.appl;
 
 import java.util.ArrayList;
+
+import com.webcheckers.model.AI;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 /**
@@ -47,6 +49,14 @@ public class GameManager {
 	
 	public Game createGame(String redPlayer, String whitePlayer) {
 		return createGame(new Player(redPlayer), new Player(whitePlayer));
+	}
+
+	public Game createGame(String redPlayer, AI.difficulty dif) {
+		Game game = new Game(new Player(redPlayer), dif);
+		synchronized(lock) { // Protect resource
+			active.add(game);
+		}
+		return game;
 	}
 	
 	private Game getGame(int gameID, ArrayList<Game> collection) {

@@ -3,6 +3,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.GameManager;
 
+import com.webcheckers.model.AI;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
@@ -58,18 +59,21 @@ public class PostGameRoute implements Route {
         String med = request.queryParams("med");
         String hard = request.queryParams("hard");
         Integer gameID = request.session().attribute(GAME_ID_ATTRIBUTE);
-        Game game;
+        Game game = null;
 
         // if ai is selected
         if (easy != null){
             //start AI game
             LOG.fine("ai easy triggered");
+            gameManager.createGame(playerName, AI.difficulty.stupid);
         }
         else if (med != null){
             LOG.fine("ai med");
+            gameManager.createGame(playerName, AI.difficulty.defensive);
         }
         else if (hard != null) {
             LOG.fine("ai hard");
+            gameManager.createGame(playerName, AI.difficulty.agressive);
         }
         else {
             LOG.fine("ai null");
@@ -77,8 +81,21 @@ public class PostGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
+        if (game != null) {
+
+            vm.put("title", "Checkers!");
+            vm.put("currentUser", playerName);
+            vm.put("viewMode", Game.View.PLAY);
+            vm.put("redPlayer", game.getRedPlayer());
+            vm.put("whitePlayer", game.getWhitePlayer());
+            vm.put("activeColor", game.getActiveColor());
+            vm.put("board", game.getBoardView());
+            vm.put("flip", game.getRedPlayer().getName().equals(playerName));
+            return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        }
+
         if (!playerLobby.checkPlayerExist(opponentName)) {
-            request.session().attribute("message", Message.error("Selected Player is not in Lobby"));
+            request.session().attribute("message", Message.error("Selected Player is not Online"));
             response.redirect(WebServer.HOME_URL);
             return null;
         }
@@ -90,27 +107,29 @@ public class PostGameRoute implements Route {
         }
 
         if (gameManager.findPlayerGame(opponentName) == null) {
-		if (gameID == null) { // create a game
-		    game = gameManager.createGame(playerName, opponentName);
-		    request.attribute(GAME_ID_ATTRIBUTE, game.getGameID());
-		} else {
-		    game = gameManager.getActiveGame(gameID);
-		    if (game == null) { // There is no active game for this ID
-		        response.redirect(WebServer.HOME_URL);
-		        return null;
-		    }
-		}
+            if (gameID == null) { // create a game
+                game = gameManager.createGame(playerName, opponentName);
+                request.attribute(GAME_ID_ATTRIBUTE, game.getGameID());
+            }
+            else {
+                game = gameManager.getActiveGame(gameID);
+                if (game == null) { // There is no active game for this ID
+                    response.redirect(WebServer.HOME_URL);
+                    return null;
+                }
+            }
 
-		vm.put("title", "Checkers!");
-		vm.put("currentUser", playerName);
-		vm.put("viewMode", Game.View.PLAY);
-		vm.put("redPlayer", game.getRedPlayer());
-		vm.put("whitePlayer", game.getWhitePlayer());
-		vm.put("activeColor", game.getActiveColor());
-		vm.put("board", game.getBoardView());
-		vm.put("flip", game.getRedPlayer().getName().equals(playerName));
-		return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-        } else {
+            vm.put("title", "Checkers!");
+            vm.put("currentUser", playerName);
+            vm.put("viewMode", Game.View.PLAY);
+            vm.put("redPlayer", game.getRedPlayer());
+            vm.put("whitePlayer", game.getWhitePlayer());
+            vm.put("activeColor", game.getActiveColor());
+            vm.put("board", game.getBoardView());
+            vm.put("flip", game.getRedPlayer().getName().equals(playerName));
+            return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+        }
+        else {
         	request.session().attribute("message", Message.error("That player is already in a game!"));
         	response.redirect(WebServer.HOME_URL);
         	return null;

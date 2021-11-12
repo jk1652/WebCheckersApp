@@ -1,8 +1,13 @@
 package com.webcheckers.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * A single player
@@ -12,6 +17,7 @@ import java.util.logging.Logger;
 public class Player {
     private static final Logger LOG = Logger.getLogger(Player.class.getName());
     private String name;
+    private Map<String, Game> saved;
 
     /**
      * Constructor for Player, creates player with name
@@ -25,6 +31,14 @@ public class Player {
      */
     public String getName() {
         return this.name;
+    }
+
+    public void saveGame(Game game) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String gameInfo = "";
+        gameInfo = "vs. " + game.getOpponentName(this.name) + " @ " + formatter.format(date);
+        saved.put(gameInfo, game);
     }
 
     /**
