@@ -70,7 +70,7 @@ public class PlayerLobby {
 
     public Player getPlayer(String name) {
         for (Player x : players) {
-            if (x.getName() == name) {
+            if (x.getName().equals(name)) {
                 return x;
             }
         }
