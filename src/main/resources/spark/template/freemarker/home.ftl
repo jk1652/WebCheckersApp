@@ -27,6 +27,10 @@
             <input name="opponentName" />
             <button type="submit">Ok</button>
         </form>
+        <form action="./game" method="POST">
+            <button type="submit" name="AI">Play AI?</button>
+        </form>
+
         <p>
             ${playerListTitle}
             <ul>

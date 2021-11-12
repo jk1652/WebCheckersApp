@@ -13,6 +13,7 @@ import spark.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
@@ -22,6 +23,7 @@ public class PostGameRoute implements Route {
     private final PlayerLobby playerLobby;
     private final GameManager gameManager;
     private final TemplateEngine templateEngine;
+    private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
     /**
      * The constructor for the {@code POST /game} route handler.
@@ -52,8 +54,18 @@ public class PostGameRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         String playerName = request.session().attribute(PostSignInRoute.USERNAME);
         String opponentName = request.queryParams(OPPONENT_NAME);
+        String ai = request.queryParams("AI");
         Integer gameID = request.session().attribute(GAME_ID_ATTRIBUTE);
         Game game;
+
+        // used . as a player can't sign in as .
+        if (ai != null){
+            //start AI game
+            LOG.fine("ai triggered: " + ai);
+        }
+        else {
+            LOG.fine("ai null");
+        }
 
         Map<String, Object> vm = new HashMap<>();
 
