@@ -2,7 +2,6 @@ package com.webcheckers.model;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.Null;
 
 import static org.mockito.Mockito.*;
 
@@ -21,7 +20,7 @@ public class AiTest {
     }
 
     @Test
-    public void simpleMovedefensive() {
+    public void simpleMoveDefensive() {
         //runs this multiple times do the ai random decision making
         int x = 100;
         while (x != 0) {
@@ -34,11 +33,11 @@ public class AiTest {
     }
 
     @Test
-    public void simpleMoveagrressive() {
+    public void simpleMoveAggressive() {
         //runs this multiple times do the ai random decision making
         int x = 100;
         while (x != 0) {
-            Game CuT = new Game(mock(Player.class), AI.difficulty.agressive);
+            Game CuT = new Game(mock(Player.class), AI.difficulty.aggressive);
             CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
             CuT.submitMove();
             assertTrue(CuT.forceJump());
@@ -53,22 +52,22 @@ public class AiTest {
         while(x != 0) {
             Game CuT = new Game(mock(Player.class), AI.difficulty.stupid);
 
-            Board custome = new Board("");
+            Board custom = new Board("");
 
-            custome.getRow(2).getSpace(1).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
-            custome.getRow(4).getSpace(3).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
-            custome.getRow(7).getSpace(0).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+            custom.getRow(2).getSpace(1).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+            custom.getRow(4).getSpace(3).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+            custom.getRow(7).getSpace(0).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
 
-            CuT.setBoard(custome);
+            CuT.setBoard(custom);
             CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
             CuT.submitMove();
 
 
-            custome.getRow(2).getSpace(1).setPiece(null);
-            custome.getRow(4).getSpace(3).setPiece(null);
-            custome.getRow(2).getSpace(1).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+            custom.getRow(2).getSpace(1).setPiece(null);
+            custom.getRow(4).getSpace(3).setPiece(null);
+            custom.getRow(2).getSpace(1).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
 
-            assertEquals(custome.toString(), CuT.getBoardView().toString() );
+            assertEquals(custom.toString(), CuT.getBoardView().toString() );
             x -= 1;
         }
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class AI extends Player{
-    public enum difficulty {stupid, defensive, agressive}
+    public enum difficulty {stupid, defensive, aggressive}
     private final difficulty dif;
 
     public AI(difficulty dif){
@@ -14,8 +14,8 @@ public class AI extends Player{
 
     /**
      * this function houses all the main move logic in the game, because we
-     * bypass validate move we insted us perrfer moves to get the legal moves
-     * that the ai wants to make and dirrectly executed them by calling
+     * bypass validate move we instead us prefer moves to get the legal moves
+     * that the ai wants to make and directly executed them by calling
      * makeMove and submitTurn
      * @param game the game that the ai is playing in
      */
@@ -29,10 +29,12 @@ public class AI extends Player{
             if (move.isMove() && !hasJumped) {
                 game.makeMove(move);
                 break;
-            } else if (move.isJump()) {
+            }
+            else if (move.isJump()) {
                 game.makeMove(move);
                 hasJumped = true;
-            } else {
+            }
+            else {
                 break;
             }
         }
@@ -40,39 +42,39 @@ public class AI extends Player{
     }
 
     /**
-     * depending on the difficulty type of the AI it will take all legal moves from AImoves
-     * and only chose the ones that follow its perferd parameters. because calcPreferMoves can
+     * depending on the difficulty type of the AI it will take all legal moves from AIMoves
+     * and only chose the ones that follow its preferred parameters. because calcPreferMoves can
      * return null the final if is used to just return all moves
      * @param game the game the ai is in
-     * @return all the moves that meet the required parameter or all moves if none meet the requirments
+     * @return all the moves that meet the required parameter or all moves if none meet the requirements
      */
     private ArrayList<Move> preferMoves(Game game) {
         ArrayList<Move> moves = new ArrayList<>();
         if(dif == difficulty.defensive){moves = calcPreferMoves(game,false);}
-        if(dif == difficulty.agressive){moves = calcPreferMoves(game,true);}
+        if(dif == difficulty.aggressive){moves = calcPreferMoves(game,true);}
         if(moves.size() == 0){moves = AIMoves(game);}
         return moves;
     }
 
     /**
      * looks at all possible moves and either avoids creating or forces
-     * an force jump by the opponent depending on the agrressive boolean
+     * an force jump by the opponent depending on the aggressive boolean
      * @param game the game the ai in in
-     * @param agrressive if the function shoul returrn aggresive moves or defensive moves
-     * @return list of moves meeting the paramaters
+     * @param aggressive if the function should return aggressive moves or defensive moves
+     * @return list of moves meeting the parameters
      */
-    private ArrayList<Move> calcPreferMoves(Game game, Boolean agrressive) {
+    private ArrayList<Move> calcPreferMoves(Game game, Boolean aggressive) {
         ArrayList<Move> moves = AIMoves(game);
-        Game proxie = new Game(game.getRedPlayer(), game.getWhitePlayer());
-        ArrayList<Move> perrferdMoves = new ArrayList<>();
+        Game proxy = new Game(game.getRedPlayer(), game.getWhitePlayer());
+        ArrayList<Move> preferredMoves = new ArrayList<>();
         for(Move canMove : moves){
-            proxie.setBoard(game.getBoardView());
-            proxie.makeMove(canMove);
-            if(agrressive == proxie.forceJump()){
-                perrferdMoves.add(canMove);
+            proxy.setBoard(game.getBoardView());
+            proxy.makeMove(canMove);
+            if(aggressive == proxy.forceJump()){
+                preferredMoves.add(canMove);
             }
         }
-        return perrferdMoves;
+        return preferredMoves;
     }
 
 

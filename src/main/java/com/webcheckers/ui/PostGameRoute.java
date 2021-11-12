@@ -5,7 +5,6 @@ import com.webcheckers.appl.GameManager;
 
 import com.webcheckers.model.AI;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Player;
 
 import com.webcheckers.util.Message;
 
@@ -79,7 +78,7 @@ public class PostGameRoute implements Route {
         }
         else if (hard != null) {
             LOG.fine("ai hard");
-            gameManager.createGame(playerName, AI.difficulty.agressive);
+            gameManager.createGame(playerName, AI.difficulty.aggressive);
         }
         else {
             LOG.fine("ai null");
