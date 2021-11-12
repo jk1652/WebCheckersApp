@@ -83,7 +83,12 @@ public class GameManager {
 		active.remove(del);
 	}
 
-	public Game LoadGame(Game game){
+	public Game LoadGame(Game game, Player loader){
+
+		if (findPlayerGame(game.getOpponentName(loader.getName())) != null) {
+			return null;
+		}
+
 		LOG.config("load game");
 		active.add(game);
 		return game;

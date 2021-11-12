@@ -79,37 +79,31 @@ public class PostLoadGameRoute implements Route {
             }
         }
 
-        Game game = gameManager.LoadGame(user.getSaved().get(loadGame));
-
-        Player oppo = playerLobby.getPlayer(game.getOpponentName(playerName));
-
-        System.out.println(game.getOpponentName(playerName));
-
-        Map<String, Object> vm = new HashMap<>();
-
-        if (!game.getOpponentName(playerName).equals("CPU")) {
-            System.out.println("checking player");
-            if (playerLobby.getPlayer(game.getOpponentName(playerName)) == null) {
-                System.out.println("we made it here");
-                gameManager.finishGame(playerName);
-                request.session().attribute("message", Message.error("Selected Player is not Online"));
-                response.redirect(WebServer.HOME_URL);
-                return null;
-            }
-            else {
-                System.out.println("oppo is not null");
-            }
-        }
-
-        user.removeSaveGame(loadGame);
-
-        if (oppo != null){
-            oppo.getSaved().values().remove(game);
-        }
-
-
+        Game game = gameManager.LoadGame(user.getSaved().get(loadGame), user);
 
         if (game != null) {
+
+            Player oppo = playerLobby.getPlayer(game.getOpponentName(playerName));
+
+            System.out.println(game.getOpponentName(playerName));
+
+            Map<String, Object> vm = new HashMap<>();
+
+            if (!game.getOpponentName(playerName).equals("CPU")) {
+                System.out.println("checking player");
+                if (playerLobby.getPlayer(game.getOpponentName(playerName)) == null) {
+                    gameManager.finishGame(playerName);
+                    request.session().attribute("message", Message.error("Selected Player is not Online"));
+                    response.redirect(WebServer.HOME_URL);
+                    return null;
+                }
+            }
+
+            user.removeSaveGame(loadGame);
+
+            if (oppo != null){
+                oppo.getSaved().values().remove(game);
+            }
 
             vm.put("title", "Checkers!");
             vm.put("currentUser", playerName);
@@ -119,10 +113,13 @@ public class PostLoadGameRoute implements Route {
             vm.put("activeColor", game.getActiveColor());
             vm.put("board", game.getBoardView());
             vm.put("flip", game.getRedPlayer().getName().equals(playerName));
+            response.redirect(WebServer.GAME_URL);
             return templateEngine.render(new ModelAndView(vm, "game.ftl"));
         }
 
-        return true;
+        request.session().attribute("message", Message.error("Selected Player is in a Game"));
+        response.redirect(WebServer.HOME_URL);
+        return null;
     }
 }
 
