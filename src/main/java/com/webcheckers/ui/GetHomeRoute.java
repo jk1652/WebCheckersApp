@@ -92,11 +92,11 @@ public class GetHomeRoute implements Route {
         }
         // if player is in NOT in a game make name GREEN
         if (gameManager.findPlayerGame(x) == null){
-          readyPlayers =  readyPlayers + ("<li style=\"color:#52BE80 ;\">" + x.getName() + "</li>");
+          readyPlayers =  readyPlayers + ("<li style=\"color:#52BE80 ;margin-left: 40px;\">" + x.getName() + "</li>");
         }
         // if player is in a game make their name RED
         else {
-          inGamePlayers = inGamePlayers + ("<li style=\"color:#CB4335;\">" + x.getName() + "</li>");
+          inGamePlayers = inGamePlayers + ("<li style=\"color:#CB4335;margin-left: 40px;\">" + x.getName() + "</li>");
         }
       }
 
@@ -106,14 +106,14 @@ public class GetHomeRoute implements Route {
       // if there are no players online, declares so
       if (!readyPlayers.equals("") || !inGamePlayers.equals("")) {
         if (readyPlayers.equals("")){
-          readyPlayers = "<p> No players available</p>";
+          readyPlayers = "<p style=\"color:#52BE80;margin-left: 20px;\"><i> No players available</i></p>";
         }
         if (inGamePlayers.equals("")){
-          inGamePlayers = "<p> No players in a game</p>";
+          inGamePlayers = "<p style=\"color:#CB4335;margin-left: 20px;\"><i> No players in a game</i></p>";
         }
 
-        players = "<h2> Available Players</h2>" + readyPlayers +
-                "<h2> Already in a game</h2>" + inGamePlayers;
+        players = "<h2 style=\"color:black;\"> Available Players</h2>" + readyPlayers +
+                "<h2 style=\"color:black;\"> Already in a game</h2>" + inGamePlayers;
         vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
       }
       else {
