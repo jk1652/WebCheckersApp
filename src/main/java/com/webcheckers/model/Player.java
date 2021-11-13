@@ -35,8 +35,13 @@ public class Player {
     public void saveGame(Game game) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
-        String gameInfo = "";
-        gameInfo = "vs. " + game.getOpponentName(this.name) + " @ " + formatter.format(date);
+        String gameInfo;
+        if(game.getSinglePlayer()){
+            gameInfo = "vs. " + game.getAIOpponentDifficulty() + " AI @ " + formatter.format(date);
+        }
+        else{
+            gameInfo = "vs. " + game.getOpponentName(this.name) + " @ " + formatter.format(date);
+        }
         saved.put(gameInfo, game);
     }
 

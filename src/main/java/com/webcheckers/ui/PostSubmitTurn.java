@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
+import com.webcheckers.model.Piece;
 import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
@@ -53,8 +54,8 @@ public class PostSubmitTurn implements Route {
         Game game = gameManager.findPlayerGame(playerName);
 
         //If the player is playing an AI, check if AI is stalemate
-        if(game.getSinglePlayer()){
-            if(game.checkStalemate()){return null;}
+        if(game.getSinglePlayer() && game.getActiveColor() == Piece.Color.WHITE){
+            if(game.checkStalemate()){game.submitMove(); return null;}
         }
 
         //checks if there is a forcible jump on the game board
@@ -64,7 +65,7 @@ public class PostSubmitTurn implements Route {
             if (game.canJump(latest.getEnd())) {msg = Message.error("Another Jump can be made");}
             else {game.submitMove(); msg = Message.info("Turn Submitted");}
         }
-        else {game.submitMove();msg = Message.info("Turn Submitted");}
+        else {game.submitMove(); msg = Message.info("Turn Submitted");}
 
         Gson gson = new GsonBuilder().create();
         return gson.toJson( msg );

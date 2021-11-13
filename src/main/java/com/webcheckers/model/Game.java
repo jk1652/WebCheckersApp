@@ -20,7 +20,7 @@ public class Game {
 	private String validity;
 	private ArrayList<Move> possibleJumps = new ArrayList<>();
 	private Boolean SinglePlayer = false;
-	private Boolean stalemate = false;
+	private AI.difficulty difficulty;
 
 
 	
@@ -43,6 +43,7 @@ public class Game {
 	public Game(Player redPlayer,AI.difficulty dif ){
 		this.redPlayer = redPlayer;
 		this.whitePlayer = new AI(dif);
+		difficulty = dif;
 		SinglePlayer = true;
 		activeColor = Piece.Color.RED;
 		board = new Board();
@@ -175,15 +176,17 @@ public class Game {
 	 * a deep copy and not a pointer then calls swapActiveColor();
 	 */
 	public void submitMove(){
-		board = new Board(board);
-		validatedMoves = new ArrayList<>();
-		pastMoves = new ArrayList<>();
-		possibleJumps = new ArrayList<>();
-		swapActiveColor();
-		if(activeColor.equals(Piece.Color.WHITE) && SinglePlayer){
-			if(whitePlayer instanceof AI){
-				AI ai = (AI)whitePlayer;
-				ai.AIMakeMove(this);
+		if(!checkStalemate()){
+			board = new Board(board);
+			validatedMoves = new ArrayList<>();
+			pastMoves = new ArrayList<>();
+			possibleJumps = new ArrayList<>();
+			swapActiveColor();
+			if(activeColor.equals(Piece.Color.WHITE) && SinglePlayer){
+				if(whitePlayer instanceof AI){
+					AI ai = (AI)whitePlayer;
+					ai.AIMakeMove(this);
+				}
 			}
 		}
 	}
@@ -370,23 +373,15 @@ public class Game {
 	}
 
 	/**
-	 * sets the stalemate variable to true if the active color
-	 * has pieces that cannot move at all
+	 * checks if there is a stalemate
 	 */
-	public void setStalemate(){
+	public boolean checkStalemate(){
 		ArrayList<Move> moves = new ArrayList<>();
 		for (int x = 0; x < 8; x++) {for (int y = 0; y < 8; y++) {
 			Piece target = board.getRow(x).getSpace(y).getPiece();
 			if(target != null && target.getColor() == activeColor){moves.addAll(canMove(new Position(x,y)));}
 		}}
-		if(moves.isEmpty()){stalemate = true;}
-	}
-
-	/**
-	 * @return stalemate boolean
-	 */
-	public boolean checkStalemate(){
-		return stalemate;
+		return moves.isEmpty();
 	}
 
 	/**
@@ -412,6 +407,13 @@ public class Game {
 			return whitePlayer.getName();
 		else
 			return redPlayer.getName();
+	}
+
+	/**
+	 * @return AI difficulty
+	 */
+	public String getAIOpponentDifficulty(){
+		return String.valueOf(difficulty);
 	}
 
 	/**

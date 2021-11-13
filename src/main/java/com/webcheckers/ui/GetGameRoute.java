@@ -92,7 +92,7 @@ public class GetGameRoute implements Route {
             else
                 winnerName = game.getOpponentName(playerName);
                 modeOptions.put("isGameOver", true);
-                modeOptions.put("gameOverMessage", winnerName + " has captured all the pieces.");
+                modeOptions.put("gameOverMessage", winnerName + " has won and has captured all of the opposing pieces.");
         }
         else if (winner == null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
             modeOptions.put("isGameOver", false);
@@ -124,14 +124,13 @@ public class GetGameRoute implements Route {
             return templateEngine.render(new ModelAndView(vm , "game.ftl"));
     }
     else {
-        //request.session().attribute("message", Message.info("Game was Resigned"));
 
         if (playerLobby.getPlayer(playerName).currentSavedGamesWentUp()) {
-            request.session().attribute("message", Message.info("Game was Saved"));
+            request.session().attribute("message", Message.info("Your previous game has been saved"));
             playerLobby.getPlayer(playerName).savedGamesOnLVL();
         }
         else {
-            request.session().attribute("message", Message.info("Game was Resigned"));
+            request.session().attribute("message", Message.info("Your checkers game has ended"));
         }
 
     	response.redirect(WebServer.HOME_URL);

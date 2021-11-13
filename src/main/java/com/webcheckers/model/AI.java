@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class AI extends Player{
-    public enum difficulty {easy, defensive, aggressive}
+    public enum difficulty {Easy, Defensive, Aggressive}
     private final difficulty dif;
 
     public AI(difficulty dif){
@@ -22,12 +22,12 @@ public class AI extends Player{
     public void AIMakeMove(Game game){
         ArrayList<Move> moves;
         boolean hasJumped = false;
+        Position EndOfJump = null;
         while (true) {
             moves = preferMoves(game);
 
             //if there are no moves stalemate has been reached
-            if(moves.isEmpty()) {
-                game.setStalemate();
+            if(game.checkStalemate()) {
                 break;
             }
 
@@ -37,14 +37,26 @@ public class AI extends Player{
                 //choose a random move
                 Move move = moves.get((int) (Math.random() * moves.size()));
 
+                //Do a random simple move if there was no jump
                 if (move.isMove() && !hasJumped) {
                     game.makeMove(move); game.setKing(move);
                     break;
                 }
 
+                //Do a jump
                 else if (move.isJump()) {
-                    game.makeMove(move); game.setKing(move);
-                    hasJumped = true;
+
+                    //If there was no jump before
+                    if(EndOfJump == null){
+                        game.makeMove(move); game.setKing(move);
+                        EndOfJump = move.getEnd();
+                        hasJumped = true;
+                    }
+                    //If there was a jump before, get the piece at the end position of first jump
+                    else if(move.getStart().equals(EndOfJump)){
+                        game.makeMove(move); game.setKing(move);
+                        EndOfJump = move.getEnd();
+                    }
                 }
 
                 else {break;}
@@ -62,8 +74,8 @@ public class AI extends Player{
      */
     private ArrayList<Move> preferMoves(Game game) {
         ArrayList<Move> moves = new ArrayList<>();
-        if(dif == difficulty.defensive){moves = calcPreferMoves(game,false);}
-        if(dif == difficulty.aggressive){moves = calcPreferMoves(game,true);}
+        if(dif == difficulty.Defensive){moves = calcPreferMoves(game,false);}
+        if(dif == difficulty.Aggressive){moves = calcPreferMoves(game,true);}
         if(moves.size() == 0){moves = AIMoves(game);}
         return moves;
     }
