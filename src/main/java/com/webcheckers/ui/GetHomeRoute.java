@@ -140,17 +140,11 @@ public class GetHomeRoute implements Route {
         String msg = "";
         Set<String> keys = saveGames.keySet();
         int i = 0;
+        // create buttons for the saved games
         for (String x: keys){
-          //msg = "<a href=\"/game\" onclick=\"gameManger.LoadGame(" + saveGames.get(x) + ");\">" + msg + x + "<br></a>";
-
           msg = msg + "<form action=\"./load\" method=\"POST\">\n" +
-                  "            <button type=\"submit\" name=\"" + Integer.toString(++i) + "\">" + x + "</button>\n" +
-                  "            </form>";
-
-          //msg = msg + "<form id=\"load\" action=\"/load\" method=\"post\"> "
-          //        + "<a href=\"/load\"  >" + x + "</a></form><br>";
-
-          //name=\"" + x + "\"
+                  "<button type=\"submit\" name=\"" + Integer.toString(++i) + "\">" + x + "</button>\n" +
+                  "</form>";
         }
         if (keys.size() > 0) {
           vm.put("saveList", msg);

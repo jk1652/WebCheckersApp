@@ -64,17 +64,21 @@ public class PostSaveGameRoute implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
-        player.saveGame(game);
-        //player.savedGamesDidGoUp();
 
         Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
         //if inactive player asks to save do nothing
         Piece.Color userColor = game.getUserColor(playerName);
         if (userColor != game.getActiveColor()){
-            otherPlayer = null;
             response.redirect(WebServer.GAME_URL);
-            return false;
+            return null;
+        }
+        else if (game.getWinner() != null){ // do nothing if game has a winner
+            response.redirect(WebServer.GAME_URL);
+            return null;
+        }
+        else {
+            player.saveGame(game);
         }
         // if any moves has occured do nothing
         if (game.getMoveSize() > 0) {
