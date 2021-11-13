@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 
 public class AI extends Player{
-    public enum difficulty {stupid, defensive, aggressive}
+    public enum difficulty {easy, defensive, aggressive}
     private final difficulty dif;
 
     public AI(difficulty dif){
@@ -24,18 +24,30 @@ public class AI extends Player{
         boolean hasJumped = false;
         while (true) {
             moves = preferMoves(game);
-            Move move = moves.get((int) (Math.random() * moves.size()));
 
-            if (move.isMove() && !hasJumped) {
-                game.makeMove(move);
+            //if there are no moves stalemate has been reached
+            if(moves.isEmpty()) {
+                game.setStalemate();
                 break;
             }
-            else if (move.isJump()) {
-                game.makeMove(move);
-                hasJumped = true;
-            }
-            else {
-                break;
+
+            //else execute a random move
+            else{
+
+                //choose a random move
+                Move move = moves.get((int) (Math.random() * moves.size()));
+
+                if (move.isMove() && !hasJumped) {
+                    game.makeMove(move); game.setKing(move);
+                    break;
+                }
+
+                else if (move.isJump()) {
+                    game.makeMove(move); game.setKing(move);
+                    hasJumped = true;
+                }
+
+                else {break;}
             }
         }
         game.submitMove();

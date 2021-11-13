@@ -29,11 +29,12 @@
             <input name="opponentName" />
             <button type="submit">Ok</button>
         </form>
-        <br>
+        <p>To challenge an AI, select a difficulty:<p>
+        <p>(Hover over a difficulty to get a description of the AI movement)</p>
         <form action="./game" method="POST">
-            <button type="submit" name="easy">Play easy AI?</button>
-            <button type="submit" name="med">Play med AI?</button>
-            <button type="submit" name="hard">Play hard AI?</button>
+            <button type="submit" style="font-size : 15px" title="(Easy) AI makes moves randomly" name="easy">Easy AI</button>
+            <button type="submit" style="font-size : 15px" title="(Medium) AI goes on the offensive and pushes you to jump" name="med">Aggressive AI</button>
+            <button type="submit" style="font-size : 15px" title="(Difficult) AI tries to keep pieces and avoids jumps" name="hard">Defensive AI</button>
         </form>
         <#if saveList??>
             <br>

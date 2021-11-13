@@ -52,6 +52,11 @@ public class PostSubmitTurn implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
+        //If the player is playing an AI, check if AI is stalemate
+        if(game.getSinglePlayer()){
+            if(game.checkStalemate()){return null;}
+        }
+
         //checks if there is a forcible jump on the game board
         Move latest = game.getPastMoves().get(game.getPastMoves().size() - 1);
         Message msg;

@@ -20,6 +20,7 @@ public class Game {
 	private String validity;
 	private ArrayList<Move> possibleJumps = new ArrayList<>();
 	private Boolean SinglePlayer = false;
+	private Boolean stalemate = false;
 
 
 	
@@ -366,6 +367,33 @@ public class Game {
 	 */
 	public int getGameID() {
 		return gameID;
+	}
+
+	/**
+	 * sets the stalemate variable to true if the active color
+	 * has pieces that cannot move at all
+	 */
+	public void setStalemate(){
+		ArrayList<Move> moves = new ArrayList<>();
+		for (int x = 0; x < 8; x++) {for (int y = 0; y < 8; y++) {
+			Piece target = board.getRow(x).getSpace(y).getPiece();
+			if(target != null && target.getColor() == activeColor){moves.addAll(canMove(new Position(x,y)));}
+		}}
+		if(moves.isEmpty()){stalemate = true;}
+	}
+
+	/**
+	 * @return stalemate boolean
+	 */
+	public boolean checkStalemate(){
+		return stalemate;
+	}
+
+	/**
+	 * @return single player boolean
+	 */
+	public Boolean getSinglePlayer() {
+		return SinglePlayer;
 	}
 
 	/**

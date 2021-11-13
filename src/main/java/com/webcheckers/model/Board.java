@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 
 public class Board implements Iterable<Row> {
-    private ArrayList<Row> rows = new ArrayList<>();
+    private final ArrayList<Row> rows = new ArrayList<>();
 
     private Piece.Color winner = null;
     private boolean resign = Boolean.FALSE;
@@ -36,7 +36,7 @@ public class Board implements Iterable<Row> {
 
     /**
      * makes an empty board for debug purposes
-     * @param empty just to diferrentiate the 2 construters pass whatever you want
+     * @param empty just to differentiate the 2 constructors pass whatever you want
      */
     public Board(String empty){
         for(int row = 0; row < 8; row++) {
@@ -49,9 +49,9 @@ public class Board implements Iterable<Row> {
     }
 
     /**
-     * this constructer is used to create deep copys of past
-     * board states so when the move stack is cleard the board
-     * is not renderd null
+     * this constructor is used to create a deep copy of past
+     * board states so when the move stack is cleared the board
+     * is not rendered null
      * @param board board object to be copied
      */
     public Board (Board board){
@@ -83,7 +83,7 @@ public class Board implements Iterable<Row> {
     /**
      * this function is used to check if a player has won
      *though capturing all pieces
-     * @return the color of the winner if their is one
+     * @return the color of the winner if there is one
      */
     public Piece.Color getWinner() {
         if (winner == null) {
@@ -106,7 +106,7 @@ public class Board implements Iterable<Row> {
 
     /**
      * this function is used to check how the game was exited
-     * ie via win or forfit
+     * ie via win or forfeit
      * @return the exit status
      */
     public boolean getExitState() {

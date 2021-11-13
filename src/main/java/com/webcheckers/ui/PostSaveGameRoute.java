@@ -1,23 +1,17 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
-import jdk.swing.interop.SwingInterOpUtils;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Route;
+import spark.TemplateEngine;
 
-import javax.print.DocFlavor;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
-
-import static spark.Spark.halt;
 
 /**
  * @Author Zane Kitchen Lipski
@@ -56,28 +50,36 @@ public class PostSaveGameRoute implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
 
-        Map<String, Object> vm = new HashMap<>();
-
         String playerName = request.session().attribute(PostSignInRoute.USERNAME);
 
         Player player = playerLobby.getPlayer(playerName);
 
         Game game = gameManager.findPlayerGame(playerName);
 
-        player.saveGame(game);
-        //player.savedGamesDidGoUp();
+        Message msg;
+        if(game.getUserColor(playerName) == game.getActiveColor()){
+            player.saveGame(game);
 
-        Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
+            Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
-        if (otherPlayer != null) {
-            otherPlayer.saveGame(game);
-            otherPlayer.savedGamesDidGoUp();
+            if (otherPlayer != null) {
+                otherPlayer.saveGame(game);
+                otherPlayer.savedGamesDidGoUp();
+                request.session().attribute("message", Message.info("Your game against " + otherPlayer + " was Saved"));
+            }
+
+            else{
+                request.session().attribute("message", Message.info("Your game against the AI was Saved"));
+            }
+            gameManager.finishGame(playerName);
+            response.redirect(WebServer.HOME_URL);
+            return null;
         }
 
-        request.session().attribute("message", Message.info("Game was Saved"));
-        gameManager.finishGame(playerName);
-        response.redirect(WebServer.HOME_URL);
-        return null;
+        else{
+            msg = Message.error("You can only save the game on your turn");
+        }
 
+        return gson.toJson(msg);
     }
 }

@@ -69,16 +69,16 @@ public class PostGameRoute implements Route {
         // if ai is selected
         if (easy != null){
             //start AI game
-            LOG.fine("ai easy triggered");
-            gameManager.createGame(playerName, AI.difficulty.stupid);
+            LOG.fine("game against ai easy triggered");
+            gameManager.createGame(playerName, AI.difficulty.easy);
         }
         else if (med != null){
-            LOG.fine("ai med");
-            gameManager.createGame(playerName, AI.difficulty.defensive);
+            LOG.fine("game against ai aggressive triggered");
+            gameManager.createGame(playerName, AI.difficulty.aggressive);
         }
         else if (hard != null) {
-            LOG.fine("ai hard");
-            gameManager.createGame(playerName, AI.difficulty.aggressive);
+            LOG.fine("game against ai defensive triggered");
+            gameManager.createGame(playerName, AI.difficulty.defensive);
         }
         else {
             LOG.fine("ai null");

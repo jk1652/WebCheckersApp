@@ -13,7 +13,7 @@ public class AiTest {
 
     @Test
     public void simpleMoveStupid() {
-        Game CuT = new Game(mock(Player.class), AI.difficulty.stupid);
+        Game CuT = new Game(mock(Player.class), AI.difficulty.easy);
         CuT.makeMove(new Move(new Position(2, 1), new Position(3, 2)));
         CuT.submitMove();
         assertEquals(CuT.getActiveColor(), Piece.Color.RED);
@@ -50,7 +50,7 @@ public class AiTest {
         //runs this multiple times do the ai random decision making
         int x = 5;
         while(x != 0) {
-            Game CuT = new Game(mock(Player.class), AI.difficulty.stupid);
+            Game CuT = new Game(mock(Player.class), AI.difficulty.easy);
 
             Board custom = new Board("");
 

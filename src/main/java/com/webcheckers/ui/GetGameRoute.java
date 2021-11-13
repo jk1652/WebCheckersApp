@@ -1,34 +1,26 @@
 package com.webcheckers.ui;
 
-import java.sql.SQLOutput;
-import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.model.Board;
+import com.webcheckers.model.Game;
+import com.webcheckers.model.Piece;
+import com.webcheckers.util.Message;
+import spark.*;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import com.webcheckers.appl.PlayerLobby;
-import com.webcheckers.appl.GameManager;
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
-
-import com.google.gson.*;
-
-import com.webcheckers.util.Message;
-import com.webcheckers.model.Game;
-import com.webcheckers.model.Piece;
 /**
  * The UI Controller to GET the Game page.
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
 public class GetGameRoute implements Route {
-  private static Gson gson = new GsonBuilder().create();
+  private static final Gson gson = new GsonBuilder().create();
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
   private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   private final TemplateEngine templateEngine;
@@ -82,46 +74,56 @@ public class GetGameRoute implements Route {
     }
 
     if (game != null) {
-        // Check if someone won.
-        Piece.Color winner = game.getWinner(); 
-	final Map<String, Object> modeOptions = new HashMap<>(2);
- 	if (winner != null && board.getResign() == Boolean.FALSE) {
-          Piece.Color userColor = game.getUserColor(playerName);
-	  String winnerName;
-	  if (userColor.equals(winner))
-            winnerName = playerName;
-	  else
-	    winnerName = game.getOpponentName(playerName);  
-	  modeOptions.put("isGameOver", true);
-	  modeOptions.put("gameOverMessage", winnerName + " has captured all the pieces.");
-	} else if (winner == null && board.getResign() == Boolean.FALSE) {
-	  modeOptions.put("isGameOver", false);
-	  modeOptions.put("gameOverMessage", "");
-	}
- 	else if (winner != null && board.getResign() == Boolean.TRUE) {
- 	    Piece.Color userColor = game.getUserColor(playerName);
- 	    String loserName;
- 	    if (userColor.equals(winner))
- 	        loserName = playerName;
- 	    else
-            loserName = game.getOpponentName(playerName);
- 	        modeOptions.put("isGameOver", true);
-            modeOptions.put("gameOverMessage", loserName + " has lost by resign.");
- 	} else if (winner == null && board.getResign() == Boolean.TRUE) {
+        Piece.Color winner = game.getWinner();
+        final Map<String, Object> modeOptions = new HashMap<>(2);
+
+        //First check for a stalemate
+        if(game.checkStalemate()){
+            modeOptions.put("isGameOver", true);
+            modeOptions.put("gameOverMessage", "The match has come to a stalemate and cannot proceed");
+        }
+
+        //Check if there is a declared winner.
+        if (winner != null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
+            Piece.Color userColor = game.getUserColor(playerName);
+            String winnerName;
+            if (userColor.equals(winner))
+                winnerName = playerName;
+            else
+                winnerName = game.getOpponentName(playerName);
+                modeOptions.put("isGameOver", true);
+                modeOptions.put("gameOverMessage", winnerName + " has captured all the pieces.");
+        }
+        else if (winner == null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
             modeOptions.put("isGameOver", false);
             modeOptions.put("gameOverMessage", "");
- 	}
-	vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-	vm.put("title", "Checkers!");
-        vm.put("currentUser", playerName);
-        vm.put("viewMode", Game.View.PLAY);
-        vm.put("redPlayer", game.getRedPlayer());
-        vm.put("whitePlayer", game.getWhitePlayer());
-        vm.put("activeColor", game.getActiveColor());
-        vm.put("board", game.getBoardView());
-        vm.put("flip", game.getRedPlayer().getName().equals(playerName));
-        return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-    } else {
+        }
+        else if (winner != null && board.getResign() == Boolean.TRUE) {
+            Piece.Color userColor = game.getUserColor(playerName);
+            String loserName;
+            if (userColor.equals(winner))
+                loserName = playerName;
+            else
+                loserName = game.getOpponentName(playerName);
+                modeOptions.put("isGameOver", true);
+                modeOptions.put("gameOverMessage", loserName + " has lost by resign.");
+        }
+         else if (winner == null && board.getResign() == Boolean.TRUE) {
+                modeOptions.put("isGameOver", false);
+                modeOptions.put("gameOverMessage", "");
+        }
+        vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
+        vm.put("title", "Checkers!");
+            vm.put("currentUser", playerName);
+            vm.put("viewMode", Game.View.PLAY);
+            vm.put("redPlayer", game.getRedPlayer());
+            vm.put("whitePlayer", game.getWhitePlayer());
+            vm.put("activeColor", game.getActiveColor());
+            vm.put("board", game.getBoardView());
+            vm.put("flip", game.getRedPlayer().getName().equals(playerName));
+            return templateEngine.render(new ModelAndView(vm , "game.ftl"));
+    }
+    else {
         //request.session().attribute("message", Message.info("Game was Resigned"));
 
         if (playerLobby.getPlayer(playerName).currentSavedGamesWentUp()) {
