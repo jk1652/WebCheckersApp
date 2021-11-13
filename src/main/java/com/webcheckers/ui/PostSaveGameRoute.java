@@ -69,6 +69,22 @@ public class PostSaveGameRoute implements Route {
 
         Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
+        //if inactive player asks to save do nothing
+        Piece.Color userColor = game.getUserColor(playerName);
+        if (userColor != game.getActiveColor()){
+            otherPlayer = null;
+            response.redirect(WebServer.GAME_URL);
+            return false;
+        }
+        // if any moves has occured do nothing
+        if (game.getMoveSize() > 0) {
+            for(int i = game.getMoveSize(); i > 0; i--){
+                game.undoMove();
+            }
+            //response.redirect(WebServer.GAME_URL);
+            //return Message.error("Can't save with loaded moves");
+        }
+
         if (otherPlayer != null) {
             otherPlayer.saveGame(game);
             otherPlayer.savedGamesDidGoUp();
