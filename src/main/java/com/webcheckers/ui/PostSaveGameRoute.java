@@ -5,6 +5,7 @@ import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Move;
+import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.Request;
@@ -61,6 +62,8 @@ public class PostSaveGameRoute implements Route {
 
         Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
+
+
         //if inactive player asks to save do nothing
         Piece.Color userColor = game.getUserColor(playerName);
         if (userColor != game.getActiveColor()){
@@ -79,8 +82,6 @@ public class PostSaveGameRoute implements Route {
             for(int i = game.getMoveSize(); i > 0; i--){
                 game.undoMove();
             }
-            //response.redirect(WebServer.GAME_URL);
-            //return Message.error("Can't save with loaded moves");
         }
 
         if (otherPlayer != null) {

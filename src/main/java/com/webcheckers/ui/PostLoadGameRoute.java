@@ -85,12 +85,10 @@ public class PostLoadGameRoute implements Route {
 
             Player oppo = playerLobby.getPlayer(game.getOpponentName(playerName));
 
-            System.out.println(game.getOpponentName(playerName));
-
             Map<String, Object> vm = new HashMap<>();
 
-            if (!game.getOpponentName(playerName).equals("CPU")) {
-                System.out.println("checking player");
+            if (!game.getSinglePlayer()) {
+
                 if (playerLobby.getPlayer(game.getOpponentName(playerName)) == null) {
                     gameManager.finishGame(playerName);
                     request.session().attribute("message", Message.error("Selected Player is not Online"));
