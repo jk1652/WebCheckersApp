@@ -57,25 +57,21 @@ public class PostSaveGameRoute implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
-        if(game.getUserColor(playerName) == game.getActiveColor()) {
-            player.saveGame(game);
+        player.saveGame(game);
 
-            Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
+        Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
-            if (otherPlayer != null) {
-                otherPlayer.saveGame(game);
-                otherPlayer.savedGamesDidGoUp();
-                request.session().attribute("message", Message.info("Your game against " +
-                        otherPlayer.getName() + " was Saved"));
-            } else {
-                request.session().attribute("message", Message.info("Your game against the " +
-                        game.getAIOpponentDifficulty() + " AI was Saved"));
-            }
-            gameManager.finishGame(playerName);
-            response.redirect(WebServer.HOME_URL);
-            return null;
+        if (otherPlayer != null) {
+            otherPlayer.saveGame(game);
+            otherPlayer.savedGamesDidGoUp();
+            request.session().attribute("message", Message.info("Your game against " +
+                    otherPlayer.getName() + " was Saved"));
+        } else {
+            request.session().attribute("message", Message.info("Your game against the " +
+                    game.getAIOpponentDifficulty() + " AI was Saved"));
         }
-        response.redirect(WebServer.GAME_URL);
+        gameManager.finishGame(playerName);
+        response.redirect(WebServer.HOME_URL);
         return null;
     }
 }
