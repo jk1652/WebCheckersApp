@@ -56,7 +56,7 @@
             <div class="toolbar"></div>
 
             <form action="./save" method="POST">
-            <button type="submit" name="saveGame">Save Game</button>
+            <button type="submit" name="saveGame" id="saveGame">Save Game</button>
             </form>
 
           </fieldset>

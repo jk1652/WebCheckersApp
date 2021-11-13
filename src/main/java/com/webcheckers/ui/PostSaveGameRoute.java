@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.Request;
@@ -44,7 +45,7 @@ public class PostSaveGameRoute implements Route {
      * sends resign game state
      * @param request
      * @param response
-     * @return reisgn game state json message
+     * @return resign game state json message
      * @throws Exception
      */
     @Override
@@ -56,8 +57,7 @@ public class PostSaveGameRoute implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
-        Message msg;
-        if(game.getUserColor(playerName) == game.getActiveColor()){
+        if(game.getUserColor(playerName) == game.getActiveColor()) {
             player.saveGame(game);
 
             Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
@@ -65,21 +65,17 @@ public class PostSaveGameRoute implements Route {
             if (otherPlayer != null) {
                 otherPlayer.saveGame(game);
                 otherPlayer.savedGamesDidGoUp();
-                request.session().attribute("message", Message.info("Your game against " + otherPlayer + " was Saved"));
-            }
-
-            else{
-                request.session().attribute("message", Message.info("Your game against the AI was Saved"));
+                request.session().attribute("message", Message.info("Your game against " +
+                        otherPlayer.getName() + " was Saved"));
+            } else {
+                request.session().attribute("message", Message.info("Your game against the " +
+                        game.getAIOpponentDifficulty() + " AI was Saved"));
             }
             gameManager.finishGame(playerName);
             response.redirect(WebServer.HOME_URL);
             return null;
         }
-
-        else{
-            msg = Message.error("You can only save the game on your turn");
-        }
-
-        return gson.toJson(msg);
+        response.redirect(WebServer.GAME_URL);
+        return null;
     }
 }

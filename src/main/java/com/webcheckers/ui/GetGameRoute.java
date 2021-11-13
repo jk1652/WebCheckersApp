@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class GetGameRoute implements Route {
   private static final Gson gson = new GsonBuilder().create();
   private static final Logger LOG = Logger.getLogger(GetGameRoute.class.getName());
-  private static final Message WELCOME_MSG = Message.info("Welcome to the world of online Checkers.");
   private final TemplateEngine templateEngine;
   private final PlayerLobby playerLobby;
   private final GameManager gameManager;
@@ -126,7 +125,7 @@ public class GetGameRoute implements Route {
     else {
 
         if (playerLobby.getPlayer(playerName).currentSavedGamesWentUp()) {
-            request.session().attribute("message", Message.info("Your previous game has been saved"));
+            request.session().attribute("message", Message.info("Your opponent has left, but luckily they saved the game against you :)"));
             playerLobby.getPlayer(playerName).savedGamesOnLVL();
         }
         else {
