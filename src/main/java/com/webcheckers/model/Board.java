@@ -114,6 +114,14 @@ public class Board implements Iterable<Row> {
     }
 
     /**
+     * Sets the exit state to the passed value for testing purposes.
+     * @param state the state to update to
+     */
+    public void setExitState(boolean state) {
+        exit = state;
+    }
+
+    /**
      *returns an even row on the checkers board
      * @param color color of pieces to be placed
      * @param starter should there be pieces in this row

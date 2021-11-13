@@ -72,6 +72,8 @@ public class Game {
 	 * @return true if move is valid / False if move isn't
 	 */
 	public boolean validateMove(Move move){
+		if (move == null)
+			return false;
 		//Retrieve the starting position
 		Position start_pos = move.getStart();
 		int initRow = start_pos.getRow();
