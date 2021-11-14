@@ -2,17 +2,21 @@ package com.webcheckers.ui;
 
 import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
 import com.webcheckers.util.Message;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Objects;
+
+import static spark.Spark.halt;
 
 public class PostBackupMove implements Route {
 
+    private final TemplateEngine templateEngine;
     private final GameManager gameManager;
 
     /**
@@ -28,15 +32,16 @@ public class PostBackupMove implements Route {
         Objects.requireNonNull(gameManager, "game must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
+        this.templateEngine = templateEngine;
         this.gameManager = gameManager;
     }
 
     /**
      * This backups a previously valid move
-     * @param request the HTTP request
-     * @param response the HTTP response
+     * @param request
+     * @param response
      * @return json message
-     * @throws Exception exception
+     * @throws Exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {

@@ -1,10 +1,10 @@
 package com.webcheckers.model;
 
 
+import java.util.*;
+import java.util.logging.Logger;
+
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A single player
@@ -12,15 +12,17 @@ import java.util.Map;
  * @author Zane Kitchen Lipski
  */
 public class Player {
-    private final String name;
+    private static final Logger LOG = Logger.getLogger(Player.class.getName());
+    private String name;
     private boolean Saved_Games_went_up = false;
-    private final Map<String, Game> saved = new HashMap<>();
+    private Map<String, Game> saved = new HashMap<>();
 
     /**
      * Constructor for Player, creates player with name
      */
     public Player(String name) {
         this.name = name;
+        this.saved = saved;
     }
 
     /**

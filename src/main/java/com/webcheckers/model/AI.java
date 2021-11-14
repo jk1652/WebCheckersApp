@@ -2,10 +2,6 @@ package com.webcheckers.model;
 
 import java.util.ArrayList;
 
-/**
- * @author Quentin Ramos
- * @author Spencer Creveling
- */
 
 public class AI extends Player{
     public enum difficulty {Easy, Defensive, Aggressive}
@@ -133,4 +129,5 @@ public class AI extends Player{
         else{return moves;}
     }
 
+    public difficulty getDifficulty(){return dif;}
 }

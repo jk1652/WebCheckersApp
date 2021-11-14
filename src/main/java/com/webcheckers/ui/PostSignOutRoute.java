@@ -1,11 +1,10 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.PlayerLobby;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.TemplateEngine;
+import spark.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import static spark.Spark.halt;
@@ -13,12 +12,13 @@ import static spark.Spark.halt;
 public class PostSignOutRoute implements Route {
 
     private final PlayerLobby playerLobby;
+    private final TemplateEngine templateEngine;
 
     /**
      * The constructor for the {@code POST /signout} route handler.
      *
-     * @param playerLobby the player lobby
-     * @param templateEngine The default {@link TemplateEngine} to render page-level HTML views.
+     * @param playerLobby
+     * @param templateEngine
      */
     PostSignOutRoute(final PlayerLobby playerLobby, final TemplateEngine templateEngine) {
         // validation
@@ -26,14 +26,15 @@ public class PostSignOutRoute implements Route {
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
         //
         this.playerLobby = playerLobby;
+        this.templateEngine = templateEngine;
     }
 
     /**
-     * This signs out a player after the clicking sign-out
-     * @param request the HTTP request
-     * @param response the HTTP response
+     * This signs out a player after the clicking signout
+     * @param request
+     * @param response
      * @return back to home page
-     * @throws Exception exception
+     * @throws Exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {

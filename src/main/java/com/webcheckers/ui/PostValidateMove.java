@@ -8,6 +8,7 @@ import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import spark.TemplateEngine;
 
 import java.util.logging.Logger;
 
@@ -19,12 +20,15 @@ public class PostValidateMove implements Route {
     private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
 
     private final GameManager gameManager;
+    private final TemplateEngine templateEngine;
 
     /**
      * The constructor for the {@code POST /validateMove} route handler.
+     * @param templateEngine the template engine
      * @param gameManager the game manager for all games
      */
-    public PostValidateMove(final GameManager gameManager) {
+    public PostValidateMove(final TemplateEngine templateEngine, final GameManager gameManager) {
+        this.templateEngine = templateEngine;
         this.gameManager = gameManager;
     }
 

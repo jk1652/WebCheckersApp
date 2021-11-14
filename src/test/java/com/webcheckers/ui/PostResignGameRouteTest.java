@@ -38,7 +38,7 @@ public class PostResignGameRouteTest {
         engine = mock(TemplateEngine.class);
         gameManager = new GameManager();
         gson = new Gson();
-        CuT = new PostResignGameRoute(gson, gameManager);
+        CuT = new PostResignGameRoute(gson, engine, gameManager);
     }
 
     /**

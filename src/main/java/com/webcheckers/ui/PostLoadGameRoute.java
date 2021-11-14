@@ -1,17 +1,19 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
+import com.webcheckers.appl.GameManager;
+
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
+
 import com.webcheckers.util.Message;
 import spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.logging.Logger;
+
+import static spark.Spark.halt;
 
 public class PostLoadGameRoute implements Route {
     private final PlayerLobby playerLobby;
@@ -21,9 +23,9 @@ public class PostLoadGameRoute implements Route {
 
     /**
      * The constructor for the {@code POST /load} route handler.
-     * @param templateEngine The default {@link TemplateEngine} to render page-level HTML views.
-     * @param playerLobby the player lobby
-     * @param gameManager the game manager
+     * @param templateEngine
+     * @param playerLobby
+     * @param gameManager
      */
     PostLoadGameRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
                   final GameManager gameManager) {
@@ -39,10 +41,10 @@ public class PostLoadGameRoute implements Route {
 
     /**
      * Load a game, based on button pressed on homepage
-     * @param request the HTTP request
-     * @param response the HTTP response
+     * @param request
+     * @param response
      * @return nothing
-     * @throws Exception exception
+     * @throws Exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
