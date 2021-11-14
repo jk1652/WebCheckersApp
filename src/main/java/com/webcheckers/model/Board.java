@@ -178,6 +178,7 @@ public class Board implements Iterable<Row> {
     		return iterator();
     }
 
+    
     /**
      * returns a specific row
      * @param row_num the row number
@@ -185,6 +186,26 @@ public class Board implements Iterable<Row> {
      */
     public Row getRow(int row_num){
         return rows.get(row_num);
+    }
+
+    /**
+     * Places a non-kinged piece of a specified color in a cell.
+     * @param row the row of the cell
+     * @param column the column of the cell
+     * @param piece the piece to place in the cell
+     */
+    public void placePiece(int row, int column, Piece piece) {
+        rows.get(row).setPiece(column, piece);
+    }
+
+    /**
+     * Remove all pieces from the board. Used in debugging.
+     */
+    public void clearBoard() {
+        for (Row row : rows) {
+            for (Space space : row) 
+                space.setPiece(null);
+        }    
     }
 
     @Override

@@ -490,6 +490,13 @@ public class Game {
 	}
 
 	/**
+	 * Set the active color to the passed value.
+	 * @param color what the active color should be
+	 */
+	public void setActiveColor(Piece.Color color) {
+		activeColor = color;
+	}
+	/**
 	 * switches which color is active
 	 */
 	public void swapActiveColor(){
