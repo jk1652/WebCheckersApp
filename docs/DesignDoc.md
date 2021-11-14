@@ -3,11 +3,6 @@ geometry: margin=1in
 ---
 # PROJECT Design Documentation
 
-> _The following template provides the headings for your Design
-> Documentation.  As you edit each section make sure you remove these
-> commentary 'blockquotes'; the lines that start with a > character
-> and appear in the generated PDF in italics._
-
 ## Team Information
 * Team name: Team 8
 * Team members
@@ -19,16 +14,16 @@ geometry: margin=1in
 
 ## Executive Summary
 
-The WebCheckers is a web based application that allows players to log in and play checkers against other players.
+The WebCheckers is a web based application that allows players to log in with a unique alphanumeric username and play 
+checkers against other players. The user can also play against AI opponents with varying difficulties and save games 
+against opponents to play against them at another time.
 
 ### Purpose
-> _Provide a very brief statement about the project and the most
-> important user group and user goals._
 
-> The purpose of this project is to make a webchecker application in which people could
+> The purpose of this project is to make a WebCheckers application in which people could
 > play a game of checkers against other online users, and importantly do the project as
-> a group in which we have to communicate via Slack, and update our trello board to keep
-> others updated on where their progress is.
+> a group in which we communicate via Slack, and update our project status via trello board 
+> to keep team members as well as the product owner updated on where their progress is.
 
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
@@ -36,25 +31,19 @@ The WebCheckers is a web based application that allows players to log in and pla
 | Term | Definition |
 |------|------------|
 | VO | Value Object |
+| AI | Artificial Intelligence |
 
 
 ## Requirements
 
 This section describes the features of the application.
 
-> _In this section you do not need to be exhaustive and list every
-> story.  Focus on top-level features from the Vision document and
-> maybe Epics and critical Stories._
-
 ### Definition of MVP
-> _Provide a simple description of the Minimum Viable Product._
 
-> The MVP of this product, should allow me to sign in and play a
-> game of webcheckers against an opponent, In which 
-> one of us could win/lose/resign
+> The MVP of this product, should allow players to sign in with an alphanumeric username and play a
+> game of WebCheckers against an opponent, In which one of the players wins/loses/resigns.
 
 ### MVP Features
-> _Provide a list of top-level Epics and/or Stories of the MVP._
 
 > For epics for the MVP we had Game Board, Movement, and Checker Pieces.
 > For the Game Board we had to store all the pieces on the board
@@ -63,15 +52,16 @@ This section describes the features of the application.
 > and could only move their colored pieces
 
 ### Roadmap of Enhancements
-> _Provide a list of top-level features in the order you plan to consider them._
 
-> The enhancements that we decided to go with were to add an AI opponent to play against
-> and to add asynchronous play.
-> For the AI opponent from the homepage you would be able to press a button to 
-> play against an opponent that makes their turn right after you submit your own.
-> For the asynchronous play we allow you to save the game when it is your turn, in which 
-> both players will be exited from the game state and returned to the homepage in which you can 
-> then load the saved game
+  >The enhancements that we decided to go with were to add AI opponent with varying difficulties to play against
+  >and to add asynchronous play.
+
+  >For the AI opponent enhancement, the user would be presented three varying difficulties on the homepage to 
+  >play against. After selecting a difficulty, the AI will reactively submit moves once the user submits their move.
+
+  >For the asynchronous play the user is able to save the game when it is their turn, in which 
+  >both players will be exited from the game state and returned to the homepage in which you can 
+  >then load the saved game as long as the opponent is not in another game.
 
 
 ## Application Domain
@@ -80,12 +70,12 @@ This section describes the application domain.
 
 ![The WebCheckers Domain Model](domain-model-placeholder.png)
 
-> Player is one of our most important entities.
+> The Player is one of the most important entities.
 > The player represents a user interacting with our application.
-> The player can either join a tourney, choose play against an AI player they can win/lose/retire a game view a board, control pieces
+> The player can either play against opponents; the opponent be an AI or another online player.
 > Another important entity is the game, which represents a checkers game.
-> A game contains a board made of squares with pieces on the board.
-> The pieces have certain movement rules.
+> A game contains a board made of 64 squares with 12 red pieces and 12 white pieces on the board.
+> The pieces have certain restrictions on their movement that need to be adhered to.
 
 
 ## Architecture and Design
@@ -100,11 +90,12 @@ The following Tiers/Layers model shows a high-level view of the webapp's archite
 
 As a web application, the user interacts with the system using a
 browser.  The client-side of the UI is composed of HTML pages with
-some minimal CSS for styling the page.  There is also some JavaScript
+some minimal CSS for styling the page. There is also some JavaScript
 that has been provided to the team by the architect.
 
 The server-side tiers include the UI Tier that is composed of UI Controllers and Views.
-Controllers are built using the Spark framework and View are built using the FreeMarker framework.  The Application and Model tiers are built using plain-old Java objects (POJOs).
+Controllers are built using the Spark framework and View are built using the FreeMarker framework.
+The Application and Model tiers are built using plain-old Java objects (POJOs).
 
 Details of the components within these tiers are supplied below.
 
@@ -166,7 +157,7 @@ resigns.
 > analysis of where there are problems in the code base which could be
 > addressed with design changes, and describe those suggested design
 > improvements. After completion of the Code metrics exercise, you
-> will also discuss the resutling metric measurements.  Indicate the
+> will also discuss the resulting metric measurements.  Indicate the
 > hot spots the metrics identified in your code base, and your
 > suggested design improvements to address those hot spots._
 
