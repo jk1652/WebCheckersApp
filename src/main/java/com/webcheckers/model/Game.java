@@ -72,6 +72,8 @@ public class Game {
 	 * @return true if move is valid / False if move isn't
 	 */
 	public boolean validateMove(Move move){
+		if (move == null)
+			return false;
 		//Retrieve the starting position
 		Position start_pos = move.getStart();
 		int initRow = start_pos.getRow();
@@ -487,6 +489,13 @@ public class Game {
 		return temp;
 	}
 
+	/**
+	 * Set the active color to the passed value.
+	 * @param color what the active color should be
+	 */
+	public void setActiveColor(Piece.Color color) {
+		activeColor = color;
+	}
 	/**
 	 * switches which color is active
 	 */

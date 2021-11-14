@@ -2,6 +2,7 @@ package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Player;
+import com.webcheckers.model.Game;
 
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
@@ -17,7 +18,6 @@ import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GetGameRouteTest {
-    /*
 	private Request request;
 	private Session session;
 	private Response response;
@@ -38,14 +38,32 @@ class GetGameRouteTest {
 		gameManager = new GameManager();
 		CuT = new GetGameRoute(engine, playerLobby, gameManager);
 	}
-	
-	//@Test
-	//public void testWithoutGame() {
-	//	playerLobby.addPlayer("test1");
-	//	playerLobby.addPlayer("test2");
-	//	assertNull(CuT.handle(request, response));
-	//}
-	
+
+	/**
+	 * Tests redirect to homepage when a game doesn't exist.
+	 */
+	@Test
+	public void testNoGame() {
+		playerLobby.addPlayer("notplaying");
+		when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("notplaying");
+		CuT.handle(request, response);
+		verify(response).redirect(WebServer.HOME_URL);
+	}
+    /**
+	 * Sets the exit flag to true and tests whether the game is closed.
+	 */
+	@Test
+	public void testExitState() {
+		playerLobby.addPlayer("test3");
+		playerLobby.addPlayer("test4");
+		Game game = gameManager.createGame("test3", "test4");
+		when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test3");
+		game.getBoardView().setExitState(true);
+		CuT.handle(request, response);
+		assertNull(gameManager.findPlayerGame("test3"));
+		assertNull(gameManager.findPlayerGame("test4"));
+	}
+
 	@Test
 	public void testWithGame() {
 		playerLobby.addPlayer("test1");
@@ -59,6 +77,6 @@ class GetGameRouteTest {
 		testHelper.assertViewModelExists();
 		testHelper.assertViewModelIsaMap();
 	}
-*/
+
 
 }

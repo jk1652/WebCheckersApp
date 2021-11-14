@@ -65,6 +65,15 @@ public class Row implements Iterable<Space>{
     }
 
     /**
+     * Set the space in a column.
+     * @param col
+     * @param space
+     */
+    public void setPiece(int col, Piece piece) {
+        spaces.get(col).setPiece(piece);
+    }
+
+    /**
      *
      * @return the proper iterator
      */
