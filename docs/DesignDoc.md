@@ -25,6 +25,11 @@ The WebCheckers is a web based application that allows players to log in and pla
 > _Provide a very brief statement about the project and the most
 > important user group and user goals._
 
+> The purpose of this project is to make a webchecker application in which people could
+> play a game of checkers against other online users, and importantly do the project as
+> a group in which we have to communicate via Slack, and update our trello board to keep
+> others updated on where their progress is.
+
 ### Glossary and Acronyms
 > _Provide a table of terms and acronyms._
 
@@ -44,11 +49,29 @@ This section describes the features of the application.
 ### Definition of MVP
 > _Provide a simple description of the Minimum Viable Product._
 
+> The MVP of this product, should allow me to sign in and play a
+> game of webcheckers against an opponent, In which 
+> one of us could win/lose/resign
+
 ### MVP Features
 > _Provide a list of top-level Epics and/or Stories of the MVP._
 
+> For epics for the MVP we had Game Board, Movement, and Checker Pieces.
+> For the Game Board we had to store all the pieces on the board
+> For Movement we had to validate all moves that the pieces on the board could do
+> For the checker pieces that was to ensure that the player started as the right color
+> and could only move their colored pieces
+
 ### Roadmap of Enhancements
 > _Provide a list of top-level features in the order you plan to consider them._
+
+> The enhancements that we decided to go with were to add an AI opponent to play against
+> and to add asynchronous play.
+> For the AI opponent from the homepage you would be able to press a button to 
+> play against an opponent that makes their turn right after you submit your own.
+> For the asynchronous play we allow you to save the game when it is your turn, in which 
+> both players will be exited from the game state and returned to the homepage in which you can 
+> then load the saved game
 
 
 ## Application Domain

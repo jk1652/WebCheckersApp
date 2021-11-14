@@ -38,7 +38,7 @@ public class GetHomeRoute implements Route {
   public GetHomeRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
           final GameManager gameManager) {
     this.templateEngine = Objects.requireNonNull(templateEngine, "templateEngine is required");
-    //
+
     LOG.config("GetHomeRoute is initialized.");
     this.playerLobby = playerLobby;
     this.gameManager = gameManager;
@@ -58,7 +58,6 @@ public class GetHomeRoute implements Route {
   @Override
   public Object handle(Request request, Response response) {
     LOG.finer("GetHomeRoute is invoked.");
-    //
     Map<String, Object> vm = new HashMap<>();
     vm.put("title", "Welcome!");
 
@@ -72,7 +71,6 @@ public class GetHomeRoute implements Route {
     if (playerName != null) {
       ArrayList<Player> playerList = playerLobby.getPlayerList();
 
-      //System.out.println(player.getSaved());
 
       Game playerGame = gameManager.findPlayerGame(playerName);
       if (playerGame != null) { // Player is on the wrong page.
@@ -109,7 +107,7 @@ public class GetHomeRoute implements Route {
         if (inGamePlayers.equals("")){
           inGamePlayers = "<p style=\"color:#CB4335;margin-left: 20px;\"><i> No players in a game</i></p>";
         }
-
+        // insert the constructed list of readyPlayers and inGamePlayers into string players
         players = "<h2 style=\"color:black;\"> Available Players</h2>" + readyPlayers +
                 "<h2 style=\"color:black;\"> Already in a game</h2>" + inGamePlayers;
         vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
