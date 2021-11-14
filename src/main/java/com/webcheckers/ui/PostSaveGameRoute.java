@@ -29,10 +29,11 @@ public class PostSaveGameRoute implements Route {
     private final TemplateEngine templateEngine;
 
     /**
-     * The constructor for the {@code POST /resignGame} route handler.
+     * The constructor for the {@code POST /save} route handler.
      *
      * @param gson
      * @param templateEngine
+     * @param playerLobby
      * @param gameManager
      */
     public PostSaveGameRoute(final Gson gson, final TemplateEngine templateEngine, final PlayerLobby playerLobby, final GameManager gameManager){
@@ -43,7 +44,7 @@ public class PostSaveGameRoute implements Route {
     }
 
     /**
-     * sends resign game state
+     * Saves game for current player and opponent, closes game
      * @param request
      * @param response
      * @return resign game state json message
@@ -58,6 +59,7 @@ public class PostSaveGameRoute implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
+        //save game for player
         player.saveGame(game);
 
         Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
@@ -84,7 +86,9 @@ public class PostSaveGameRoute implements Route {
             }
         }
 
+        // check if playing against an actual other person (not ai)
         if (otherPlayer != null) {
+            //save game for opponent
             otherPlayer.saveGame(game);
             otherPlayer.savedGamesDidGoUp();
             request.session().attribute("message", Message.info("Your game against " +
@@ -93,6 +97,7 @@ public class PostSaveGameRoute implements Route {
             request.session().attribute("message", Message.info("Your game against the " +
                     game.getAIOpponentDifficulty() + " AI was Saved"));
         }
+        // properly close game
         gameManager.finishGame(playerName);
         response.redirect(WebServer.HOME_URL);
         return null;
