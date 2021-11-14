@@ -1,36 +1,12 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.model.Player;
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.util.Message;
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
-
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
-import spark.TemplateEngine;
-import static spark.Spark.halt;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-
-import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
-import spark.Route;
-import spark.Session;
-import spark.TemplateEngine;
-import static spark.Spark.halt;
-
-import com.webcheckers.appl.PlayerLobby;
 
 import static spark.Spark.halt;
 
@@ -64,8 +40,8 @@ public class PostSignInRoute implements Route {
 
     /**
      * This signs a player in
-     * @param request
-     * @param response
+     * @param request the HTTP request
+     * @param response the HTTP response
      * @return back to home page while signed in
      */
     @Override

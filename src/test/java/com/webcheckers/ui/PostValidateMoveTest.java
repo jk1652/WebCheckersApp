@@ -1,13 +1,9 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.*;
-import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.stubbing.Answer;
 import spark.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +34,7 @@ public class PostValidateMoveTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
         gameManager = new GameManager();
-        CuT = new PostValidateMove(engine, gameManager);
+        CuT = new PostValidateMove(gameManager);
     }
 
     /**

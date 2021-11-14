@@ -11,10 +11,7 @@ import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.TemplateEngine;
 
-import java.util.HashMap;
-import java.util.Map;
 /**
  * @Author Zane Kitchen Lipski
  * @Author Jaden Kitchen Lipski
@@ -23,25 +20,22 @@ import java.util.Map;
 public class PostCheckTurn implements Route {
 
     private final GameManager gameManager;
-    private final TemplateEngine templateEngine;
 
     /**
      * The constructor for the {@code POST /checkTurn} route handler.
      *
-     * @param templateEngine
-     * @param gameManager
+     * @param gameManager the game manager
      */
-    public PostCheckTurn(final TemplateEngine templateEngine, final GameManager gameManager) {
-        this.templateEngine = templateEngine;
+    public PostCheckTurn(final GameManager gameManager) {
         this.gameManager = gameManager;
     }
 
     /**
-     * sends checkturn request
-     * @param request
-     * @param response
+     * sends check turn request
+     * @param request the HTTP request
+     * @param response the HTTP response
      * @return json message
-     * @throws Exception
+     * @throws Exception exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -58,7 +52,7 @@ public class PostCheckTurn implements Route {
             return gson.toJson( msg );
         }
 
-        Piece.Color activecolor = game.getActiveColor();
+        Piece.Color activeColor = game.getActiveColor();
 
         Board board = game.getBoardView();
 
@@ -70,11 +64,11 @@ public class PostCheckTurn implements Route {
         }
 
         // if red player asks if it is their turn and they are active
-        if (game.getRedPlayer().equals(player) && activecolor == Piece.Color.RED){
+        if (game.getRedPlayer().equals(player) && activeColor == Piece.Color.RED){
             msg = Message.info("true");
         }
         // if white player asks if it is their turn and they are active
-        else if (game.getWhitePlayer().equals(player) && activecolor == Piece.Color.WHITE) {
+        else if (game.getWhitePlayer().equals(player) && activeColor == Piece.Color.WHITE) {
             msg = Message.info("true");
         }
         // if player is not active

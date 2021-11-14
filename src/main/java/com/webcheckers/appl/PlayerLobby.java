@@ -3,13 +3,12 @@ package com.webcheckers.appl;
 import com.webcheckers.model.Player;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Logger;
 
 public class PlayerLobby {
     private static final Logger LOG = Logger.getLogger(PlayerLobby.class.getName());
 
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     public PlayerLobby() {
         players = new ArrayList<>();
@@ -17,7 +16,7 @@ public class PlayerLobby {
 
     /**
      * adds player to player list
-     * @param name
+     * @param name name of player
      * @return false if cannot add player OR
      * true if player was added
      */
@@ -37,13 +36,10 @@ public class PlayerLobby {
 
     public Boolean checkPlayerExist(String name) {
         Player player = new Player(name);
-        if(players.contains(player)) {
-            return true;
-        }
-        return false;
+        return players.contains(player);
     }
 
-    public int numberofPlayers() {
+    public int numberOfPlayers() {
         return players.size();
     }
 
@@ -53,12 +49,7 @@ public class PlayerLobby {
     }
 
     public Boolean isValidName(String name){
-        if (name.matches("[a-zA-Z_0-9]+([a-zA-Z_0-9]|\\s)*$")) {
-            return true;
-        }
-        else {
-            return false;
-        }
+        return name.matches("[a-zA-Z_0-9]+([a-zA-Z_0-9]|\\s)*$");
     }
 
     public void removePlayer(String name) {

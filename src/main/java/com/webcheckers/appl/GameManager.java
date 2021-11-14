@@ -14,7 +14,8 @@ import com.webcheckers.ui.WebServer;
  */
 public class GameManager {
 	private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-	private ArrayList<Game> active, inactive;
+	private final ArrayList<Game> active;
+	private final ArrayList<Game> inactive;
 	private final Object lock = new Object();
 
 	public GameManager() {

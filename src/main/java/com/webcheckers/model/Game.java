@@ -11,10 +11,11 @@ import java.util.ArrayList;
 public class Game {
 	private static int GAME_COUNTER = 0;
 	public enum View {PLAY, SPECTATOR, REPLAY}
-	private Player currentUser, redPlayer, whitePlayer;
+	private final Player redPlayer;
+	private final Player whitePlayer;
 	private Piece.Color activeColor;
 	private Board board;
-	private int gameID;
+	private final int gameID;
 	private ArrayList<Board>  validatedMoves = new ArrayList<>();
 	private ArrayList<Move> pastMoves = new ArrayList<>();
 	private String validity;
@@ -51,19 +52,6 @@ public class Game {
 			gameID = GAME_COUNTER;
 			GAME_COUNTER++;
 		}
-	}
-	
-	/**
-	 * Checks if a player can interact with the game in a certain view mode.
-	 * @param viewMode the method in which the player will interact.
-	 * @param player the player interacting with the game.
-	 */
-	public boolean isPermittedViewMode(View viewMode, Player player) {
-		// TODO add check for game over? return true if mode = REPLAY
-		if (player.equals(redPlayer) || player.equals(whitePlayer))
-			return viewMode.equals(View.PLAY);
-		else
-			return viewMode.equals(View.SPECTATOR);
 	}
 
 	/**

@@ -66,8 +66,6 @@ public class GetHomeRoute implements Route {
 
     String playerName = request.session().attribute(PostSignInRoute.USERNAME);
 
-    Player player = playerLobby.getPlayer(playerName);
-
     if (playerName != null) {
       ArrayList<Player> playerList = playerLobby.getPlayerList();
 
@@ -79,8 +77,8 @@ public class GetHomeRoute implements Route {
         return null;
       }
       String players = "";
-      String readyPlayers = "";
-      String inGamePlayers = "";
+      StringBuilder readyPlayers = new StringBuilder();
+      StringBuilder inGamePlayers = new StringBuilder();
       // creates players full of player names
       for (Player x : playerList) {
         if (x.equals(new Player(playerName))) {
@@ -88,11 +86,11 @@ public class GetHomeRoute implements Route {
         }
         // if player is in NOT in a game make name GREEN
         if (gameManager.findPlayerGame(x) == null){
-          readyPlayers =  readyPlayers + ("<li style=\"color:#52BE80 ;margin-left: 40px;\">" + x.getName() + "</li>");
+          readyPlayers.append("<li style=\"color:#52BE80 ;margin-left: 40px;\">").append(x.getName()).append("</li>");
         }
         // if player is in a game make their name RED
         else {
-          inGamePlayers = inGamePlayers + ("<li style=\"color:#CB4335;margin-left: 40px;\">" + x.getName() + "</li>");
+          inGamePlayers.append("<li style=\"color:#CB4335;margin-left: 40px;\">").append(x.getName()).append("</li>");
         }
       }
 
@@ -100,12 +98,12 @@ public class GetHomeRoute implements Route {
       vm.put("currentUser", playerName);
 
       // if there are no players online, declares so
-      if (!readyPlayers.equals("") || !inGamePlayers.equals("")) {
-        if (readyPlayers.equals("")){
-          readyPlayers = "<p style=\"color:#52BE80;margin-left: 20px;\"><i> No players available</i></p>";
+      if (!readyPlayers.toString().equals("") || !inGamePlayers.toString().equals("")) {
+        if (readyPlayers.toString().equals("")){
+          readyPlayers = new StringBuilder("<p style=\"color:#52BE80;margin-left: 20px;\"><i> No players available</i></p>");
         }
-        if (inGamePlayers.equals("")){
-          inGamePlayers = "<p style=\"color:#CB4335;margin-left: 20px;\"><i> No players in a game</i></p>";
+        if (inGamePlayers.toString().equals("")){
+          inGamePlayers = new StringBuilder("<p style=\"color:#CB4335;margin-left: 20px;\"><i> No players in a game</i></p>");
         }
         // insert the constructed list of readyPlayers and inGamePlayers into string players
         players = "<h2 style=\"color:black;\"> Available Players</h2>" + readyPlayers +
@@ -126,7 +124,7 @@ public class GetHomeRoute implements Route {
     }
     else {
       vm.put("message", Message.info("Current Number of Players: " +
-              String.valueOf(playerLobby.numberofPlayers())));
+              playerLobby.numberOfPlayers()));
     }
 
     // for saved games
@@ -135,17 +133,15 @@ public class GetHomeRoute implements Route {
       Map<String, Game> saveGames = user.getSaved();
 
       if (saveGames != null){
-        String msg = "";
+        StringBuilder msg = new StringBuilder();
         Set<String> keys = saveGames.keySet();
         int i = 0;
         // create buttons for the saved games
         for (String x: keys){
-          msg = msg + "<form action=\"./load\" method=\"POST\">\n" +
-                  "<button type=\"submit\" name=\"" + Integer.toString(++i) + "\">" + x + "</button>\n" +
-                  "</form>";
+          msg.append("<form action=\"./load\" method=\"POST\">\n").append("<button type=\"submit\" name=\"").append(++i).append("\">").append(x).append("</button>\n").append("</form>");
         }
         if (keys.size() > 0) {
-          vm.put("saveList", msg);
+          vm.put("saveList", msg.toString());
         }
       }
     }

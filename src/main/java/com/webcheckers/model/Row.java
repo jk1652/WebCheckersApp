@@ -66,8 +66,8 @@ public class Row implements Iterable<Space>{
 
     /**
      * Set the space in a column.
-     * @param col
-     * @param space
+     * @param col the column number where that space is at
+     * @param piece the piece going to be set
      */
     public void setPiece(int col, Piece piece) {
         spaces.get(col).setPiece(piece);
@@ -84,7 +84,7 @@ public class Row implements Iterable<Space>{
 
     /**
      *
-     * @param flip if the iterator should be forwards or nackwards
+     * @param flip if the iterator should be forwards or backwards
      * @return the appropriate iterator
      */
     public Iterator<Space> iterator(boolean flip) {

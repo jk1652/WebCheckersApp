@@ -1,19 +1,14 @@
 package com.webcheckers.ui;
 
-import com.google.gson.Gson;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Game;
-import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
 import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.TemplateEngine;
-
-import java.util.logging.Logger;
 
 /**
  * @Author Zane Kitchen Lipski
@@ -21,34 +16,26 @@ import java.util.logging.Logger;
  * PostResignGameRoute
  */
 public class PostSaveGameRoute implements Route {
-    private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-
-    private final Gson gson;
     private final GameManager gameManager;
     private final PlayerLobby playerLobby;
-    private final TemplateEngine templateEngine;
 
     /**
      * The constructor for the {@code POST /save} route handler.
      *
-     * @param gson
-     * @param templateEngine
-     * @param playerLobby
-     * @param gameManager
+     * @param playerLobby The player lobby
+     * @param gameManager the game manager
      */
-    public PostSaveGameRoute(final Gson gson, final TemplateEngine templateEngine, final PlayerLobby playerLobby, final GameManager gameManager){
-        this.gson = gson;
-        this.templateEngine = templateEngine;
+    public PostSaveGameRoute(final PlayerLobby playerLobby, final GameManager gameManager){
         this.playerLobby = playerLobby;
         this.gameManager = gameManager;
     }
 
     /**
      * Saves game for current player and opponent, closes game
-     * @param request
-     * @param response
+     * @param request the HTTP request
+     * @param response the HTTP response
      * @return resign game state json message
-     * @throws Exception
+     * @throws Exception exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {
@@ -79,7 +66,7 @@ public class PostSaveGameRoute implements Route {
         else {
             player.saveGame(game);
         }
-        // if any moves has occured do nothing
+        // if any moves has occurred do nothing
         if (game.getMoveSize() > 0) {
             for(int i = game.getMoveSize(); i > 0; i--){
                 game.undoMove();

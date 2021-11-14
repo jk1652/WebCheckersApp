@@ -1,21 +1,16 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.GameManager;
-
+import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.AI;
 import com.webcheckers.model.Game;
-
 import com.webcheckers.util.Message;
-
 import spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
-
-import static spark.Spark.halt;
 
 public class PostGameRoute implements Route {
     public static final String OPPONENT_NAME = "opponentName";
@@ -27,9 +22,9 @@ public class PostGameRoute implements Route {
 
     /**
      * The constructor for the {@code POST /game} route handler.
-     * @param templateEngine
-     * @param playerLobby
-     * @param gameManager
+     * @param templateEngine The default {@link TemplateEngine} to render page-level HTML views.
+     * @param playerLobby the player lobby
+     * @param gameManager the game manager
      */
     PostGameRoute(final TemplateEngine templateEngine, final PlayerLobby playerLobby,
             final GameManager gameManager) {
@@ -45,10 +40,10 @@ public class PostGameRoute implements Route {
 
     /**
      * sends game related information
-     * @param request
-     * @param response
+     * @param request the HTTP request
+     * @param response the HTTP response
      * @return game info
-     * @throws Exception
+     * @throws Exception exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {

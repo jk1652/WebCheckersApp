@@ -1,21 +1,16 @@
 package com.webcheckers.ui;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
-import com.webcheckers.model.Player;
 import com.webcheckers.util.Message;
-import spark.*;
+import spark.Request;
+import spark.Response;
+import spark.Route;
 
-import javax.print.DocFlavor;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
-
-import static spark.Spark.halt;
 
 /**
  * @Author Zane Kitchen Lipski
@@ -27,27 +22,24 @@ public class PostResignGameRoute implements Route {
 
     private final Gson gson;
     private final GameManager gameManager;
-    private final TemplateEngine templateEngine;
 
     /**
      * The constructor for the {@code POST /resignGame} route handler.
      *
-     * @param gson
-     * @param templateEngine
-     * @param gameManager
+     * @param gson The Google JSON parser object used to render Ajax responses.
+     * @param gameManager the game manager
      */
-    public PostResignGameRoute(final Gson gson, final TemplateEngine templateEngine, final GameManager gameManager){
+    public PostResignGameRoute(final Gson gson, final GameManager gameManager){
         this.gson = gson;
-        this.templateEngine = templateEngine;
         this.gameManager = gameManager;
     }
 
     /**
      * sends resign game state
-     * @param request
-     * @param response
-     * @return reisgn game state json message
-     * @throws Exception
+     * @param request the HTTP request
+     * @param response the HTTP response
+     * @return resign game state json message
+     * @throws Exception exception
      */
     @Override
     public Object handle(Request request, Response response) throws Exception {

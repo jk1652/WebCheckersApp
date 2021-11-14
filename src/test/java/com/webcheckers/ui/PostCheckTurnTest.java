@@ -1,12 +1,9 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameManager;
-import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Game;
 import com.webcheckers.model.Piece;
-import com.webcheckers.model.Player;
-import com.webcheckers.util.Message;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import spark.*;
@@ -37,7 +34,7 @@ public class PostCheckTurnTest {
         response = mock(Response.class);
         engine = mock(TemplateEngine.class);
         gameManager = new GameManager();
-        CuT = new PostCheckTurn(engine, gameManager);
+        CuT = new PostCheckTurn(gameManager);
     }
 
     /**

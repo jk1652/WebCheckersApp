@@ -96,7 +96,7 @@ public class WebServer {
    *
    * @param templateEngine
    *    The default {@link TemplateEngine} to render page-level HTML views.
-   * @param playerLobby
+   * @param playerLobby the playerLobby
    * @param gson
    *    The Google JSON parser object used to render Ajax responses.
    *
@@ -179,15 +179,15 @@ public class WebServer {
     get(GAME_URL, new GetGameRoute(templateEngine, playerLobby, gameManager));
     post(GAME_URL, new PostGameRoute(templateEngine, playerLobby, gameManager));
 
-    post(VALIDATE_URL, new PostValidateMove(templateEngine, gameManager));
-    post(CHECK_URL, new PostCheckTurn(templateEngine, gameManager));
+    post(VALIDATE_URL, new PostValidateMove(gameManager));
+    post(CHECK_URL, new PostCheckTurn(gameManager));
 
-    post(RESIGN_URL, new PostResignGameRoute(gson, templateEngine, gameManager));
+    post(RESIGN_URL, new PostResignGameRoute(gson, gameManager));
 
     post(BACKUP_MOVE_URL, new PostBackupMove(templateEngine, gameManager));
     post(SUBMIT_TURN_URL, new PostSubmitTurn(templateEngine, gameManager));
 
-    post(SAVE_URL, new PostSaveGameRoute(gson, templateEngine, playerLobby, gameManager));
+    post(SAVE_URL, new PostSaveGameRoute(playerLobby, gameManager));
 
     post(LOAD_URL, new PostLoadGameRoute(templateEngine, playerLobby, gameManager));
 

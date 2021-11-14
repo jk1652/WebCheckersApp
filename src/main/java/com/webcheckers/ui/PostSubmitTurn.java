@@ -13,7 +13,6 @@ import spark.Route;
 import spark.TemplateEngine;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 /**
  * @Author Zane Kitchen Lipski
  * @Author Jaden Kitchen Lipski
@@ -21,8 +20,6 @@ import java.util.logging.Logger;
  */
 public class PostSubmitTurn implements Route {
 
-    private static final Logger LOG = Logger.getLogger(WebServer.class.getName());
-    private final TemplateEngine templateEngine;
     private final GameManager gameManager;
 
     /**
@@ -35,7 +32,6 @@ public class PostSubmitTurn implements Route {
         Objects.requireNonNull(gameManager, "game must not be null");
         Objects.requireNonNull(templateEngine, "templateEngine must not be null");
 
-        this.templateEngine = templateEngine;
         this.gameManager = gameManager;
     }
 
