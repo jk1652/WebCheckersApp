@@ -2,7 +2,10 @@ package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameManager;
 import com.webcheckers.model.Game;
+import com.webcheckers.model.Move;
 import com.webcheckers.model.Piece;
+import com.webcheckers.model.Position;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import spark.Request;
@@ -49,9 +52,8 @@ public class PostSubmitTurnTest {
 
         gameManager.findPlayerGame("test");
 
-        Piece.Color activecolor = game.getActiveColor();
-
-        game.submitMove();
+        game.setActiveColor(Piece.Color.RED);
+        game.makeMove(new Move(new Position(2,1), new Position(3, 2)));
 
         try {
             CuT.handle(request, response);
