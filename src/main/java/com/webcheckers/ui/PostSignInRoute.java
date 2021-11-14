@@ -36,6 +36,7 @@ import static spark.Spark.halt;
 
 public class PostSignInRoute implements Route {
 
+    static final Message ERROR_MESSAGE_CPU_NAME = Message.error("Invalid Username: Cannot use \"CPU\" name.");
     static final Message ERROR_MESSAGE_USERNAME_IN_USE = Message.error("Invalid Username: Username in use.");
     static final Message ERROR_MESSAGE_USERNAME_INVALID = Message.error("Invalid Username: Username needs to include " +
             "at least one alphanumeric character.");
@@ -71,21 +72,28 @@ public class PostSignInRoute implements Route {
     public String handle(Request request, Response response) {
         final Map<String, Object> vm = new HashMap<>();
 
-
-
         final String name = request.queryParams(USERNAME);
 
+        // Don't allow a player to have name cpu (reserved for ai)
+        if (name.equals("CPU")) {
+            vm.put("message", ERROR_MESSAGE_CPU_NAME);
+            return templateEngine.render(new ModelAndView(vm, "login.ftl"));
+        }
+
+        // Don't allow a player to have a non valid name
         if (!(playerLobby.isValidName(name))){
             vm.put("message", ERROR_MESSAGE_USERNAME_INVALID);
             return templateEngine.render(new ModelAndView(vm, "login.ftl"));
         }
 
+        // add player to player lobby with valid name
         if (playerLobby.addPlayer(name)) {
             request.session().attribute(USERNAME, name);
             response.redirect(WebServer.HOME_URL);
             halt();
             return null;
         }
+        // user did not have valid name
         else {
             vm.put("message", ERROR_MESSAGE_USERNAME_IN_USE);
             return templateEngine.render(new ModelAndView(vm, "login.ftl"));
