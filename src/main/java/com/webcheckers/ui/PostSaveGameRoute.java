@@ -59,9 +59,6 @@ public class PostSaveGameRoute implements Route {
 
         Game game = gameManager.findPlayerGame(playerName);
 
-        //save game for player
-        player.saveGame(game);
-
         Player otherPlayer = playerLobby.getPlayer(game.getOpponentName(playerName));
 
 
@@ -77,7 +74,7 @@ public class PostSaveGameRoute implements Route {
             return null;
         }
         else {
-            player.saveGame(game);
+            player.saveGame(game); //save game for player
         }
         // if any moves has occured do nothing
         if (game.getMoveSize() > 0) {
