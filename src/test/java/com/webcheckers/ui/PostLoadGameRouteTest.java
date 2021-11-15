@@ -123,4 +123,35 @@ public class PostLoadGameRouteTest {
         }
         verify(response).redirect(WebServer.HOME_URL);
     }
+
+    /**
+     * Test the load game loop.
+     */
+    @Test
+    public void testLoop() {
+        playerLobby.addPlayer("test1");
+        playerLobby.addPlayer("test2");
+        playerLobby.addPlayer("test3");
+        Player player1 = playerLobby.getPlayer("test1");
+        player1.saveGame(gameManager.createGame("test1", "test2"));
+        Game game = gameManager.createGame("test1", "test3");
+        String gameKey = player1.saveGame(game);
+        gameManager.finishGame("test2");
+        gameManager.finishGame("test3");
+
+        final TemplateEngineTester testHelper = new TemplateEngineTester();
+        when(engine.render(any(ModelAndView.class))).thenAnswer(testHelper.makeAnswer());
+        when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test1");
+        when(request.queryParams("1")).thenReturn(null);
+        when(request.queryParams("2")).thenReturn(gameKey);
+
+        try {
+            CuT.handle(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        testHelper.assertViewModelExists();
+        testHelper.assertViewModelIsaMap();
+        verify(response, atLeast(1)).redirect(WebServer.GAME_URL);
+    }
 }
