@@ -113,4 +113,16 @@ public final class Message {
     return "{Msg " + type + " '" + text + "'}";
   }
 
+  /**
+   * Check whether this and another message are equal.
+   * @param other
+   */
+  @Override
+  public boolean equals(Object other) {
+    if (other instanceof Message)
+      return toString().equals(((Message) other).toString());
+    else
+      return false;
+  }
+
 }
