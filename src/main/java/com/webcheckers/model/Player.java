@@ -32,7 +32,12 @@ public class Player {
         return this.name;
     }
 
-    public void saveGame(Game game) {
+    /**
+     * Save the passed game for the player and return the key.
+     * @param game
+     * @return the info for the game, also the key.
+     */
+    public String saveGame(Game game) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String gameInfo;
@@ -43,6 +48,7 @@ public class Player {
             gameInfo = "vs. " + game.getOpponentName(this.name) + " @ " + formatter.format(date);
         }
         saved.put(gameInfo, game);
+        return gameInfo;
     }
 
     public void removeSaveGame(String key) {

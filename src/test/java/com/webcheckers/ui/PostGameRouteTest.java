@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 import com.webcheckers.appl.PlayerLobby;
 import com.webcheckers.appl.GameManager;
+import com.webcheckers.model.Game;
 import com.webcheckers.model.Player;
 
 import com.webcheckers.appl.GameManager;
@@ -16,7 +17,8 @@ import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FPostGameRouteTest {
+@Tag("UI-tier")
+class PostGameRouteTest {
 	private Request request;
 	private Session session;
 	private Response response;
@@ -90,8 +92,8 @@ class FPostGameRouteTest {
 			CuT.handle(request, response);
 		} catch(Exception e) { }
 		
-		//testHelper.assertViewModelExists();
-		//testHelper.assertViewModelIsaMap();
+		testHelper.assertViewModelExists();
+		testHelper.assertViewModelIsaMap();
 	}
 
 	@Test
@@ -122,5 +124,29 @@ class FPostGameRouteTest {
 		verify(response).redirect(WebServer.HOME_URL);
 	}
 
+	@Test
+	public void testEasyAI() {
+		testAI("easy");
+	}
+
+	@Test
+	public void testMediumAI(){
+		testAI("med");
+	}
+
+	@Test
+	public void testHardAI() {
+		testAI("hard");
+	}
 	
+	private void testAI(String difficulty) {
+		playerLobby.addPlayer("test");
+		when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
+		when(request.queryParams(difficulty)).thenReturn(difficulty);
+		
+		try {
+			assertNull(CuT.handle(request, response));
+		} catch(Exception e) { }
+		
+	}
 }

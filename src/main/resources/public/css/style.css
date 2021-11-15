@@ -135,3 +135,25 @@ button.game {
   width: 100px;
   margin: 10px;
 }
+
+.green {
+  color:#52BE80;
+  margin-left: 40px;
+}
+
+.red {
+  color:#CB4335;
+  margin-left: 40px;
+}
+
+.none_ingame {
+  color:#CB4335; margin-left: 20px;
+}
+
+.none_available {
+  color:#52BE80;margin-left: 20px;
+}
+
+div.player_list h2 {
+  color:black;
+}
