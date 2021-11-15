@@ -17,7 +17,8 @@ import static org.mockito.Mockito.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FPostGameRouteTest {
+@Tag("UI-tier")
+class PostGameRouteTest {
 	private Request request;
 	private Session session;
 	private Response response;

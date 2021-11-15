@@ -88,14 +88,15 @@ public class GetHomeRoute implements Route {
         }
         // if player is in NOT in a game make name GREEN
         if (gameManager.findPlayerGame(x) == null){
-          readyPlayers =  readyPlayers + ("<li style=\"color:#52BE80 ;margin-left: 40px;\">" + x.getName() + "</li>");
+          readyPlayers = readyPlayers + ("<li class=\"green\">" + x.getName() + "</li>");
         }
         // if player is in a game make their name RED
         else {
-          inGamePlayers = inGamePlayers + ("<li style=\"color:#CB4335;margin-left: 40px;\">" + x.getName() + "</li>");
+          inGamePlayers = inGamePlayers + ("<li class=\"red\">" + x.getName() + "</li>");
         }
       }
-
+      System.out.println(readyPlayers);
+      System.out.println(inGamePlayers);
 
       vm.put("currentUser", playerName);
 
@@ -144,6 +145,7 @@ public class GetHomeRoute implements Route {
                   "<button type=\"submit\" name=\"" + Integer.toString(++i) + "\">" + x + "</button>\n" +
                   "</form>";
         }
+        System.out.println(msg);
         if (keys.size() > 0) {
           vm.put("saveList", msg);
         }

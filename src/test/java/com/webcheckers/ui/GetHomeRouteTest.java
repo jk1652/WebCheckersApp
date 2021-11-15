@@ -98,19 +98,4 @@ public class GetHomeRouteTest {
 
     }
 
-    /**
-     * logged in and message exists
-     */
-    // @Test
-    // public void messageExists() {
-    //     when(session.attribute(PostSignInRoute.USERNAME)).thenReturn("test");
-    //     when(session.attribute("message")).thenReturn(Message.info("yo"));
-
-    //     try {
-    //         CuT.handle(request, response);
-    //     } catch (HaltException e) {
-    //         // expected
-    //     }
-    // }
-
 }
