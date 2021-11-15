@@ -86,19 +86,6 @@ public class PostGameRoute implements Route {
 
         Map<String, Object> vm = new HashMap<>();
 
-        if (game != null) {
-
-            vm.put("title", "Checkers!");
-            vm.put("currentUser", playerName);
-            vm.put("viewMode", Game.View.PLAY);
-            vm.put("redPlayer", game.getRedPlayer());
-            vm.put("whitePlayer", game.getWhitePlayer());
-            vm.put("activeColor", game.getActiveColor());
-            vm.put("board", game.getBoardView());
-            vm.put("flip", game.getRedPlayer().getName().equals(playerName));
-            return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-        }
-
         if (!playerLobby.checkPlayerExist(opponentName)) {
             request.session().attribute("message", Message.error("Selected Player is not Online"));
             response.redirect(WebServer.HOME_URL);
@@ -133,8 +120,7 @@ public class PostGameRoute implements Route {
             vm.put("board", game.getBoardView());
             vm.put("flip", game.getRedPlayer().getName().equals(playerName));
             return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-        }
-        else {
+        } else {
         	request.session().attribute("message", Message.error("That player is already in a game!"));
         	response.redirect(WebServer.HOME_URL);
         	return null;
