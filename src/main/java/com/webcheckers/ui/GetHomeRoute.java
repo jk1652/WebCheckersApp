@@ -95,8 +95,6 @@ public class GetHomeRoute implements Route {
           inGamePlayers = inGamePlayers + ("<li class=\"red\">" + x.getName() + "</li>");
         }
       }
-      System.out.println(readyPlayers);
-      System.out.println(inGamePlayers);
 
       vm.put("currentUser", playerName);
 
@@ -145,7 +143,6 @@ public class GetHomeRoute implements Route {
                   "<button type=\"submit\" name=\"" + Integer.toString(++i) + "\">" + x + "</button>\n" +
                   "</form>";
         }
-        System.out.println(msg);
         if (keys.size() > 0) {
           vm.put("saveList", msg);
         }

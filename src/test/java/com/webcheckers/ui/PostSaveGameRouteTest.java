@@ -57,7 +57,6 @@ public class PostSaveGameRouteTest {
         try {
             assertNull(CuT.handle(request, response));
         } catch (Exception e) { }
-        System.out.println("\n\n\n\n" + player.getSaved() + "\n" + player.getSaved().entrySet().size() + "\n\n\n\n");
         assertEquals(0, player.getSaved().entrySet().size());
         verify(response).redirect(WebServer.GAME_URL);   
     }
