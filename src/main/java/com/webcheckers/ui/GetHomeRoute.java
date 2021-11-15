@@ -102,14 +102,14 @@ public class GetHomeRoute implements Route {
       // if there are no players online, declares so
       if (!readyPlayers.equals("") || !inGamePlayers.equals("")) {
         if (readyPlayers.equals("")){
-          readyPlayers = "<p style=\"color:#52BE80;margin-left: 20px;\"><i> No players available</i></p>";
+          readyPlayers = "<p class=\"none_available\"><i> No players available</i></p>";
         }
         if (inGamePlayers.equals("")){
-          inGamePlayers = "<p style=\"color:#CB4335;margin-left: 20px;\"><i> No players in a game</i></p>";
+          inGamePlayers = "<p class=\"none_ingame\"><i> No players in a game</i></p>";
         }
         // insert the constructed list of readyPlayers and inGamePlayers into string players
-        players = "<h2 style=\"color:black;\"> Available Players</h2>" + readyPlayers +
-                "<h2 style=\"color:black;\"> Already in a game</h2>" + inGamePlayers;
+        players = "<h2> Available Players</h2>" + readyPlayers +
+                "<h2> Already in a game</h2>" + inGamePlayers;
         vm.put("playerListTitle", "<h2><b> Players online </h2></b>");
       }
       else {

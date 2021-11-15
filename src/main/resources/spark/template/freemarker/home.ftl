@@ -42,13 +42,14 @@
             ${saveList}
         </#if>
 
-
-        <p>
+        <div class="player_list">
+          <p>
             ${playerListTitle}
             <ul>
             ${playerList}
             </ul>
-        </p>
+          </p>
+        </div>
     </#if>
 
     <!-- Provide a message to the user, if supplied. -->
