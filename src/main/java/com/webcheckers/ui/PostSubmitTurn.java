@@ -61,8 +61,10 @@ public class PostSubmitTurn implements Route {
         //checks if there is a forcible jump on the game board
         Move latest = game.getPastMoves().get(game.getPastMoves().size() - 1);
         Message msg;
+
         if(latest.isJump()){
-            if (game.canJump(latest.getEnd())) {msg = Message.error("Another Jump can be made");}
+            if(game.getPromotion()){game.submitMove(); msg = Message.info("Turn Submitted");}
+            else if (game.canJump(latest.getEnd())) {msg = Message.error("Another Jump can be made");}
             else {game.submitMove(); msg = Message.info("Turn Submitted");}
         }
         else {game.submitMove(); msg = Message.info("Turn Submitted");}

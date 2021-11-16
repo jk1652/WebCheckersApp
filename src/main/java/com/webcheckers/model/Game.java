@@ -21,6 +21,7 @@ public class Game {
 	private ArrayList<Move> possibleJumps = new ArrayList<>();
 	private Boolean SinglePlayer = false;
 	private AI.difficulty difficulty;
+	private boolean promotion = false;
 
 
 	
@@ -78,6 +79,11 @@ public class Game {
 		Position start_pos = move.getStart();
 		int initRow = start_pos.getRow();
 		int initCol = start_pos.getCol();
+
+		if(promotion){
+			validity = "you can not move after a promotion";
+			return false;
+		}
 
 		//Get the space according to the position
 		Space start_space = board.getRow(initRow).getSpace(initCol);
@@ -168,6 +174,7 @@ public class Game {
 		if(validatedMoves.size() != 0){
 			board = validatedMoves.remove(validatedMoves.size() - 1);
 			pastMoves.remove(pastMoves.size()-1);
+			if(promotion){ promotion = false; }
 			return true;
 		}
 		return false;
@@ -179,6 +186,7 @@ public class Game {
 	 */
 	public void submitMove(){
 		if(!checkStalemate()){
+			promotion = false;
 			board = new Board(board);
 			validatedMoves = new ArrayList<>();
 			pastMoves = new ArrayList<>();
@@ -355,8 +363,15 @@ public class Game {
 	 */
 	public void setKing(Move move){
 		Piece piece = board.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).getPiece();
-		if(activeColor == Piece.Color.RED && move.getEnd().getRow() == 7){piece.setKing();}
-		if(activeColor == Piece.Color.WHITE && move.getEnd().getRow() == 0){piece.setKing();}
+		if(activeColor == Piece.Color.RED && move.getEnd().getRow() == 7){
+			piece.setKing();
+			promotion = true;
+		}
+		if(activeColor == Piece.Color.WHITE && move.getEnd().getRow() == 0){
+			piece.setKing();
+			promotion = true;
+
+		}
 	}
 
 	/**
@@ -508,6 +523,10 @@ public class Game {
 		}
 	}
 
+	public boolean getPromotion(){
+		return promotion;
+	}
+
 	/**
 	 * this is use for junit tests to create custom states.
 	 * @param board board to be imported
@@ -515,6 +534,8 @@ public class Game {
 	public void setBoard(Board board){
 		this.board = board;
 	}
+
+
 
 
 }

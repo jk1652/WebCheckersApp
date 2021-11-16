@@ -177,4 +177,10 @@ resigns.
 > achieved from unit testing of the code base. Discuss the team's
 > coverage targets, why you selected those values, and how well your
 > code coverage met your targets. If there are any anomalies, discuss
-> those._
+
+during the development of our test we ended up implementing ToStrings as well as setters 
+inorder to help use create ideal scenarios so that we could test as many possible branches. 
+we still struggled to reach certain branches however as you will see below we have extensive
+testing coverage. one part that was uniquely challenging to test was the AI as its use of randomness makes
+it harder to test all random outcomes. overall we aimed for over 90% in the 3 major branches appl,model and ui 
+as once we reach <90% coverage we can be confidante that the user will most likely not ever encounter an error.
