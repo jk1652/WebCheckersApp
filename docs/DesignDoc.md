@@ -155,6 +155,9 @@ resigns.
 > _Provide a summary of the Application tier of your architecture. This
 > section will follow the same instructions that are given for the UI
 > Tier above._
+> 
+> Our model tier is the backbone of our WebCheckers project. The WebCheckers Model Tier encapsulates the game
+> class which holds
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -185,11 +188,8 @@ resigns.
 > make sure that we made unit tests to cover the code.
 
 ### Acceptance Testing
-> _Report on the number of user stories that have passed all their
-> acceptance criteria tests, the number that have some acceptance
-> criteria tests failing, and the number of user stories that
-> have not had any testing yet. Highlight the issues found during
-> acceptance testing and if there are any concerns._
+> For our Acceptance Testing, we currently pass all of the acceptance criteria tests. There were no concerns
+> with any of the acceptance testing for any of the user stories.
 
 ### Unit Testing and Code Coverage
 > _Discuss your unit testing strategy. Report on the code coverage
