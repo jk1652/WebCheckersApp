@@ -361,17 +361,19 @@ public class Game {
 	 * if becomes a king
 	 * @param move where the piece is moving too
 	 */
-	public void setKing(Move move){
+	public boolean setKing(Move move){
 		Piece piece = board.getRow(move.getEnd().getRow()).getSpace(move.getEnd().getCol()).getPiece();
 		if(activeColor == Piece.Color.RED && move.getEnd().getRow() == 7){
 			piece.setKing();
 			promotion = true;
+			return promotion;
 		}
 		if(activeColor == Piece.Color.WHITE && move.getEnd().getRow() == 0){
 			piece.setKing();
 			promotion = true;
-
+			return promotion;
 		}
+		return false;
 	}
 
 	/**

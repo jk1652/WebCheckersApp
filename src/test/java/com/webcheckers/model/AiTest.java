@@ -46,10 +46,10 @@ public class AiTest {
     }
 
     @Test
-    public void forceJump(){
+    public void forceJump() {
         //runs this multiple times do the ai random decision making
         int x = 5;
-        while(x != 0) {
+        while (x != 0) {
             Game CuT = new Game(mock(Player.class), AI.difficulty.Easy);
 
             Board custom = new Board("");
@@ -67,10 +67,50 @@ public class AiTest {
             custom.getRow(4).getSpace(3).setPiece(null);
             custom.getRow(2).getSpace(1).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
 
-            assertEquals(custom.toString(), CuT.getBoardView().toString() );
+            assertEquals(custom.toString(), CuT.getBoardView().toString());
             x -= 1;
         }
-
     }
 
+    @Test
+    public void testdoublejump() {
+
+        for(AI.difficulty dif : AI.difficulty.values()){
+            Game CuT = new Game(mock(Player.class), dif);
+            Board custom = new Board("");
+            custom.getRow(3).getSpace(4).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+            custom.getRow(2).getSpace(3).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+            custom.getRow(5).getSpace(6).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+            CuT.setBoard(custom);
+            CuT.makeMove(new Move(new Position(3,4),new Position(4,5)));
+            CuT.submitMove();
+        }
+    }
+
+    @Test
+    public void testdoublejumpIntoKing() {
+        for (AI.difficulty dif : AI.difficulty.values()) {
+            Game CuT = new Game(mock(Player.class), dif);
+            Board custom = new Board("");
+            custom.getRow(2).getSpace(4).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+            custom.getRow(1).getSpace(3).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+            custom.getRow(4).getSpace(6).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+            CuT.setBoard(custom);
+            CuT.makeMove(new Move(new Position(3, 4), new Position(4, 5)));
+            CuT.submitMove();
+        }
+    }
+
+    @Test
+    public void testjumpIntoKing() {
+        for (AI.difficulty dif : AI.difficulty.values()) {
+            Game CuT = new Game(mock(Player.class), dif);
+            Board custom = new Board("");
+            custom.getRow(0).getSpace(1).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.RED));
+            custom.getRow(2).getSpace(3).setPiece(new Piece(Piece.Type.SINGLE, Piece.Color.WHITE));
+            CuT.setBoard(custom);
+            CuT.makeMove(new Move(new Position(0, 1), new Position(1, 2)));
+            CuT.submitMove();
+        }
+    }
 }
