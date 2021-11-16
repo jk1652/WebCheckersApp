@@ -117,27 +117,78 @@ The Application and Model tiers are built using plain-old Java objects (POJOs).
 
 
 ### UI Tier
-> _Provide a summary of the Server-side UI tier of your architecture.
-> Describe the types of components in the tier and describe their
-> responsibilities.  This should be a narrative description, i.e. it has
-> a flow or "story line" that the reader can follow._
+> _The **GetHomeRoute** handles the rendering of the homepage. Like all UI components,
+it retrieves the player's username through a session attribute and checks whether
+a player is logged in by testing equality with null. Depending on this value, one of
+two page formats are rendered. The first, if the player is not logged in, is a
+counter of the players in the lobby, through the PlayerLobby class, and a link to
+the SignIn page (discussed in paragraph 2). The second, if the player is logged in,
+the player is presented with a list of available players, unavailable players, and
+buttons to load saved games, which directs the player through
+PostLoadGameRoute (discussed in paragraph 4). The player enters an available When a
+player enters the name of an available player in a submit box which routes the player
+through PostGameRoute (discussed in paragraph 3).
 
-> _At appropriate places as part of this narrative provide one or more
-> static models (UML class structure or object diagrams) with some
-> details such as critical attributes and methods._
+>**GetSignInRoute** renders the signin page and nothing else. **PostSignInRoute**, invoked
+when submit is pressed, validates the username (is it alphanumeric, not "CPU", and
+not in use), adds the validated playername to the PlayerLobby object shared between
+many UI tier classes, and updates the username session attribute to mark the player
+as signed in as well as store the username. On an invalid username, the signin page
+is rendered. On a valid username, the player is redirected to the homepage.
 
-> _You must also provide any dynamic models, such as statechart and
-> sequence diagrams, as is relevant to a particular aspect of the design
-> that you are describing.  For example, in WebCheckers you might create
-> a sequence diagram of the `POST /validateMove` HTTP request processing
-> or you might show a statechart diagram if the Game component uses a
-> state machine to manage the game._
+>**PostGameRoute** handles the creation of games. Using the parameters in the request, it
+determines what difficulty of bot to use, if applicable, and gets the name of the
+requested opponent. Using the PlayerLobby, it checks that the player is both online
+and not the same player, checks that the opponent is not already in a game, and it
+creates and renders the game. **GetGameRoute** renders the game, checks for win
+conditions, passes the game end condition message for the template and a boolean stating
+whether the game has ended for some JS nonsense. If the opponent saves, or the game ends,
+it redirects the player to the homepage. Checking winners is done through the Game class,
+checking player status is done through GameManager, and checking player existence is done
+through PlayerLobby.
 
-> _If a dynamic model, such as a statechart describes a feature that is
-> not mostly in this tier and cuts across multiple tiers, you can
-> consider placing the narrative description of that feature in a
-> separate section for describing significant features. Place this after
-> you describe the design of the three tiers._
+>**PostLoadGameRoute** handles loading a game into the GameManager from the Map of saved
+games in Player objects. Load buttons on the homepage have an attribute under an integer
+and the selected one will have a nonnull value containing the key of the game. The game is
+retrieved from the map in the Player object, retrieved from the PlayerLobby and username
+attribute, and passed to a load function in the GameManager. Checking that the game is versus
+an AI is done with a field in Game, checking that the opponent is online is done using
+PlayerLobby. If the opponent is offline or already in a game, the player is redirected to
+the homepage. Otherwise, the player is redirected to the game page and the page is rendered.
+
+>**PostSaveGameRoute** handles interaction between the UI from the save button on the game
+and saved games in the Player objects. The route tests if the player is the active color
+using the Game class and redirects the user to the game, ignoring the request, if the
+player is not the active player. If the game has a winner, the request is ignored and the
+player is redirected to the game page. If there are moves in the move stack (technically
+an ArrayList), then they are undone. Once these tests are passed, the game is saved for
+the player who clicked the button. If the player is an AI, its name is stored as null. This
+is checked in the game object to determine when not to save the game.
+
+>**PostSignOutRoute** is invoked when the signout button is pressed. It removes the player
+from the PlayerLobby object and clears the username attribute to mark the player as not
+signed in.
+
+>The remaining routes are invoked through the JavaScript and Ajax calls on the game page. All
+the following Routes get the game object, for whatever they need, through the GameManager
+using the username attribute.
+
+>**PostBackupRoute** invoked when the backup button is pressed on the page. It calls the
+undoMove function in the Game object and returns a JSON formatted Message depending on
+whether there was a move to back up.
+
+>**PostCheckTurn** is invoked when there is a POST request to "/checkTurn" and it returns true
+in a JSON Message if the player is active, checked using Game,  or the board is in the exit
+state, checked using Board. Otherwise, false is returned.
+
+>**PostResignGameRoute** checks if the player can resign, if they're the active player. If
+so, the resign and win flag is set using Board.
+
+>**PostValidateRoute** is invoked when there is a POST request to "/validateMove" and it
+checks the validity of the passed move, retrieved through a parameter in the requets, by
+using the validateMove function in the Game object. If the move is valid, it puts the move
+on the move stack and sets the moved piece to a king, if necessary. A JSON Message containing
+with a boolean for the validity of the move is returned.
 
 
 ### Application Tier
