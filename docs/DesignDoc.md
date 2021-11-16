@@ -80,24 +80,24 @@ This section describes the application domain.
 
 ## Architecture and Design
 
-This section describes the application architecture.
+>This section describes the application architecture.
 
 ### Summary
 
-The following Tiers/Layers model shows a high-level view of the webapp's architecture.
+>The following Tiers/Layers model shows a high-level view of the webapp's architecture.
 
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 
-As a web application, the user interacts with the system using a
+>As a web application, the user interacts with the system using a
 browser.  The client-side of the UI is composed of HTML pages with
 some minimal CSS for styling the page. There is also some JavaScript
 that has been provided to the team by the architect.
 
-The server-side tiers include the UI Tier that is composed of UI Controllers and Views.
+>The server-side tiers include the UI Tier that is composed of UI Controllers and Views.
 Controllers are built using the Spark framework and View are built using the FreeMarker framework.
 The Application and Model tiers are built using plain-old Java objects (POJOs).
 
-Details of the components within these tiers are supplied below.
+>Details of the components within these tiers are supplied below.
 
 
 ### Overview of User Interface
