@@ -157,7 +157,20 @@ resigns.
 > Tier above._
 > 
 > Our model tier is the backbone of our WebCheckers project. The WebCheckers Model Tier encapsulates the game
-> class which holds
+> class which holds AI, Board, Game, Move, Piece, Player, Position, Row, Space.
+> For AI we are able to select from 3 different AI from the Homepage, In which the AI will 
+> act like a player and makes moves as if another player was making them. 
+> The moves that the AI decides are based on a set of preferred moves based on the difficulty selected
+> The Board class, stores the board and all the pieces on the board, in which the board will
+> determine that when one player has all their pieces missing the other player will become the winner
+> For the Game class that will validate moves on the board, as it stores the information of what 2 players 
+> are playing each other, or it will store player vs AI.
+> For the Move class all it does is determine if a jump or simple move is being made.
+> For the Piece class we declare the color of the pieces on the board.
+> For the Player class we determine that a player will have a list of saved games and their username stored
+> For the Position class we can determine the position of pieces on the board.
+> For the Row class we are able to use this class to make rows on the board in combination with the
+> Space class that will provide space for pieces to be placed on and determine if spaces are droppable
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
