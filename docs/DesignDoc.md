@@ -4,19 +4,19 @@ geometry: margin=1in
 # PROJECT Design Documentation
 
 ## Team Information
-* Team name: Team 8
-* Team members
-  * Quentin Ramos
-  * Zane Kitchen Lipski
-  * Jaden Kitchen Lipski
-  * Spencer Creveling
-  * David Pritchard
+>* Team name: Team 8
+  > * Team members
+  >   * Quentin Ramos
+  >   * Zane Kitchen Lipski
+  >   * Jaden Kitchen Lipski
+  >   * Spencer Creveling
+  >   * David Pritchard
 
 ## Executive Summary
 
-The WebCheckers is a web based application that allows players to log in with a unique alphanumeric username and play 
-checkers against other players. The user can also play against AI opponents with varying difficulties and save games 
-against opponents to play against them at another time.
+>The WebCheckers is a web based application that allows players to log in with a unique alphanumeric username and play 
+>checkers against other players. The user can also play against AI opponents with varying difficulties and save games 
+>against opponents to play against them at another time.
 
 ### Purpose
 
@@ -193,15 +193,12 @@ The Application and Model tiers are built using plain-old Java objects (POJOs).
 > to a game would remove this possible problem.
 
 ## Testing
-> _This section will provide information about the testing performed
-> and the results of the testing._
-> 
-> We made sure that whenever we implemented something, that we would live
-> test it and make sure it past it's acceptance test. We would then
-> make sure that we made unit tests to cover the code.
+> During our testing sessions we ensured that all MVP user stories where being met
+> we would often have several people testing these issues both through playing the game
+> and creating custom scenarios though code overall almost all errors have been solved
 
 ### Acceptance Testing
-> For our Acceptance Testing, we currently pass all of the acceptance criteria tests. There were no concerns
+> For our Acceptance Testing, we currently pass all the acceptance criteria tests. There were no concerns
 > with any of the acceptance testing for any of the user stories.
 
 ### Unit Testing and Code Coverage
@@ -213,8 +210,8 @@ The Application and Model tiers are built using plain-old Java objects (POJOs).
 ![Code Coverrage](overallcodecoverage.png)
 
 >one part that was uniquely challenging to test was the AI as its use of randomness makes
->it harder to test all random outcomes. however by running test multiple times and going through each verrsion of the ai
->we where able to get great AI coverage 
+>it harder to test all random outcomes. however, by running test multiple times and going through each 
+> version of the aI we were able to get great AI coverage 
 
 ![AI Coverrage](AiCovrarge.png)
 
