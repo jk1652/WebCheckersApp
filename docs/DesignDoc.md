@@ -157,7 +157,20 @@ resigns.
 > Tier above._
 > 
 > Our model tier is the backbone of our WebCheckers project. The WebCheckers Model Tier encapsulates the game
-> class which holds
+> class which holds AI, Board, Game, Move, Piece, Player, Position, Row, Space.
+> For AI we are able to select from 3 different AI from the Homepage, In which the AI will 
+> act like a player and makes moves as if another player was making them. 
+> The moves that the AI decides are based on a set of preferred moves based on the difficulty selected
+> The Board class, stores the board and all the pieces on the board, in which the board will
+> determine that when one player has all their pieces missing the other player will become the winner
+> For the Game class that will validate moves on the board, as it stores the information of what 2 players 
+> are playing each other, or it will store player vs AI.
+> For the Move class all it does is determine if a jump or simple move is being made.
+> For the Piece class we declare the color of the pieces on the board.
+> For the Player class we determine that a player will have a list of saved games and their username stored
+> For the Position class we can determine the position of pieces on the board.
+> For the Row class we are able to use this class to make rows on the board in combination with the
+> Space class that will provide space for pieces to be placed on and determine if spaces are droppable
 
 ### Design Improvements
 > _Discuss design improvements that you would make if the project were
@@ -192,14 +205,32 @@ resigns.
 > with any of the acceptance testing for any of the user stories.
 
 ### Unit Testing and Code Coverage
-> _Discuss your unit testing strategy. Report on the code coverage
-> achieved from unit testing of the code base. Discuss the team's
-> coverage targets, why you selected those values, and how well your
-> code coverage met your targets. If there are any anomalies, discuss
-
 during the development of our test we ended up implementing ToStrings as well as setters 
 inorder to help use create ideal scenarios so that we could test as many possible branches. 
 we still struggled to reach certain branches however as you will see below we have extensive
-testing coverage. one part that was uniquely challenging to test was the AI as its use of randomness makes
-it harder to test all random outcomes. overall we aimed for over 90% in the 3 major branches appl,model and ui 
+testing coverage. 
+
+![Code Coverrage](overallcodecoverage.png)
+
+one part that was uniquely challenging to test was the AI as its use of randomness makes
+it harder to test all random outcomes. however by running test multiple times and going through each verrsion of the ai 
+we where able to get great AI coverage 
+
+![AI Coverrage](AiCovrarge.png)
+
+one part of junit testing that we struggled with was testing branches of the UI tier, we ensure highe covrace to
+be confidante that the functions will work however due to having troubles with mockioto we resulted in a lower
+coverage than initially hoped for
+
+![UI Coverrage](UIcoverage.png)
+
+overall we aimed for over 90% in the 3 major branches appl,model and ui 
 as once we reach <90% coverage we can be confidante that the user will most likely not ever encounter an error.
+
+
+
+
+
+
+
+
