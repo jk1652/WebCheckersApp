@@ -88,10 +88,7 @@ public class GetGameRoute implements Route {
         if(game.checkStalemate() && winner == null){
             modeOptions.put("isGameOver", true);
             modeOptions.put("gameOverMessage", "The match has come to a stalemate and cannot proceed");
-            vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
-            return templateEngine.render(new ModelAndView(vm , "game.ftl"));
         }
-
         //Check if there is a declared winner.
         if (winner != null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
             Piece.Color userColor = game.getUserColor(playerName);
@@ -102,10 +99,12 @@ public class GetGameRoute implements Route {
                 winnerName = game.getOpponentName(playerName);
             modeOptions.put("isGameOver", true);
             modeOptions.put("gameOverMessage", winnerName + " has won and has captured all of the opposing pieces.");
-        } else if (winner == null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
+        }
+        else if (winner == null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
             modeOptions.put("isGameOver", false);
             modeOptions.put("gameOverMessage", "");
-        } else if (winner != null && board.getResign() == Boolean.TRUE) {
+        }
+        else if (winner != null && board.getResign() == Boolean.TRUE) {
             Piece.Color userColor = game.getUserColor(playerName);
             String loserName;
             if (userColor.equals(winner))
@@ -115,18 +114,15 @@ public class GetGameRoute implements Route {
             modeOptions.put("isGameOver", true);
             modeOptions.put("gameOverMessage", loserName + " has lost by resign.");
         }
-        // This branch can only be reached by adding debug code specifically for that. I may be stupid, so I'll leave it here. --DP
-        // else if (winner == null && board.getResign() == Boolean.TRUE) {
-        //         modeOptions.put("isGameOver", false);
-        //         modeOptions.put("gameOverMessage", "");
-        // }
         vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
-    } else {
+        }
+    else {
         if (playerLobby.getPlayer(playerName).currentSavedGamesWentUp()) {
             request.session().attribute("message", Message.info("Your opponent has left, but luckily they saved the game against you :)"));
             playerLobby.getPlayer(playerName).savedGamesOnLVL();
-        } else {
+        }
+        else {
             request.session().attribute("message", Message.info("Your checkers game has ended"));
         }
     	response.redirect(WebServer.HOME_URL);
