@@ -102,18 +102,18 @@ Details of the components within these tiers are supplied below.
 
 ### Overview of User Interface
 
-This section describes the web interface flow; this is how the user views and interacts
-with the WebCheckers application.
+>This section describes the web interface flow; this is how the user views and interacts
+>with the WebCheckers application.
 
 ![The WebCheckers Web Interface Statechart](web-interface-placeholder.png)
 
-From the perspective of a user, the user first logs in with a valid
-alphanumeric username. Upon logging in, the user views a list of players they
-are able to challenge, and can challenge one at a time. After challenging a
-listed player, the player is then directed to a game page and the player that
-controls the red pieces moves first and the players then take turns moving. A
-game can be finished when all of a player’s pieces are gone or a player
-resigns.
+>From the perspective of a user, the user first logs in with a valid
+>alphanumeric username. Upon logging in, the user views a list of players they
+>are able to challenge, and can challenge one at a time. After challenging a
+>listed player, the player is then directed to a game page and the player that
+>controls the red pieces moves first and the players then take turns moving. A
+>game can be finished when all of a player’s pieces are gone or a player
+>resigns.
 
 
 ### UI Tier
@@ -205,27 +205,27 @@ resigns.
 > with any of the acceptance testing for any of the user stories.
 
 ### Unit Testing and Code Coverage
-during the development of our test we ended up implementing ToStrings as well as setters 
-inorder to help use create ideal scenarios so that we could test as many possible branches. 
-we still struggled to reach certain branches however as you will see below we have extensive
-testing coverage. 
+>during the development of our test we ended up implementing ToStrings as well as setters
+>inorder to help use create ideal scenarios so that we could test as many possible branches.
+>we still struggled to reach certain branches however as you will see below we have extensive
+>testing coverage. 
 
 ![Code Coverrage](overallcodecoverage.png)
 
-one part that was uniquely challenging to test was the AI as its use of randomness makes
-it harder to test all random outcomes. however by running test multiple times and going through each verrsion of the ai 
-we where able to get great AI coverage 
+>one part that was uniquely challenging to test was the AI as its use of randomness makes
+>it harder to test all random outcomes. however by running test multiple times and going through each verrsion of the ai
+>we where able to get great AI coverage 
 
 ![AI Coverrage](AiCovrarge.png)
 
-one part of junit testing that we struggled with was testing branches of the UI tier, we ensure highe covrace to
-be confidante that the functions will work however due to having troubles with mockioto we resulted in a lower
-coverage than initially hoped for
+>one part of junit testing that we struggled with was testing branches of the UI tier, we ensure highe covrace to
+>be confidante that the functions will work however due to having troubles with mockioto we resulted in a lower
+>coverage than initially hoped for
 
 ![UI Coverrage](UIcoverage.png)
 
-overall we aimed for over 90% in the 3 major branches appl,model and ui 
-as once we reach <90% coverage we can be confidante that the user will most likely not ever encounter an error.
+>overall we aimed for over 90% in the 3 major branches appl,model and ui
+>as once we reach <90% coverage we can be confidante that the user will most likely not ever encounter an error.
 
 
 
