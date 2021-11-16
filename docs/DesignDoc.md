@@ -165,10 +165,24 @@ resigns.
 > will also discuss the resulting metric measurements.  Indicate the
 > hot spots the metrics identified in your code base, and your
 > suggested design improvements to address those hot spots._
+> 
+> Some possible design improvements that we could make, could be more
+> logging, and properly defining our win state for a game within the game model.
+> Currently we have very minimal logging, improving our logging would allow
+> trouble shooting to be much easier and creates a better understanding of 
+> how the program works during operation. Then for our win state, our win state 
+> for a game is held within the board connected to a game. This is not that big 
+> of a problem for right now because a board and game are 1:1, but this could 
+> cause problems if that was different. Moving the win state for a game 
+> to a game would remove this possible problem.
 
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
+> 
+> We made sure that whenever we implemented something, that we would live
+> test it and make sure it past it's acceptance test. We would then
+> make sure that we made unit tests to cover the code.
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
