@@ -141,10 +141,15 @@ resigns.
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
-
+> For our application Tier we have 2 classes, GameManager, and PlayerLobby
+> For PlayerLobby we are able to add players into the active pool of online players
+> When a player decides to sign out they are removed from this pool of players online
+> To prevent multiple users from signing with the same username, PlayerLobby will 
+> compare the name they inputted to every other online player
+> For The GameManager we can create games between players, in which will put players
+> into a game to play against each other and this game will be stored in a pool of active games.
+> Once a game has finished the game will be removed from the active pool, also this application
+> will be able to load games, if they were already created then saved previously
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
@@ -160,10 +165,24 @@ resigns.
 > will also discuss the resulting metric measurements.  Indicate the
 > hot spots the metrics identified in your code base, and your
 > suggested design improvements to address those hot spots._
+> 
+> Some possible design improvements that we could make, could be more
+> logging, and properly defining our win state for a game within the game model.
+> Currently we have very minimal logging, improving our logging would allow
+> trouble shooting to be much easier and creates a better understanding of 
+> how the program works during operation. Then for our win state, our win state 
+> for a game is held within the board connected to a game. This is not that big 
+> of a problem for right now because a board and game are 1:1, but this could 
+> cause problems if that was different. Moving the win state for a game 
+> to a game would remove this possible problem.
 
 ## Testing
 > _This section will provide information about the testing performed
 > and the results of the testing._
+> 
+> We made sure that whenever we implemented something, that we would live
+> test it and make sure it past it's acceptance test. We would then
+> make sure that we made unit tests to cover the code.
 
 ### Acceptance Testing
 > _Report on the number of user stories that have passed all their
