@@ -141,10 +141,15 @@ resigns.
 
 
 ### Application Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
-
+> For our application Tier we have 2 classes, GameManager, and PlayerLobby
+> For PlayerLobby we are able to add players into the active pool of online players
+> When a player decides to sign out they are removed from this pool of players online
+> To prevent multiple users from signing with the same username, PlayerLobby will 
+> compare the name they inputted to every other online player
+> For The GameManager we can create games between players, in which will put players
+> into a game to play against each other and this game will be stored in a pool of active games.
+> Once a game has finished the game will be removed from the active pool, also this application
+> will be able to load games, if they were already created then saved previously
 
 ### Model Tier
 > _Provide a summary of the Application tier of your architecture. This
