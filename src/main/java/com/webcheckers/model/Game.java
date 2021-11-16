@@ -322,7 +322,7 @@ public class Game {
 	public ArrayList<Move> canMove(Position start){
 		ArrayList<Move> moves = new ArrayList<>();
 		Piece piece = board.getRow(start.getRow()).getSpace(start.getCol()).getPiece();
-		if(piece != null && piece.getColor() == activeColor){
+		if(piece != null){
 			//right move
 			if(start.getRow() + 1 <= 7){
 				if(start.getCol() + 1 <= 7){
@@ -398,7 +398,7 @@ public class Game {
 			Piece target = board.getRow(x).getSpace(y).getPiece();
 			if(target != null && target.getColor() == activeColor){moves.addAll(canMove(new Position(x,y)));}
 		}}
-		return moves.isEmpty();
+		return moves.isEmpty() && possibleJumps.isEmpty();
 	}
 
 	/**

@@ -85,12 +85,14 @@ public class GetGameRoute implements Route {
         vm.put("flip", game.getRedPlayer().getName().equals(playerName));
 
         //First check for a stalemate
-        if(game.checkStalemate() && winner == null){
+        if(game.checkStalemate() && winner == null && board!=null){
             modeOptions.put("isGameOver", true);
-            modeOptions.put("gameOverMessage", "The match has come to a stalemate and cannot proceed");
+            modeOptions.put("gameOverMessage", "The match has come to a stalemate and cannot proceed. " +
+                    "The opposing player will resign and you will be prompted to exit the game again");
+            board.setWinner(game.getActiveColor());
         }
-        //Check if there is a declared winner.
-        if (winner != null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
+        //Then check if there is a declared winner.
+        else if (winner != null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
             Piece.Color userColor = game.getUserColor(playerName);
             String winnerName;
             if (userColor.equals(winner))
@@ -100,10 +102,12 @@ public class GetGameRoute implements Route {
             modeOptions.put("isGameOver", true);
             modeOptions.put("gameOverMessage", winnerName + " has won and has captured all of the opposing pieces.");
         }
+
         else if (winner == null && Objects.requireNonNull(board).getResign() == Boolean.FALSE) {
             modeOptions.put("isGameOver", false);
             modeOptions.put("gameOverMessage", "");
         }
+
         else if (winner != null && board.getResign() == Boolean.TRUE) {
             Piece.Color userColor = game.getUserColor(playerName);
             String loserName;
@@ -114,9 +118,11 @@ public class GetGameRoute implements Route {
             modeOptions.put("isGameOver", true);
             modeOptions.put("gameOverMessage", loserName + " has lost by resign.");
         }
+
         vm.put("modeOptionsAsJSON", gson.toJson(modeOptions));
         return templateEngine.render(new ModelAndView(vm , "game.ftl"));
         }
+
     else {
         if (playerLobby.getPlayer(playerName).currentSavedGamesWentUp()) {
             request.session().attribute("message", Message.info("Your opponent has left, but luckily they saved the game against you :)"));
