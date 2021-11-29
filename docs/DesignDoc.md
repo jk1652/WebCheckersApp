@@ -237,6 +237,10 @@ with a boolean for the validity of the move is returned.
 > We can improve these metrics by splitting up our logic into more specialized needs instead of having a catch all Function.
 > By doing this our average operation complexity should meet the target numbers.
 
+>In regard to out Java docs coverage we have many outliers that could be improved upon, many of our more important classes
+> have 100% or near 100% code coverage however many classes also have 0% coverage. We can improve upon this issue by going 
+> class by class and adding the necessary javadocs inorder remove these outliers.
+
 > The canJump function checks each direction and has many nested ifs, long ones at that. 
 > It also has some problems with duplication and violations of the Law of Demeter.
 > `space.getPiece().getColor() != current.getColor()` could be replaced with:
