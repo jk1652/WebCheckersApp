@@ -240,6 +240,12 @@ with a boolean for the validity of the move is returned.
 > cause problems if that was different. Moving the win state for a game 
 > to a game would remove this possible problem.
 
+> When looking at the code metrics in regard to our complexity our UI Classes suffer from high average operation complexity.
+> The reason for these metrics is that all the logic required for each HTML request is managed in one large function. 
+> We can improve these metrics by splitting up our logic into more specialized needs instead of having a catch all Function.
+> By doing this our average operation complexity should meet the target numbers.
+
+
 ## Testing
 > During our testing sessions we ensured that all MVP user stories where being met
 > we would often have several people testing these issues both through playing the game
