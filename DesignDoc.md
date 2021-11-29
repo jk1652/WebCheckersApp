@@ -53,15 +53,15 @@ This section describes the features of the application.
 
 ### Roadmap of Enhancements
 
-  >The enhancements that we decided to go with were to add AI opponent with varying difficulties to play against
-  >and to add asynchronous play.
+>The enhancements that we decided to go with were to add AI opponent with varying difficulties to play against
+>and to add asynchronous play.
 
-  >For the AI opponent enhancement, the user would be presented three varying difficulties on the homepage to 
-  >play against. After selecting a difficulty, the AI will reactively submit moves once the user submits their move.
+>For the AI opponent enhancement, the user would be presented three varying difficulties on the homepage to 
+>play against. After selecting a difficulty, the AI will reactively submit moves once the user submits their move.
 
-  >For the asynchronous play the user is able to save the game when it is their turn, in which 
-  >both players will be exited from the game state and returned to the homepage in which you can 
-  >then load the saved game as long as the opponent is not in another game.
+>For the asynchronous play the user is able to save the game when it is their turn, in which 
+>both players will be exited from the game state and returned to the homepage in which you can 
+>then load the saved game as long as the opponent is not in another game.
 
 
 ## Application Domain
