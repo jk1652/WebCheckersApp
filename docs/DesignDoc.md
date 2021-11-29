@@ -272,6 +272,10 @@ with a boolean for the validity of the move is returned.
 
 > We aimed for 100% coverage, but couldn't quite reach that. We ended up with 93% coverage, which was good enough.
 
+>Another notable outlier in our code metrics are Java docs coverage, while many of the larger important classes have 
+> 100% or near 100% javadoc coverage many smaller classes have 0% javadoc coverage. we could improve this by
+> going through each class and adding the required javadocs to increase our coverage and remove these outliers.
+
 
 
 
