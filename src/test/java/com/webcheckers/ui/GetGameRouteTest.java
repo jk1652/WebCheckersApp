@@ -112,7 +112,7 @@ class GetGameRouteTest {
 		// Create expected value.
 		Map<String, Object> options = new HashMap<>();
 		options.put("isGameOver", true);
-		options.put("gameOverMessage", "The match has come to a stalemate and cannot proceed");
+		options.put("gameOverMessage", "The match has come to a stalemate and cannot proceed. The opposing player will resign and you will be prompted to exit the game again");
 		testHelper.assertViewModelAttribute("modeOptionsAsJSON", gson.toJson(options));
 	}
 

@@ -221,15 +221,7 @@ with a boolean for the validity of the move is returned.
 > Space class that will provide space for pieces to be placed on and determine if spaces are droppable
 
 ### Design Improvements
-> _Discuss design improvements that you would make if the project were
-> to continue. These improvement should be based on your direct
-> analysis of where there are problems in the code base which could be
-> addressed with design changes, and describe those suggested design
-> improvements. After completion of the Code metrics exercise, you
-> will also discuss the resulting metric measurements.  Indicate the
-> hot spots the metrics identified in your code base, and your
-> suggested design improvements to address those hot spots._
-> 
+
 > Some possible design improvements that we could make, could be more
 > logging, and properly defining our win state for a game within the game model.
 > Currently we have very minimal logging, improving our logging would allow
@@ -265,22 +257,20 @@ with a boolean for the validity of the move is returned.
 >we still struggled to reach certain branches however as you will see below we have extensive
 >testing coverage. 
 
-![Code Coverrage](overallcodecoverage.png)
+![Code Coverage](overallcodecoverage.png)
 
->one part that was uniquely challenging to test was the AI as its use of randomness makes
->it harder to test all random outcomes. however, by running test multiple times and going through each 
-> version of the aI we were able to get great AI coverage 
+> One part that was uniquely challenging to test was the AI, as its use of randomness makes
+> it harder to test all random outcomes. However, by running tests multiple times and going through each 
+> version of the AI we were able to get great AI coverage.
 
-![AI Coverrage](AiCovrarge.png)
+![AI Coverage](AiCovrarge.png)
 
->one part of junit testing that we struggled with was testing branches of the UI tier, we ensure highe covrace to
->be confidante that the functions will work however due to having troubles with mockioto we resulted in a lower
->coverage than initially hoped for
+> We struggled with testing the UI tier with JUnit, we aimed for high coverage to be be confident that the functions
+> will work; however due to having troubles with mockito, we had lower coverage than we hoped for.
 
-![UI Coverrage](UIcoverage.png)
+![UI Coverage](UIcoverage.png)
 
->overall we aimed for over 90% in the 3 major branches appl,model and ui
->as once we reach <90% coverage we can be confidante that the user will most likely not ever encounter an error.
+> We aimed for 100% coverage, but couldn't quite reach that. We ended up with 93% coverage, which was good enough.
 
 
 
