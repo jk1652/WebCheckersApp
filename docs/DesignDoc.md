@@ -82,7 +82,7 @@ This section describes the application domain.
 
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 >as seen above the Architecture of our system is relatively simple the user will load the preset HTML CSS & CSS while still
-> being able to be loaded in any OS or hardware. once loaded the user comnicates to with our 
+> being able to be loaded in any OS or hardware. once loaded the user communicates to with our 
 
 ### Summary
 
