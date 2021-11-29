@@ -282,6 +282,10 @@ with a boolean for the validity of the move is returned.
 >overall we aimed for over 90% in the 3 major branches appl,model and ui
 >as once we reach <90% coverage we can be confidante that the user will most likely not ever encounter an error.
 
+>Another notable outlier in our code metrics are Java docs coverage, while many of the larger important classes have 
+> 100% or near 100% javadoc coverage many smaller classes have 0% javadoc coverage. we could improve this by
+> going through each class and adding the required javadocs to increase our coverage and remove these outliers.
+
 
 
 
