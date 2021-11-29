@@ -65,9 +65,6 @@ This section describes the features of the application.
 
 
 ## Application Domain
-
-This section describes the application domain.
-
 ![The WebCheckers Domain Model](domain-model-placeholder.png)
 
 > The Player is one of the most important entities.
@@ -82,7 +79,9 @@ This section describes the application domain.
 
 ![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
 >as seen above the Architecture of our system is relatively simple the user will load the preset HTML CSS & CSS while still
-> being able to be loaded in any OS or hardware. once loaded the user communicates to with our 
+> being able to be loaded in any OS or hardware. once loaded the user communicates to with our server that utilises java to manage 
+> all logic and jetty to handle web server POST/GET/PUT commands that the client may issue, these systems are then alsop utilised by 
+> our model tier logic inorder to properly run the game as outlines in out MVP.
 
 ### Summary
 
