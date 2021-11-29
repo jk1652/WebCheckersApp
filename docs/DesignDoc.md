@@ -245,6 +245,10 @@ with a boolean for the validity of the move is returned.
 > We can improve these metrics by splitting up our logic into more specialized needs instead of having a catch all Function.
 > By doing this our average operation complexity should meet the target numbers.
 
+> The canJump function checks each direction and has many nested ifs, long ones at that. 
+> It also has some problems with duplication and violations of the Law of Demeter.
+> `space.getPiece().getColor() != current.getColor()` could be replaced with:
+> `!space.pieceColorMatches(current)`. Because we tried making many catch all functions, this is a relatively common problem.
 
 ## Testing
 > During our testing sessions we ensured that all MVP user stories where being met
