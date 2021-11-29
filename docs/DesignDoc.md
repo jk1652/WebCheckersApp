@@ -80,7 +80,9 @@ This section describes the application domain.
 
 ## Architecture and Design
 
->This section describes the application architecture.
+![The Tiers & Layers of the Architecture](architecture-tiers-and-layers.png)
+>as seen above the Architecture of our system is relatively simple the user will load the preset HTML CSS & CSS while still
+> being able to be loaded in any OS or hardware. once loaded the user comnicates to with our 
 
 ### Summary
 
@@ -203,10 +205,6 @@ with a boolean for the validity of the move is returned.
 > will be able to load games, if they were already created then saved previously
 
 ### Model Tier
-> _Provide a summary of the Application tier of your architecture. This
-> section will follow the same instructions that are given for the UI
-> Tier above._
-> 
 > Our model tier is the backbone of our WebCheckers project. The WebCheckers Model Tier encapsulates the game
 > class which holds AI, Board, Game, Move, Piece, Player, Position, Row, Space.
 > For AI we are able to select from 3 different AI from the Homepage, In which the AI will 
