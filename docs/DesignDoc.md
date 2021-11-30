@@ -122,7 +122,7 @@ The Application and Model tiers are built using plain-old Java objects (POJOs).
 
 
 ### UI Tier
-> _The **GetHomeRoute** handles the rendering of the homepage. Like all UI components,
+> The **GetHomeRoute** handles the rendering of the homepage. Like all UI components,
 it retrieves the player's username through a session attribute and checks whether
 a player is logged in by testing equality with null. Depending on this value, one of
 two page formats are rendered. The first, if the player is not logged in, is a
