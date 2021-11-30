@@ -116,6 +116,10 @@ The Application and Model tiers are built using plain-old Java objects (POJOs).
 >game can be finished when all of a player’s pieces are gone or a player
 >resigns.
 
+>Here is an example of how we start a game.
+
+![The WebCheckers Sequence Diagram](SWEN%20Team%208%20Sequence%20Diagram.png)
+
 
 ### UI Tier
 > _The **GetHomeRoute** handles the rendering of the homepage. Like all UI components,
