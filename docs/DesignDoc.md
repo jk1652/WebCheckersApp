@@ -36,7 +36,7 @@ geometry: margin=1in
 
 ## Requirements
 
-This section describes the features of the application.
+###the following sections describes the features of the application that are required by the MVP as defined by the client.
 
 ### Definition of MVP
 
