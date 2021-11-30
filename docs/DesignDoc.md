@@ -118,7 +118,7 @@ The Application and Model tiers are built using plain-old Java objects (POJOs).
 
 >Here is an example of how we start a game.
 
-![The WebCheckers Sequence Diagram](SWEN%20Team%208%20Sequence%20Diagram.png)
+![The WebCheckers Sequence Diagram](SWEN-Team-8-Sequence-Diagram.png)
 
 
 ### UI Tier
@@ -265,18 +265,18 @@ with a boolean for the validity of the move is returned.
 >we still struggled to reach certain branches however as you will see below we have extensive
 >testing coverage. 
 
-![Code Coverage](overallcodecoverage.png)
+![Code Coverage](overallcodecoverage.PNG)
 
 > One part that was uniquely challenging to test was the AI, as its use of randomness makes
 > it harder to test all random outcomes. However, by running tests multiple times and going through each 
 > version of the AI we were able to get great AI coverage.
 
-![AI Coverage](AiCovrarge.png)
+![AI Coverage](AICovrarge.PNG)
 
 > We struggled with testing the UI tier with JUnit, we aimed for high coverage to be be confident that the functions
 > will work; however due to having troubles with mockito, we had lower coverage than we hoped for.
 
-![UI Coverage](UIcoverage.png)
+![UI Coverage](UICoverage.PNG)
 
 > We aimed for 100% coverage, but couldn't quite reach that. We ended up with 93% coverage, which was good enough.
 
